@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:perfect_catch_dating_app/utils/app_images.dart';
 import '../../../helpers/route.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -10,24 +11,30 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+
+  /*
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 3), () {
-      /*  var isLogged = await PrefsHelper.getBool(AppConstants.isLogged);
+      *//*  var isLogged = await PrefsHelper.getBool(AppConstants.isLogged);
       if (isLogged == true) {
         Get.offAllNamed(AppRoutes.homeScreen);
       } else {
         Get.offAllNamed(AppRoutes.onboardingScreen);
       }
-      */
+      *//*
       Get.offAllNamed(AppRoutes.homeScreen);
     });
     // TODO: implement initState
     super.initState();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      backgroundColor: Color(0xffFEC629),
+      body: Center(child: Image.asset(AppImages.appLogo)),
+    );
   }
 }
