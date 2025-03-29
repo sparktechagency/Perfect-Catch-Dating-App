@@ -6,18 +6,19 @@ import '../../utils/app_colors.dart';
 import '../../utils/style.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton(
-      {super.key,
-      this.color,
-      this.textColor,
-      this.textStyle,
-      this.padding = EdgeInsets.zero,
-      required this.onTap,
-      required this.text,
-      this.loading = false,
-      this.width,
-      this.fontSize,
-      this.height});
+  const CustomButton({
+    super.key,
+    this.color,
+    this.textColor,
+    this.textStyle,
+    this.padding = EdgeInsets.zero,
+    required this.onTap,
+    required this.text,
+    this.loading = false,
+    this.width,
+    this.fontSize,
+    this.height,
+  });
   final Function() onTap;
   final String text;
   final bool loading;
@@ -32,29 +33,31 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: padding,
-        child: ElevatedButton(
-          onPressed: loading ? () {} : onTap,
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-                side: BorderSide(width: 1.w, color: AppColors.borderColor),
-                borderRadius: BorderRadius.circular(8.r)),
-            backgroundColor: color ?? AppColors.primaryColor,
-            minimumSize: Size(width ?? Get.width, height ?? 53.h),
+      padding: padding,
+      child: ElevatedButton(
+        onPressed: loading ? () {} : onTap,
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            side: BorderSide(width: 1.w, color: AppColors.primaryColor),
+            borderRadius: BorderRadius.circular(12.r),
           ),
-          child: loading
-              ? SizedBox(
+          backgroundColor: color ?? AppColors.primaryColor,
+          minimumSize: Size(width ?? Get.width, height ?? 56.h),
+        ),
+        child:
+            loading
+                ? SizedBox(
                   height: 20.h,
                   width: 20.h,
-                  child: const CircularProgressIndicator(
-                    color: Colors.white,
-                  ),
+                  child: const CircularProgressIndicator(color: Colors.white),
                 )
-              : CustomText(
+                : CustomText(
                   text: text,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                   fontSize: fontSize ?? 16.sp,
-                  color: textColor ?? Colors.white),
-        ));
+                  color: textColor ?? Colors.white,
+                ),
+      ),
+    );
   }
 }
