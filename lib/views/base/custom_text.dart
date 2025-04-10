@@ -8,14 +8,15 @@ class CustomText extends StatelessWidget {
       this.maxLine,
       this.textOverflow,
       this.fontName,
+      this.textDecoration = TextDecoration.none,
       this.textAlign = TextAlign.center,
+      this.decorationColor = Colors.transparent,
       this.left = 0,
       this.right = 0,
       this.top = 0,
       this.bottom = 0,
       this.fontSize = 12,
       this.textHeight,
-      this.decoration,
       this.fontWeight = FontWeight.w400,
       this.color = Colors.black,
       this.text = ""});
@@ -29,11 +30,12 @@ class CustomText extends StatelessWidget {
   final FontWeight fontWeight;
   final Color color;
   final String text;
+  final Color decorationColor;
   final TextAlign textAlign;
   final int? maxLine;
   final String? fontName;
   final double? textHeight;
-  final TextDecoration? decoration;
+  final TextDecoration? textDecoration;
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +48,9 @@ class CustomText extends StatelessWidget {
         maxLines: maxLine,
         overflow: textOverflow ?? TextOverflow.ellipsis,
         style: TextStyle(
-          decoration: decoration,
+          decoration: textDecoration,
           fontSize: fontSize,
-          decorationColor: AppColors.primaryColor,
+          decorationColor: Colors.black,
           fontFamily: fontName ?? "Quicksand",
           fontWeight: fontWeight,
           color: color,

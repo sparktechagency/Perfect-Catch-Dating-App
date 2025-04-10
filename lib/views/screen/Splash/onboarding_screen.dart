@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:perfect_catch_dating_app/helpers/route.dart';
 import 'package:perfect_catch_dating_app/utils/app_images.dart';
 import 'package:perfect_catch_dating_app/utils/app_strings.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_button.dart';
@@ -51,7 +52,11 @@ class OnboardingScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 32.h),
                     //=================> Get Started Button <===================
-                    CustomButton(onTap: () {}, text: AppStrings.getStarted.tr),
+                    CustomButton(
+                        onTap: () {
+                          Get.toNamed(AppRoutes.selectModeScreen);
+                        },
+                        text: AppStrings.getStarted.tr),
                   ],
                 ),
               ),

@@ -5,7 +5,7 @@ class AppStrings {
   static String getStarted = 'Get Started';
   static String skip = 'Skip';
   static String chooseYourMode = 'Choose your mode';
-  static String pleaseSelectAnOneOption = 'Please select an one option to start your journey with';
+  static String pleaseSelectAnOneOption = 'Please select an one option to start your journey with PERFECT CATCH.';
   static String perfectCatch  = 'PERFECT CATCH';
   static String bestFriend   = 'Best Friend ';
   static String openBestFriendMode   = 'Open best friend mode';
