@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../utils/app_colors.dart';
 
 ThemeData light({Color color = const Color(0xFFFFFFFF)}) => ThemeData(
   fontFamily: 'Quicksand',
   primaryColor: color,
-  scaffoldBackgroundColor: Colors.transparent,
+  scaffoldBackgroundColor: Colors.white,
   secondaryHeaderColor: AppColors.textColor,
   disabledColor: AppColors.subTextColor,
   brightness: Brightness.dark,
@@ -34,6 +33,7 @@ ThemeData light({Color color = const Color(0xFFFFFFFF)}) => ThemeData(
     unselectedLabelStyle: const TextStyle(color: Colors.red),
   ),
   appBarTheme: AppBarTheme(
+    backgroundColor: Colors.white,
       centerTitle: true,
       titleTextStyle: TextStyle(
           fontWeight: FontWeight.w600,
