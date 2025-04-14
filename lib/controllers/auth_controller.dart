@@ -14,8 +14,11 @@ class AuthController extends GetxController {
   //================================> Sign Up <=================================
   final TextEditingController nameCtrl = TextEditingController();
   final TextEditingController emailCtrl = TextEditingController();
+  final TextEditingController phoneNumCtrl = TextEditingController();
+  final TextEditingController dateOfBirthCtrl = TextEditingController();
   final TextEditingController passwordCtrl = TextEditingController();
   final TextEditingController confirmCtrl = TextEditingController();
+  String? selectedGender;
 
   // RxBool isSelectedRole = true.obs;
   var selectDivision = ''.obs;
@@ -59,6 +62,40 @@ class AuthController extends GetxController {
     }
   }
 */
+  //==========================> Show Calender Function <=======================
+  Future<void> pickBirthDate(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            dialogBackgroundColor: Colors.white,
+            colorScheme: ColorScheme.light(
+              primary: AppColors.primaryColor,
+              onSurface: Colors.black, // Text color
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (pickedDate != null) {
+        dateOfBirthCtrl.text = "${_getMonthName(pickedDate.month)} ${pickedDate.day}, ${pickedDate.year}";
+
+    }
+  }
+  // Helper function to convert month number to name
+  String _getMonthName(int month) {
+    const List<String> months = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    return months[month - 1];
+  }
+
   //======================> Select Country and Birth Day <======================
   final TextEditingController countryCTRL = TextEditingController();
   final TextEditingController birthDayCTRL = TextEditingController();

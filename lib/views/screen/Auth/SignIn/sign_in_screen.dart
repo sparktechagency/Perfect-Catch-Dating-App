@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:perfect_catch_dating_app/controllers/auth_controller.dart';
+import 'package:perfect_catch_dating_app/helpers/route.dart';
 import 'package:perfect_catch_dating_app/utils/app_colors.dart';
 import 'package:perfect_catch_dating_app/utils/app_strings.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_button.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_text.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_text_field.dart';
 
-import '../../../utils/app_images.dart';
+import '../../../../utils/app_images.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
@@ -39,7 +40,7 @@ class SignInScreen extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                       SizedBox(
-                        width: 58.w,
+                        width: 70.w,
                         height: 8.h,
                         child: Divider(
                           thickness: 5.5,
@@ -95,7 +96,9 @@ class SignInScreen extends StatelessWidget {
                   CustomText(text: AppStrings.donotHaveAccount.tr),
                   SizedBox(width: 4.w),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.signUpScreen);
+                    },
                     child: CustomText(
                       text: AppStrings.signUp.tr,
                       fontWeight: FontWeight.w600,
