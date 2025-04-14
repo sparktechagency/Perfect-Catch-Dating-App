@@ -17,9 +17,9 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
   List<bool> selectedModes = [false, false, false];
 
   final List<Map<String, String>> modeOptions = [
-    {'icon': 'person', 'title': 'Best Friend', 'subtitle': 'Open Best Friend Mode'},
-    {'icon': 'person', 'title': 'Family', 'subtitle': 'Open Family Mode'},
-    {'icon': 'person', 'title': 'Partner', 'subtitle': 'Open Partner Mode'},
+    {'icon': 'person', 'title': AppStrings.bestFriend.tr, 'subtitle': AppStrings.openBestFriendMode.tr},
+    {'icon': 'person', 'title': AppStrings.poly.tr, 'subtitle': AppStrings.openPolyMode.tr},
+    {'icon': 'person', 'title': AppStrings.arrangeMarriage.tr, 'subtitle' : AppStrings.openArrangeMarriageMode.tr},
   ];
 
   void onModeSelected(int index) {
@@ -134,6 +134,8 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                                   CustomText(
                                     text: modeOptions[index]['subtitle']!,
                                     fontSize: 14.sp,
+                                    maxLine: 3,
+                                    textAlign: TextAlign.start,
                                   ),
                                 ],
                               ),
@@ -157,7 +159,10 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                 ),
               ),
               CustomButton(
-                onTap: () {},
+                onTap: () {
+
+                  
+                },
                 text: AppStrings.continues.tr,
               ),
               SizedBox(height: 32.h)

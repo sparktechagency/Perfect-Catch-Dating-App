@@ -136,7 +136,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Padding(
       padding: EdgeInsets.only(right: 15.w),
       child: SvgPicture.asset(
-        color: Colors.black,
+        color: Colors.grey,
         icon,
       ),
     );
@@ -148,6 +148,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         width: 1.w,
         color: AppColors.borderColor,
       ),
+      borderRadius: BorderRadius.circular(12.r)
     );
   }
 }
