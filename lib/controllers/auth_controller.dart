@@ -1,4 +1,3 @@
-/*
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -23,7 +22,7 @@ class AuthController extends GetxController {
   var signUpLoading = false.obs;
   var token = "";
 
-  handleSignUp() async {
+  /*handleSignUp() async {
     signUpLoading(true);
     var userRole = await PrefsHelper.getString(AppConstants.userRole);
     Map<String, dynamic> body = {
@@ -59,13 +58,13 @@ class AuthController extends GetxController {
       update();
     }
   }
-
+*/
   //======================> Select Country and Birth Day <======================
   final TextEditingController countryCTRL = TextEditingController();
   final TextEditingController birthDayCTRL = TextEditingController();
   var selectCountryLoading = false.obs;
 
-  selectCountry() async {
+  /*selectCountry() async {
     selectCountryLoading(true);
     update();
     Map<String, dynamic> body = {
@@ -84,13 +83,15 @@ class AuthController extends GetxController {
 
     selectCountryLoading(false);
     update();
-  }
+  }*/
 
-  //==================================> Log In <================================
+  //==================================> Sign In <================================
   TextEditingController signInEmailCtrl = TextEditingController();
   TextEditingController signInPassCtrl = TextEditingController();
   var signInLoading = false.obs;
-  handleLogIn() async {
+
+
+  /*handleSignIn() async {
     signInLoading(true);
     var headers = {'Content-Type': 'application/json'};
     Map<String, dynamic> body = {
@@ -132,11 +133,11 @@ class AuthController extends GetxController {
       Fluttertoast.showToast(msg: response.statusText ?? "");
     }
     signInLoading(false);
-  }
+  }*/
 
   //=================> Resend otp <=====================
   var resendOtpLoading = false.obs;
-  resendOtp(String email) async {
+  /*resendOtp(String email) async {
     resendOtpLoading(true);
     var body = {"email": email};
     Map<String, String> header = {'Content-Type': 'application/json'};
@@ -153,12 +154,12 @@ class AuthController extends GetxController {
           gravity: ToastGravity.CENTER);
     }
     resendOtpLoading(false);
-  }
+  }*/
 
   //===================> Otp very <=======================
   TextEditingController otpCtrl = TextEditingController();
   var verifyLoading = false.obs;
-  handleOtpVery(
+  /*handleOtpVery(
       {required String email,
       required String otp,
       required String type}) async {
@@ -194,13 +195,13 @@ class AuthController extends GetxController {
       print("===> s : $s");
     }
     verifyLoading(false);
-  }
+  }*/
 
   //====================> Forgot pass word <=====================
   TextEditingController forgetEmailTextCtrl = TextEditingController();
   var forgotLoading = false.obs;
 
-  handleForget() async {
+  /*handleForget() async {
     forgotLoading(true);
     var body = {
       "email": forgetEmailTextCtrl.text.trim(),
@@ -219,7 +220,7 @@ class AuthController extends GetxController {
       ApiChecker.checkApi(response);
     }
     forgotLoading(false);
-  }
+  }*/
 
   //======================> Handle Change password <============================
   var changeLoading = false.obs;
@@ -227,7 +228,7 @@ class AuthController extends GetxController {
   TextEditingController newPasswordCtrl = TextEditingController();
   TextEditingController confirmPassController = TextEditingController();
 
-  handleChangePassword(String oldPassword, String newPassword) async {
+  /*handleChangePassword(String oldPassword, String newPassword) async {
     changeLoading(true);
     var body = {"oldPassword": oldPassword, "newPassword": newPassword};
     var response = await ApiClient.postData(ApiConstants.changePassEndPoint, body);
@@ -245,11 +246,11 @@ class AuthController extends GetxController {
       ApiChecker.checkApi(response);
     }
     changeLoading(false);
-  }
+  }*/
 
   //=============================> Set New password <===========================
   var resetPasswordLoading = false.obs;
-  resetPassword(String email, String password) async {
+  /*resetPassword(String email, String password) async {
     print("=======> $email, and $password");
     resetPasswordLoading(true);
     var body = {"email": email, "password": password};
@@ -285,10 +286,10 @@ class AuthController extends GetxController {
     }
     resetPasswordLoading(false);
   }
-}
+}*/
 
   //======================> Google login Info <============================
-  handleGoogleSingIn(String email,String userRole) async {
+  /*handleGoogleSingIn(String email,String userRole) async {
     var fcmToken=await PrefsHelper.getString(AppConstants.fcmToken);
 
     Map<String, dynamic> body =
@@ -312,10 +313,10 @@ class AuthController extends GetxController {
       ApiChecker.checkApi(response);
       update();
     }
-  }
+  }*/
 
   //======================> Facebook login Info <============================
-  handleFacebookSignIn(String email,String userRole) async {
+  /*handleFacebookSignIn(String email,String userRole) async {
     var fcmToken = await PrefsHelper.getString(AppConstants.fcmToken);
 
     Map<String, dynamic> body = {
@@ -342,9 +343,8 @@ class AuthController extends GetxController {
     } else {
       ApiChecker.checkApi(response);
       update();
-    }
+    }*/
   }
 
 
 
-*/
