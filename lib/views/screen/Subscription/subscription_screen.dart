@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:perfect_catch_dating_app/utils/app_strings.dart';
+import '../../../helpers/route.dart';
 import '../../../utils/app_colors.dart';
 import '../../base/custom_app_bar.dart';
 import '../../base/custom_button.dart';
@@ -58,7 +59,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
             //======================> Pay Now Button <=========================
             CustomButton(
               onTap: () {
-                //Get.toNamed(AppRoutes.paymentScreen);
+                Get.toNamed(AppRoutes.paymentScreen);
               },
               text: 'Pay Now'.tr,
             ),

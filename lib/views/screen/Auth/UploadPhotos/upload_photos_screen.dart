@@ -131,7 +131,12 @@ class _UploadPhotosScreenState extends State<UploadPhotosScreen> {
               ),
             ),
             //=========================> Next Button <=======================
-            CustomButton(onTap: () {}, text: AppStrings.continues.tr),
+            CustomButton(
+              onTap: () {
+                Get.toNamed(AppRoutes.songListScreen);
+              },
+              text: AppStrings.continues.tr,
+            ),
             SizedBox(height: 28.h),
           ],
         ),

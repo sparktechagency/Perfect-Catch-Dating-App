@@ -5,12 +5,17 @@ import '../views/screen/Auth/ResetPass/reset_password_screen.dart';
 import '../views/screen/Auth/SignIn/sign_in_screen.dart';
 import '../views/screen/Auth/SignUp/sign_up_screen.dart';
 import '../views/screen/Auth/UploadPhotos/upload_photos_screen.dart';
-import '../views/screen/Categories/categories_screen.dart';
+import '../views/screen/Chats/MessageInbox/message_screen.dart';
+import '../views/screen/Chats/chats_screen.dart';
 import '../views/screen/Home/home_screen.dart';
+import '../views/screen/LiveStream/live_stream_screen.dart';
 import '../views/screen/Location/location_picker_screen.dart';
 import '../views/screen/Location/location_screen.dart';
+import '../views/screen/Matches/matches_screen.dart';
+import '../views/screen/Payment/payment_screen.dart';
 import '../views/screen/Profile/profile_screen.dart';
 import '../views/screen/SelectMode/select_mode_screen.dart';
+import '../views/screen/SongList/song_list_screen.dart';
 import '../views/screen/Splash/onboarding_screen.dart';
 import '../views/screen/Splash/splash_screen.dart';
 import '../views/screen/Subscription/subscription_screen.dart';
@@ -28,9 +33,14 @@ class AppRoutes{
   static String uploadPhotosScreen="/upload_photos_screen";
   static String yourInterestsScreen="/your_interests_screen";
   static String subscriptionScreen="/subscription_screen";
+  static String paymentScreen="/payment_screen";
+  static String songListScreen="/song_list_screen";
   static String homeScreen="/home_screen";
   static String profileScreen="/profile_screen";
-  static String categoriesScreen="/categories_screen";
+  static String matchesScreen="/matches_screen";
+  static String liveStreamScreen="/live_stream_screen";
+  static String chatsScreen="/chats_screen";
+  static String messageScreen="/message_screen";
   //static String locationScreen="/location_screen";
  // static String locationPickerScreen="/location_picker_screen";
 
@@ -46,9 +56,14 @@ class AppRoutes{
     GetPage(name:uploadPhotosScreen, page: ()=> UploadPhotosScreen()),
     GetPage(name:yourInterestsScreen, page: ()=> YourInterestsScreen()),
     GetPage(name:subscriptionScreen, page: ()=> SubscriptionScreen()),
+    GetPage(name:paymentScreen, page: ()=> PaymentScreen()),
+    GetPage(name:songListScreen, page: ()=> SongListScreen()),
     GetPage(name:homeScreen, page: ()=>const HomeScreen(),transition:Transition.noTransition),
-    GetPage(name:categoriesScreen, page: ()=>const CategoriesScreen(),transition:Transition.noTransition),
+    GetPage(name:matchesScreen, page: ()=>const MatchesScreen(),transition:Transition.noTransition),
+    GetPage(name:liveStreamScreen, page: ()=>const LiveStreamScreen(),transition:Transition.noTransition),
+    GetPage(name:chatsScreen, page: ()=> ChatsScreen(),transition:Transition.noTransition),
     GetPage(name:profileScreen, page: ()=>const ProfileScreen(),transition: Transition.noTransition),
+    GetPage(name:messageScreen, page: ()=>const MessageScreen()),
    // GetPage(name:locationScreen, page: ()=>const LocationScreen(),transition: Transition.noTransition),
     //GetPage(name:locationPickerScreen, page: ()=>const LocationPickerScreen(),transition: Transition.noTransition),
   ];

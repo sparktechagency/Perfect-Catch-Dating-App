@@ -51,6 +51,8 @@ dependencies:
   shimmer: ^3.0.0
   path_provider: ^2.1.5
   logger: ^2.5.0
+  flutter_chat_bubble: ^2.0.2
+
 
 
 
