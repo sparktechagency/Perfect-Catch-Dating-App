@@ -18,5 +18,6 @@ class AppIcons{
   static String fbIcon="$baseUrl/fbIcon.svg";
   static String googleIcon="$baseUrl/googleIcon.svg";
   static String appleIcon="$baseUrl/appleIcon.svg";
+  static String clock="$baseUrl/clock.svg";
 
 }

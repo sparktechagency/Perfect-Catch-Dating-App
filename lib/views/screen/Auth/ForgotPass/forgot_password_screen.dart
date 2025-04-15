@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:perfect_catch_dating_app/helpers/route.dart';
 import '../../../../controllers/auth_controller.dart';
 import '../../../../utils/app_colors.dart';
 import '../../../../utils/app_images.dart';
@@ -66,7 +67,9 @@ class ForgotPasswordScreen extends StatelessWidget {
               ),
               SizedBox(height: 32.h),
               //========================> Send OTP Button <==================
-              CustomButton(onTap: () {}, text: AppStrings.sendOTP.tr),
+              CustomButton(onTap: () {
+                Get.toNamed(AppRoutes.otpScreen);
+              }, text: AppStrings.sendOTP.tr),
               SizedBox(height: 32.h),
             ],
           ),
