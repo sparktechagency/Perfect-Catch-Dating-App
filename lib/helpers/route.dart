@@ -13,6 +13,7 @@ import '../views/screen/Profile/profile_screen.dart';
 import '../views/screen/SelectMode/select_mode_screen.dart';
 import '../views/screen/Splash/onboarding_screen.dart';
 import '../views/screen/Splash/splash_screen.dart';
+import '../views/screen/YourInterests/your_interests_screen.dart';
 
 class AppRoutes{
   static String splashScreen="/splash_screen";
@@ -24,6 +25,7 @@ class AppRoutes{
   static String otpScreen="/otp_screen";
   static String resetPasswordScreen="/reset_password_screen";
   static String uploadPhotosScreen="/upload_photos_screen";
+  static String yourInterestsScreen="/your_interests_screen";
   static String homeScreen="/home_screen";
   static String profileScreen="/profile_screen";
   static String categoriesScreen="/categories_screen";
@@ -40,6 +42,7 @@ class AppRoutes{
     GetPage(name:otpScreen, page: ()=> OtpScreen()),
     GetPage(name:resetPasswordScreen, page: ()=> ResetPasswordScreen()),
     GetPage(name:uploadPhotosScreen, page: ()=> UploadPhotosScreen()),
+    GetPage(name:yourInterestsScreen, page: ()=> YourInterestsScreen()),
     GetPage(name:homeScreen, page: ()=>const HomeScreen(),transition:Transition.noTransition),
     GetPage(name:categoriesScreen, page: ()=>const CategoriesScreen(),transition:Transition.noTransition),
     GetPage(name:profileScreen, page: ()=>const ProfileScreen(),transition: Transition.noTransition),
