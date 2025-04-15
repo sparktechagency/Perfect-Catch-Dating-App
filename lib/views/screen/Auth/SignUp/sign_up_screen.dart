@@ -14,7 +14,7 @@ import '../../../base/custom_text.dart';
 import '../../../base/custom_text_field.dart';
 
 class SignUpScreen extends StatefulWidget {
-   SignUpScreen({super.key});
+  SignUpScreen({super.key});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -69,7 +69,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               //========================> Sign up Sub Title <==================
               SizedBox(height: 14.h),
-              Center(child: CustomText(text: AppStrings.welcomeBack.tr, maxLine: 3)),
+              Center(
+                child: CustomText(text: AppStrings.welcomeBack.tr, maxLine: 3),
+              ),
               //========================> Name Text Field <==================
               SizedBox(height: 32.h),
               CustomTextField(
@@ -92,7 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               //========================> Date Of Birth Day Text Field <==================
               SizedBox(height: 16.h),
               CustomTextField(
-                onTab: (){
+                onTab: () {
                   _authController.pickBirthDate(context);
                 },
                 readOnly: true,
@@ -146,7 +148,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 32.h)
+              SizedBox(height: 32.h),
+              Center(child: CustomText(text: AppStrings.or.tr, fontWeight: FontWeight.w600)),
+              //========================> Sign Up With Facebook Google Apple <==================
+              SizedBox(height: 24.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {},
+                    child: SvgPicture.asset(AppIcons.fbIcon),
+                  ),
+                  SizedBox(width: 20.w),
+                  InkWell(
+                    onTap: () {},
+                    child: SvgPicture.asset(AppIcons.googleIcon),
+                  ),
+                  SizedBox(width: 20.w),
+                  InkWell(
+                    onTap: () {},
+                    child: SvgPicture.asset(AppIcons.appleIcon),
+                  ),
+                ],
+              ),
+              SizedBox(height: 32.h),
             ],
           ),
         ),
@@ -154,95 +179,89 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-   //=========================> Gender Radio Button <================
-   _genderRadioButton() {
-     return Row(
-       children: [
-         InkWell(
-           onTap: () => setState(() {
-             _authController.selectedGender = 'male';
-           }),
-           child: Row(
-             children: [
-               Radio<String>(
-                 value: 'male',
-                 groupValue: _authController.selectedGender,
-                 onChanged: (value) {
-                   setState(() {
-                     _authController.selectedGender = value;
-                   });
-                 },
-                 fillColor: MaterialStateProperty.resolveWith<Color>((states) {
-                   if (states.contains(MaterialState.selected)) {
-                     return AppColors.primaryColor;
-                   }
-                   return AppColors.primaryColor;
-                 }),
-               ),
-               CustomText(
-                 text: AppStrings.male.tr,
-                 fontSize: 14.sp,
-               ),
-             ],
-           ),
-         ),
-         InkWell(
-           onTap: () => setState(() {
-             _authController.selectedGender = 'female';
-           }),
-           child: Row(
-             children: [
-               Radio<String>(
-                 value: 'female',
-                 groupValue: _authController.selectedGender,
-                 onChanged: (value) {
-                   setState(() {
-                     _authController.selectedGender = value;
-                   });
-                 },
-                 fillColor: MaterialStateProperty.resolveWith<Color>((states) {
-                   if (states.contains(MaterialState.selected)) {
-                     return AppColors.primaryColor;
-                   }
-                   return AppColors.primaryColor;
-                 }),
-               ),
-               CustomText(
-                 text: AppStrings.female.tr,
-                 fontSize: 14.sp,
-               ),
-             ],
-           ),
-         ),
-         InkWell(
-           onTap: () => setState(() {
-             _authController.selectedGender = 'non-binary';
-           }),
-           child: Row(
-             children: [
-               Radio<String>(
-                 value: 'non-binary',
-                 groupValue: _authController.selectedGender,
-                 onChanged: (value) {
-                   setState(() {
-                     _authController.selectedGender = value;
-                   });
-                 },
-                 fillColor: MaterialStateProperty.resolveWith<Color>((states) {
-                   if (states.contains(MaterialState.selected)) {
-                     return AppColors.primaryColor;
-                   }
-                   return AppColors.primaryColor;
-                 }),
-               ),
-               CustomText(
-                 text: AppStrings.nonBinary.tr,
-                 fontSize: 14.sp,
-               ),
-             ],
-           ),
-         ),
-       ],
-     );
-   }
+  //=========================> Gender Radio Button <================
+  _genderRadioButton() {
+    return Row(
+      children: [
+        InkWell(
+          onTap:
+              () => setState(() {
+                _authController.selectedGender = 'male';
+              }),
+          child: Row(
+            children: [
+              Radio<String>(
+                value: 'male',
+                groupValue: _authController.selectedGender,
+                onChanged: (value) {
+                  setState(() {
+                    _authController.selectedGender = value;
+                  });
+                },
+                fillColor: MaterialStateProperty.resolveWith<Color>((states) {
+                  if (states.contains(MaterialState.selected)) {
+                    return AppColors.primaryColor;
+                  }
+                  return AppColors.primaryColor;
+                }),
+              ),
+              CustomText(text: AppStrings.male.tr, fontSize: 14.sp),
+            ],
+          ),
+        ),
+        InkWell(
+          onTap:
+              () => setState(() {
+                _authController.selectedGender = 'female';
+              }),
+          child: Row(
+            children: [
+              Radio<String>(
+                value: 'female',
+                groupValue: _authController.selectedGender,
+                onChanged: (value) {
+                  setState(() {
+                    _authController.selectedGender = value;
+                  });
+                },
+                fillColor: MaterialStateProperty.resolveWith<Color>((states) {
+                  if (states.contains(MaterialState.selected)) {
+                    return AppColors.primaryColor;
+                  }
+                  return AppColors.primaryColor;
+                }),
+              ),
+              CustomText(text: AppStrings.female.tr, fontSize: 14.sp),
+            ],
+          ),
+        ),
+        InkWell(
+          onTap:
+              () => setState(() {
+                _authController.selectedGender = 'non-binary';
+              }),
+          child: Row(
+            children: [
+              Radio<String>(
+                value: 'non-binary',
+                groupValue: _authController.selectedGender,
+                onChanged: (value) {
+                  setState(() {
+                    _authController.selectedGender = value;
+                  });
+                },
+                fillColor: MaterialStateProperty.resolveWith<Color>((states) {
+                  if (states.contains(MaterialState.selected)) {
+                    return AppColors.primaryColor;
+                  }
+                  return AppColors.primaryColor;
+                }),
+              ),
+              CustomText(text: AppStrings.nonBinary.tr, fontSize: 14.sp),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 }

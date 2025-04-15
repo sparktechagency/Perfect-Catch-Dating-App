@@ -75,10 +75,12 @@ class SignInScreen extends StatelessWidget {
               ),
               //========================> Forgot Passwords Button <==================
               SizedBox(height: 16.h),
-              InkWell(
-                onTap: () {},
-                child: Align(
-                  alignment: Alignment.centerRight,
+              Align(
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.forgotPasswordScreen);
+                  },
                   child: CustomText(
                     text: AppStrings.forgotPasswords.tr,
                     fontWeight: FontWeight.w500,
