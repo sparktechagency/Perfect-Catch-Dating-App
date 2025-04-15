@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:perfect_catch_dating_app/helpers/route.dart';
 import 'package:perfect_catch_dating_app/utils/app_icons.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_pin_code_text_field.dart';
 import '../../../../controllers/auth_controller.dart';
@@ -134,7 +135,9 @@ class _OtpScreenState extends State<OtpScreen> {
               ),
               SizedBox(height: 16.h),
               //========================> Verify Email Button <==================
-              CustomButton(onTap: () {}, text: AppStrings.verifyEmail.tr),
+              CustomButton(onTap: () {
+                Get.toNamed(AppRoutes.resetPasswordScreen);
+              }, text: AppStrings.verifyEmail.tr),
               SizedBox(height: 32.h),
               //========================> Didn’t receive code Resend it Button <==================
               Row(
