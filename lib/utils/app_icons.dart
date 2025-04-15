@@ -21,5 +21,8 @@ class AppIcons{
   static String clock="$baseUrl/clock.svg";
   static String cancel="$baseUrl/cancel.svg";
   static String add="$baseUrl/add.svg";
+  static String chats="$baseUrl/chats.svg";
+  static String matches="$baseUrl/matches.svg";
+  static String live="$baseUrl/live.svg";
 
 }
