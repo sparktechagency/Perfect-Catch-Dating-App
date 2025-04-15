@@ -12,7 +12,7 @@ class AppIcons{
   static String eyeIcon="$baseUrl/eye.svg";
   static String eyeOffIcon="$baseUrl/eye-off.svg";
   static String cardIcon="$baseUrl/credit-card.svg";
-  static String personalIcon="$baseUrl/parsong_icon-card.svg";
+  static String personalIcon="$baseUrl/person_icon.svg";
   static String calenderIcon="$baseUrl/calender.svg";
   static String profileGurd="$baseUrl/profileGurd.svg";
   static String fbIcon="$baseUrl/fbIcon.svg";

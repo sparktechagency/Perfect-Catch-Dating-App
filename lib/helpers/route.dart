@@ -9,6 +9,7 @@ import '../views/screen/Categories/categories_screen.dart';
 import '../views/screen/Home/home_screen.dart';
 import '../views/screen/Location/location_picker_screen.dart';
 import '../views/screen/Location/location_screen.dart';
+import '../views/screen/Payment/payment_screen.dart';
 import '../views/screen/Profile/profile_screen.dart';
 import '../views/screen/SelectMode/select_mode_screen.dart';
 import '../views/screen/Splash/onboarding_screen.dart';
@@ -28,6 +29,7 @@ class AppRoutes{
   static String uploadPhotosScreen="/upload_photos_screen";
   static String yourInterestsScreen="/your_interests_screen";
   static String subscriptionScreen="/subscription_screen";
+  static String paymentScreen="/payment_screen";
   static String homeScreen="/home_screen";
   static String profileScreen="/profile_screen";
   static String categoriesScreen="/categories_screen";
@@ -46,6 +48,7 @@ class AppRoutes{
     GetPage(name:uploadPhotosScreen, page: ()=> UploadPhotosScreen()),
     GetPage(name:yourInterestsScreen, page: ()=> YourInterestsScreen()),
     GetPage(name:subscriptionScreen, page: ()=> SubscriptionScreen()),
+    GetPage(name:paymentScreen, page: ()=> PaymentScreen()),
     GetPage(name:homeScreen, page: ()=>const HomeScreen(),transition:Transition.noTransition),
     GetPage(name:categoriesScreen, page: ()=>const CategoriesScreen(),transition:Transition.noTransition),
     GetPage(name:profileScreen, page: ()=>const ProfileScreen(),transition: Transition.noTransition),
