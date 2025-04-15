@@ -1,10 +1,10 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:perfect_catch_dating_app/helpers/route.dart';
 import 'package:perfect_catch_dating_app/utils/app_icons.dart';
-
 import '../../../../controllers/auth_controller.dart';
 import '../../../../utils/app_colors.dart';
 import '../../../../utils/app_images.dart';
@@ -14,7 +14,7 @@ import '../../../base/custom_text.dart';
 import '../../../base/custom_text_field.dart';
 
 class SignUpScreen extends StatefulWidget {
-  SignUpScreen({super.key});
+  const SignUpScreen({super.key});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -23,6 +23,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final AuthController _authController = Get.put(AuthController());
   String? selectedGender;
+  bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +106,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: SvgPicture.asset(AppIcons.calenderIcon),
                 ),
               ),
+              SizedBox(height: 16.h),
+              //=============================> Gender Selection <==============================
+              CustomText(
+                text: AppStrings.gender.tr,
+                fontWeight: FontWeight.bold,
+                fontSize: 16.sp,
+              ),
+              _genderRadioButton(),
               //========================> Password Text Field <==================
               SizedBox(height: 16.h),
               CustomTextField(
@@ -120,13 +129,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 hintText: AppStrings.confirmPassword.tr,
               ),
               SizedBox(height: 16.h),
-              //=============================> Gender Selection <==============================
-              CustomText(
-                text: AppStrings.gender.tr,
-                fontWeight: FontWeight.bold,
-                fontSize: 16.sp,
-              ),
-              _genderRadioButton(),
+              _checkboxSection(),
               SizedBox(height: 16.h),
               //========================> Sign Up Button <==================
               CustomButton(onTap: () {}, text: AppStrings.signUp.tr),
@@ -149,7 +152,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
               SizedBox(height: 32.h),
-              Center(child: CustomText(text: AppStrings.or.tr, fontWeight: FontWeight.w600)),
+              Center(
+                child: CustomText(
+                  text: AppStrings.or.tr,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
               //========================> Sign Up With Facebook Google Apple <==================
               SizedBox(height: 24.h),
               Row(
@@ -258,6 +266,57 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 }),
               ),
               CustomText(text: AppStrings.nonBinary.tr, fontSize: 14.sp),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  //==========================> Checkbox Section Widget <=======================
+  _checkboxSection() {
+    return Row(
+      children: [
+        Checkbox(
+          checkColor: Colors.white,
+          activeColor: AppColors.primaryColor,
+          focusColor: AppColors.greyColor,
+          value: isChecked,
+          onChanged: (bool? value) {
+            setState(() {
+              isChecked = value ?? false;
+            });
+          },
+          side: BorderSide(
+            color: isChecked ? AppColors.primaryColor : AppColors.primaryColor,
+            width: 1.w,
+          ),
+        ),
+        Text.rich(
+          maxLines: 2,
+          TextSpan(
+            text: AppStrings.byCreatingAnAccount.tr,
+            style: TextStyle(fontSize: 14.w, fontWeight: FontWeight.w500),
+            children: [
+              TextSpan(
+                text: AppStrings.termsConditions.tr,
+                style: TextStyle(fontSize: 14.w, fontWeight: FontWeight.bold),
+                recognizer:
+                    TapGestureRecognizer()
+                      ..onTap = () {
+                        //Get.toNamed(AppRoutes.termsConditionScreen);
+                      },
+              ),
+              const TextSpan(text: ' & '),
+              TextSpan(
+                text: AppStrings.privacyPolicy.tr,
+                style: TextStyle(fontSize: 14.w, fontWeight: FontWeight.bold),
+                recognizer:
+                    TapGestureRecognizer()
+                      ..onTap = () {
+                        //Get.toNamed(AppRoutes.privacyPolicyScreen);
+                      },
+              ),
             ],
           ),
         ),
