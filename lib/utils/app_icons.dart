@@ -24,5 +24,10 @@ class AppIcons{
   static String chats="$baseUrl/chats.svg";
   static String matches="$baseUrl/matches.svg";
   static String live="$baseUrl/live.svg";
+  static String audio="$baseUrl/audio.svg";
+  static String video="$baseUrl/video.svg";
+  static String sendIcon="$baseUrl/sendIcon.svg";
+  static String gift="$baseUrl/gift.svg";
+  static String dot="$baseUrl/dot.svg";
 
 }
