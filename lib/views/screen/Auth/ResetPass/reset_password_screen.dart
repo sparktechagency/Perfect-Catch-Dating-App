@@ -77,7 +77,9 @@ class ResetPasswordScreen extends StatelessWidget {
               ),
               SizedBox(height: 32.h),
               //========================> Reset Password Button <==================
-              CustomButton(onTap: () {}, text: AppStrings.resetPassword.tr),
+              CustomButton(onTap: () {
+                Get.toNamed(AppRoutes.yourInterestsScreen);
+              }, text: AppStrings.resetPassword.tr),
             ],
           ),
         ),
