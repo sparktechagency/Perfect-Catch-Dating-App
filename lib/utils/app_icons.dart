@@ -15,5 +15,8 @@ class AppIcons{
   static String personalIcon="$baseUrl/parsong_icon-card.svg";
   static String calenderIcon="$baseUrl/calender.svg";
   static String profileGurd="$baseUrl/profileGurd.svg";
+  static String fbIcon="$baseUrl/fbIcon.svg";
+  static String googleIcon="$baseUrl/googleIcon.svg";
+  static String appleIcon="$baseUrl/appleIcon.svg";
 
 }
