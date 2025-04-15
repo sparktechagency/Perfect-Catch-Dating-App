@@ -41,7 +41,7 @@ class AppStrings {
   static String female   = 'Female';
   static String nonBinary   = 'Non-Binary';
   static String confirmPassword   = 'Confirm password';
-  static String byCreatingAnAccount   = 'By creating an account, I accept the';
+  static String byCreatingAnAccount   = 'By creating an account, I accept the\n';
   static String termsConditions   = 'Terms & Conditions';
   static String privacyPolicy   = 'Privacy Policy';
   static String alreadyHaveAccount   = 'Already have an account!';
