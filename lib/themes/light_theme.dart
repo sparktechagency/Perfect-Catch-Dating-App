@@ -37,14 +37,14 @@ ThemeData light({Color color = const Color(0xFFFFFFFF)}) => ThemeData(
       centerTitle: true,
       titleTextStyle: TextStyle(
           fontWeight: FontWeight.w600,
-          fontSize: 18.sp,
+          fontSize: 16.sp,
           fontFamily: 'Quicksand',
           color: AppColors.textColor),
       iconTheme: IconThemeData(color: AppColors.blackColor)),
   iconTheme: IconThemeData(color: AppColors.blackColor),
   checkboxTheme: CheckboxThemeData(
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(4),
+      borderRadius: BorderRadius.circular(4.r),
       side: BorderSide(color: Colors.black), // Inactive border color
     ),
   ),

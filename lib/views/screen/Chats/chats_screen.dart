@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:perfect_catch_dating_app/helpers/route.dart';
 import 'package:perfect_catch_dating_app/utils/app_images.dart';
 import 'package:perfect_catch_dating_app/utils/app_strings.dart';
+import 'package:perfect_catch_dating_app/views/base/custom_network_image.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_text.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_text_field.dart';
+import '../../../utils/app_colors.dart';
 import '../../base/bottom_menu..dart';
 
 class ChatsScreen extends StatelessWidget {
@@ -18,7 +20,7 @@ class ChatsScreen extends StatelessWidget {
       bottomNavigationBar: BottomMenu(3),
       appBar: AppBar(title: Text('Chats'.tr)),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -40,9 +42,10 @@ class ChatsScreen extends StatelessWidget {
             ),
             SizedBox(height: 10.h),
             Expanded(
-              flex: 1,
+              //flex: 1,
               child: ListView.builder(
                 shrinkWrap: true,
+                addAutomaticKeepAlives: true,
                 scrollDirection: Axis.horizontal,
                 itemCount: 10,
                 itemBuilder: (context, index) {
@@ -50,9 +53,12 @@ class ChatsScreen extends StatelessWidget {
                     padding: EdgeInsets.only(right: 10.w),
                     child: Column(
                       children: [
-                        CircleAvatar(
-                          radius: 38.r,
-                          backgroundImage: AssetImage(AppImages.music),
+                        CustomNetworkImage(
+                          imageUrl:
+                          'https://s3-alpha-sig.figma.com/img/f879/98fb/a1fa07b937baba14b0ff230ce8d5b0c7?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HffVv6KFHBElcw0KW5pb2hf7VgiLdJwUXVTMRYvx4XMBNqjqQuxw1IQINDjx3EVlU1dgT7ZFI5e-KoqGw9lRUknVg7fPLNvyHVZu9j3qERLa2QU~hJbgmx0I2FEIgwAcT2ccIDbJSRPo525VtJKjKy4E1dnNHiDISyAvTa~-JREipv6H-3CSfuawgOH6iGGmaPAKPG~nOlCDuvHj7GmyLpLzplATbalbvROP~0OzbRAe833wIAiFYcoXe3bXu6Zm3bEjiemh0onMDv5LRQx0otmy12shbcF18GHxK0sBLTe78LCiJ8yG9twupejMptq2CJiHelLiZmPVkHcGhgpsvw__',
+                          height: 56.h,
+                          width: 56.w,
+                          boxShape: BoxShape.circle,
                         ),
                         CustomText(text: 'Ariyana'),
                       ],
@@ -68,82 +74,83 @@ class ChatsScreen extends StatelessWidget {
               fontSize: 16.sp,
               fontWeight: FontWeight.bold,
             ),
-            SizedBox(height: 16.h),
             //=============================> Chats List <====================================
             Expanded(
-              flex: 3,
+              flex: 5,
               child: ListView.builder(
                 shrinkWrap: true,
+                addAutomaticKeepAlives: false,
                 itemCount: 5,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: EdgeInsets.only(bottom: 12.h),
+                    padding: EdgeInsets.only(bottom: 8.h),
                     child: GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         Get.toNamed(AppRoutes.messageScreen);
                       },
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Profile Image
-                          CircleAvatar(
-                            radius: 42.r,
-                            backgroundImage: AssetImage(AppImages.music),
-                          ),
-                          SizedBox(width: 12.w),
-                          //==========================> Chat Details <=========================
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Padding(
+                        padding:
+                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
+                        child: Row(
+                          children: [
+                            CustomNetworkImage(
+                              imageUrl:
+                              'https://s3-alpha-sig.figma.com/img/f879/98fb/a1fa07b937baba14b0ff230ce8d5b0c7?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HffVv6KFHBElcw0KW5pb2hf7VgiLdJwUXVTMRYvx4XMBNqjqQuxw1IQINDjx3EVlU1dgT7ZFI5e-KoqGw9lRUknVg7fPLNvyHVZu9j3qERLa2QU~hJbgmx0I2FEIgwAcT2ccIDbJSRPo525VtJKjKy4E1dnNHiDISyAvTa~-JREipv6H-3CSfuawgOH6iGGmaPAKPG~nOlCDuvHj7GmyLpLzplATbalbvROP~0OzbRAe833wIAiFYcoXe3bXu6Zm3bEjiemh0onMDv5LRQx0otmy12shbcF18GHxK0sBLTe78LCiJ8yG9twupejMptq2CJiHelLiZmPVkHcGhgpsvw__',
+                              height: 56.h,
+                              width: 56.w,
+                              boxShape: BoxShape.circle,
+                            ),
+                            SizedBox(width: 12.w),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  //=====================> Name <=======================
+                                  CustomText(
+                                    text: 'Rida Anam',
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w700,
+                                    bottom: 6.h,
+                                    maxLine: 2,
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  //=====================> Last Message <=======================
+                                  CustomText(
+                                    text: 'Hello, are you here?',
+                                    fontWeight: FontWeight.w500,
+                                    textAlign: TextAlign.start,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Spacer(),
+                            //==========================> Time and Unread Count Column <========================
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Flexible(
-                                      child: CustomText(
-                                        text: 'Ariana',
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.bold,
-                                        maxLine: 2,
-                                        textAlign: TextAlign.start,
-                                      ),
-                                    ),
-                                    //==========================> Time and Unread Count Column <========================
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        CustomText(
-                                          text: '7:09 PM',
-                                          fontSize: 12.sp,
-                                          color: Colors.grey,
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.all(6.w),
-                                          decoration: BoxDecoration(
-                                            color: Colors.blue,
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: CustomText(
-                                            text: '99+',
-                                            fontSize: 12.sp,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
                                 CustomText(
-                                  text: 'Hey Bro, Do You Want To Play...',
-                                  fontSize: 14.sp,
+                                  text: '7:09 PM',
+                                  fontSize: 12.sp,
                                   color: Colors.grey,
+                                ),
+                                SizedBox(height: 8.h),
+                                Container(
+                                  padding: EdgeInsets.all(6.w),
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: CustomText(
+                                    text: '99+',
+                                    fontSize: 12.sp,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );

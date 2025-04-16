@@ -59,7 +59,7 @@ class AppRoutes{
     GetPage(name:paymentScreen, page: ()=> PaymentScreen()),
     GetPage(name:songListScreen, page: ()=> SongListScreen()),
     GetPage(name:homeScreen, page: ()=>const HomeScreen(),transition:Transition.noTransition),
-    GetPage(name:matchesScreen, page: ()=>const MatchesScreen(),transition:Transition.noTransition),
+    GetPage(name:matchesScreen, page: ()=> MatchesScreen(),transition:Transition.noTransition),
     GetPage(name:liveStreamScreen, page: ()=>const LiveStreamScreen(),transition:Transition.noTransition),
     GetPage(name:chatsScreen, page: ()=> ChatsScreen(),transition:Transition.noTransition),
     GetPage(name:profileScreen, page: ()=>const ProfileScreen(),transition: Transition.noTransition),

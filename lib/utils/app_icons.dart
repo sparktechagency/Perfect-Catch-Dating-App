@@ -29,5 +29,7 @@ class AppIcons{
   static String sendIcon="$baseUrl/sendIcon.svg";
   static String gift="$baseUrl/gift.svg";
   static String dot="$baseUrl/dot.svg";
+  static String kiss="$baseUrl/kiss.svg";
+  static String msg="$baseUrl/msg.svg";
 
 }
