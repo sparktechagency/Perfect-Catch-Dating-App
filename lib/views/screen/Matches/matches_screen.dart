@@ -36,6 +36,7 @@ class MatchesScreen extends StatelessWidget {
             //=======================> Grid of User Cards <====================
             Expanded(
               child: GridView.builder(
+                shrinkWrap: true,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 16.0,
@@ -44,11 +45,10 @@ class MatchesScreen extends StatelessWidget {
                 ),
                 itemCount: 10,
                 itemBuilder: (context, index) {
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.r),
-                    ),
-                    clipBehavior: Clip.antiAlias,
+                  return GestureDetector(
+                    onTap: (){
+                      Get.toNamed(AppRoutes.userDetailsScreen);
+                    },
                     child: Stack(
                       fit: StackFit.expand,
                       children: [
