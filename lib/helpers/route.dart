@@ -19,6 +19,7 @@ import '../views/screen/SongList/song_list_screen.dart';
 import '../views/screen/Splash/onboarding_screen.dart';
 import '../views/screen/Splash/splash_screen.dart';
 import '../views/screen/Subscription/subscription_screen.dart';
+import '../views/screen/UserDetails/user_details_screen.dart';
 import '../views/screen/YourInterests/your_interests_screen.dart';
 
 class AppRoutes{
@@ -41,6 +42,7 @@ class AppRoutes{
   static String liveStreamScreen="/live_stream_screen";
   static String chatsScreen="/chats_screen";
   static String messageScreen="/message_screen";
+  static String userDetailsScreen="/user_details_screen";
   //static String locationScreen="/location_screen";
  // static String locationPickerScreen="/location_picker_screen";
 
@@ -59,11 +61,12 @@ class AppRoutes{
     GetPage(name:paymentScreen, page: ()=> PaymentScreen()),
     GetPage(name:songListScreen, page: ()=> SongListScreen()),
     GetPage(name:homeScreen, page: ()=>const HomeScreen(),transition:Transition.noTransition),
-    GetPage(name:matchesScreen, page: ()=>const MatchesScreen(),transition:Transition.noTransition),
+    GetPage(name:matchesScreen, page: ()=> MatchesScreen(),transition:Transition.noTransition),
     GetPage(name:liveStreamScreen, page: ()=>const LiveStreamScreen(),transition:Transition.noTransition),
     GetPage(name:chatsScreen, page: ()=> ChatsScreen(),transition:Transition.noTransition),
     GetPage(name:profileScreen, page: ()=>const ProfileScreen(),transition: Transition.noTransition),
     GetPage(name:messageScreen, page: ()=>const MessageScreen()),
+    GetPage(name:userDetailsScreen, page: ()=>const UserDetailsScreen()),
    // GetPage(name:locationScreen, page: ()=>const LocationScreen(),transition: Transition.noTransition),
     //GetPage(name:locationPickerScreen, page: ()=>const LocationPickerScreen(),transition: Transition.noTransition),
   ];

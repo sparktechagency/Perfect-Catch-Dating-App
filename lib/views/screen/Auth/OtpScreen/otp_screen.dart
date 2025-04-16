@@ -74,7 +74,7 @@ class _OtpScreenState extends State<OtpScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Column(
             children: [
               SizedBox(height: 164.h),

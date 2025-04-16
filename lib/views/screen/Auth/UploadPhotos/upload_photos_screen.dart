@@ -48,7 +48,7 @@ class _UploadPhotosScreenState extends State<UploadPhotosScreen> {
     return Scaffold(
       appBar: CustomAppBar(title: ''),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.w),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
