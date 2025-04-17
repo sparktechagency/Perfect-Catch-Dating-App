@@ -22,6 +22,7 @@ class AppStrings {
   static String seriousCommitment   = 'Serious Commitment';
   static String openRelationship   = 'Open Relationship';
   static String save   = 'Save';
+  static String myBio   = 'My Bio';
 //=============================>  User Authentication <==============================
   static String signInToYourAccount   = 'Sign In To Your Account';
   static String welcomeSignIn   = 'Welcome! Sign in to your account to continue.';
@@ -87,7 +88,7 @@ class AppStrings {
   static String location   = 'Location';
   static String language   = 'Language';
   static String height   = 'Height';
-  static String myStatus   = 'My Status';
+  static String maritalStatus   = 'Marital Status';
   static String religion   = 'Religion';
   static String qualification   = 'Qualification';
   static String politics   = 'Politics';
