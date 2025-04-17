@@ -31,5 +31,8 @@ class AppIcons{
   static String dot="$baseUrl/dot.svg";
   static String kiss="$baseUrl/kiss.svg";
   static String msg="$baseUrl/msg.svg";
+  static String message="$baseUrl/message.svg";
+  static String music="$baseUrl/music.svg";
+  static String location="$baseUrl/location.svg";
 
 }
