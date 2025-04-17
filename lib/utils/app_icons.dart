@@ -38,5 +38,11 @@ class AppIcons{
   static String filter="$baseUrl/filter.svg";
   static String brokenHeart="$baseUrl/brokenHeart.svg";
   static String care="$baseUrl/care.svg";
+  static String change="$baseUrl/change.svg";
+  static String support="$baseUrl/support.svg";
+  static String about="$baseUrl/about.svg";
+  static String trems="$baseUrl/trems.svg";
+  static String privacy="$baseUrl/privacy.svg";
+  static String rightArrow="$baseUrl/rightArrow.svg";
 
 }

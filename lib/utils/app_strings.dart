@@ -24,6 +24,8 @@ class AppStrings {
   static String save   = 'Save';
   static String myBio   = 'My Bio';
   static String filters   = 'Filters';
+  static String newPassword   = 'New Password';
+  static String updatePassword   = 'Update Password';
 //=============================>  User Authentication <==============================
   static String signInToYourAccount   = 'Sign In To Your Account';
   static String welcomeSignIn   = 'Welcome! Sign in to your account to continue.';
