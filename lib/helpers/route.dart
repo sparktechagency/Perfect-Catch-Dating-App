@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import '../views/screen/AboutUs/about_us_screen.dart';
+import '../views/screen/Auth/ChangePass/change_password_screen.dart';
 import '../views/screen/Auth/ForgotPass/forgot_password_screen.dart';
 import '../views/screen/Auth/OtpScreen/otp_screen.dart';
 import '../views/screen/Auth/ResetPass/reset_password_screen.dart';
@@ -7,6 +9,7 @@ import '../views/screen/Auth/SignUp/sign_up_screen.dart';
 import '../views/screen/Auth/UploadPhotos/upload_photos_screen.dart';
 import '../views/screen/Chats/MessageInbox/message_screen.dart';
 import '../views/screen/Chats/chats_screen.dart';
+import '../views/screen/Filter/filter_screen.dart';
 import '../views/screen/Home/home_screen.dart';
 import '../views/screen/LiveStream/live_stream_screen.dart';
 import '../views/screen/Location/location_picker_screen.dart';
@@ -14,12 +17,15 @@ import '../views/screen/Location/location_screen.dart';
 import '../views/screen/Matches/matches_screen.dart';
 import '../views/screen/Notifications/notifications_screen.dart';
 import '../views/screen/Payment/payment_screen.dart';
+import '../views/screen/PrivacyPolicy/privacy_policy_screen.dart';
 import '../views/screen/Profile/profile_screen.dart';
 import '../views/screen/SelectMode/select_mode_screen.dart';
+import '../views/screen/Settings/settings_screen.dart';
 import '../views/screen/SongList/song_list_screen.dart';
 import '../views/screen/Splash/onboarding_screen.dart';
 import '../views/screen/Splash/splash_screen.dart';
 import '../views/screen/Subscription/subscription_screen.dart';
+import '../views/screen/TermsofServices/terms_services_screen.dart';
 import '../views/screen/UserDetails/user_details_screen.dart';
 import '../views/screen/YourInterests/your_interests_screen.dart';
 
@@ -45,6 +51,12 @@ class AppRoutes{
   static String messageScreen="/message_screen";
   static String userDetailsScreen="/user_details_screen";
   static String notificationsScreen="/notifications_screen";
+  static String filterScreen="/filter_screen";
+  static String settingsScreen="/settings_screen";
+  static String privacyPolicyScreen="/privacy_policy_screen";
+  static String aboutUsScreen="/about_us_screen";
+  static String termsServicesScreen="/terms_services_screen";
+  static String changePasswordScreen="/change_password_screen";
   //static String locationScreen="/location_screen";
  // static String locationPickerScreen="/location_picker_screen";
 
@@ -70,6 +82,12 @@ class AppRoutes{
     GetPage(name:messageScreen, page: ()=>const MessageScreen()),
     GetPage(name:userDetailsScreen, page: ()=>const UserDetailsScreen()),
     GetPage(name:notificationsScreen, page: ()=> NotificationsScreen()),
+    GetPage(name:filterScreen, page: ()=> FilterScreen()),
+    GetPage(name:settingsScreen, page: ()=> SettingsScreen()),
+    GetPage(name:privacyPolicyScreen, page: ()=> PrivacyPolicyScreen()),
+    GetPage(name:aboutUsScreen, page: ()=> AboutUsScreen()),
+    GetPage(name:termsServicesScreen, page: ()=> TermsServicesScreen()),
+    GetPage(name:changePasswordScreen, page: ()=> ChangePasswordScreen()),
    // GetPage(name:locationScreen, page: ()=>const LocationScreen(),transition: Transition.noTransition),
     //GetPage(name:locationPickerScreen, page: ()=>const LocationPickerScreen(),transition: Transition.noTransition),
   ];

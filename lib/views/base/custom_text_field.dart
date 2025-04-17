@@ -13,6 +13,7 @@ class CustomTextField extends StatefulWidget {
   final bool? isObscureText;
   final String? obscureCharacrter;
   final Color? filColor;
+  final Color? borderColor;
   final int? maxLines;
   final Widget? prefixIcon;
   final String? labelText;
@@ -33,6 +34,7 @@ class CustomTextField extends StatefulWidget {
     this.hintText,
     this.prefixIcon,
     this.suffixIcons,
+    this.borderColor,
     this.validator,
     this.isEmail,
     required this.controller,
@@ -146,7 +148,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return OutlineInputBorder(
       borderSide: BorderSide(
         width: 1.w,
-        color: AppColors.borderColor,
+        color: widget.borderColor ?? AppColors.borderColor,
       ),
       borderRadius: BorderRadius.circular(12.r)
     );
