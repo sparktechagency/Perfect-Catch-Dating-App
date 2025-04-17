@@ -7,6 +7,7 @@ import '../views/screen/Auth/SignUp/sign_up_screen.dart';
 import '../views/screen/Auth/UploadPhotos/upload_photos_screen.dart';
 import '../views/screen/Chats/MessageInbox/message_screen.dart';
 import '../views/screen/Chats/chats_screen.dart';
+import '../views/screen/Filter/filter_screen.dart';
 import '../views/screen/Home/home_screen.dart';
 import '../views/screen/LiveStream/live_stream_screen.dart';
 import '../views/screen/Location/location_picker_screen.dart';
@@ -45,6 +46,7 @@ class AppRoutes{
   static String messageScreen="/message_screen";
   static String userDetailsScreen="/user_details_screen";
   static String notificationsScreen="/notifications_screen";
+  static String filterScreen="/filter_screen";
   //static String locationScreen="/location_screen";
  // static String locationPickerScreen="/location_picker_screen";
 
@@ -70,6 +72,7 @@ class AppRoutes{
     GetPage(name:messageScreen, page: ()=>const MessageScreen()),
     GetPage(name:userDetailsScreen, page: ()=>const UserDetailsScreen()),
     GetPage(name:notificationsScreen, page: ()=> NotificationsScreen()),
+    GetPage(name:filterScreen, page: ()=> FilterScreen()),
    // GetPage(name:locationScreen, page: ()=>const LocationScreen(),transition: Transition.noTransition),
     //GetPage(name:locationPickerScreen, page: ()=>const LocationPickerScreen(),transition: Transition.noTransition),
   ];

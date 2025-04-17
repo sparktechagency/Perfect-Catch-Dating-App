@@ -23,6 +23,7 @@ class AppStrings {
   static String openRelationship   = 'Open Relationship';
   static String save   = 'Save';
   static String myBio   = 'My Bio';
+  static String filters   = 'Filters';
 //=============================>  User Authentication <==============================
   static String signInToYourAccount   = 'Sign In To Your Account';
   static String welcomeSignIn   = 'Welcome! Sign in to your account to continue.';

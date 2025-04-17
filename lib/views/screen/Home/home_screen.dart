@@ -55,7 +55,9 @@ class _HomeScreenState extends State<HomeScreen> {
             Image.asset(AppImages.appLogo, width: 76.w, height: 64.h),
             Spacer(),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(AppRoutes.filterScreen);
+              },
               child: SvgPicture.asset(
                 AppIcons.filter,
                 width: 32.w,
