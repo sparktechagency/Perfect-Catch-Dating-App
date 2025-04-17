@@ -43,7 +43,7 @@ class MatchesScreen extends StatelessWidget {
                   mainAxisSpacing: 16.0,
                   childAspectRatio: 0.8,
                 ),
-                itemCount: 10,
+                itemCount: 6,
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: (){
@@ -56,7 +56,7 @@ class MatchesScreen extends StatelessWidget {
                         CustomNetworkImage(
                           imageUrl:
                               'https://s3-alpha-sig.figma.com/img/157d/4a30/1e58f95239747f129212af44c3ef45b0?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=azoXeqCLH8mYcdF5BQCj1R8D4y9URj03GfvFOP3tYwofiVKxwNmdSKTMpHxky1klcfE5uXglYLwgIm1tlZ1SblVOhDHNf3FI1JkZSfPtTHnjxbL8uDa~Gy4HfHZOvUE6buDVWALONzq1SYziK6E5SwKY132eNShWawxMCg2SwKParvwIP1v3NhFDAzG6Tfc8jcQV33B~t9klrofBM~dtnzVgjEW9CV197YNab60TMwBRk19Bnda-CLGhRnUJuMHLnhXMLSDD-ubR88DOmnLM2As5jK1IJ35d7LWFU-ECBcNli-JG31H5urriB0MVXT7b7qNE13kBxvBEeFooZOGCUg__',
-                          height: 227.h,
+                          height: 127.h,
                           width: 173.w,
                           borderRadius: BorderRadius.circular(16.r),
                         ),
