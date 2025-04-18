@@ -37,7 +37,9 @@ class PersonalInformationScreen extends StatelessWidget {
                   right: 16.w,
                   top: 16.h,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(AppRoutes.editProfileScreen);
+                    },
                     child: SvgPicture.asset(AppIcons.edit),
                   ),
                 ),

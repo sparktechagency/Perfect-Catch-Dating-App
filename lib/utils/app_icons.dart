@@ -49,4 +49,9 @@ class AppIcons{
   static String setting ="$baseUrl/setting.svg";
   static String logout ="$baseUrl/logout.svg";
   static String edit ="$baseUrl/edit.svg";
+  static String gallery ="$baseUrl/gallery.svg";
+  static String call ="$baseUrl/call.svg";
+  static String age ="$baseUrl/age.svg";
+  static String religion ="$baseUrl/religion.svg";
+  static String edu ="$baseUrl/edu.svg";
 }

@@ -29,6 +29,9 @@ class AppStrings {
   static String filters   = 'Filters';
   static String newPassword   = 'New Password';
   static String updatePassword   = 'Update Password';
+  static String age   = 'Age';
+  static String education   = 'Education Qualification';
+  static String addYourFavoriteInterest   = 'Add your favorite interest';
 //=============================>  User Authentication <==============================
   static String signInToYourAccount   = 'Sign In To Your Account';
   static String welcomeSignIn   = 'Welcome! Sign in to your account to continue.';

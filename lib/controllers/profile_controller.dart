@@ -9,6 +9,7 @@ class ProfileController extends GetxController {
   File? selectedImage;
   RxString imagesPath = ''.obs;
   String title = "Profile Screen";
+  String? selectedGender;
 
   @override
   void onInit() {
@@ -24,15 +25,16 @@ class ProfileController extends GetxController {
   }
 
   //===============================> Edit Profile Screen <=============================
-  final TextEditingController firstNameCTRL = TextEditingController();
-  final TextEditingController sureNameCTRL = TextEditingController();
+  final TextEditingController userNameCTRL = TextEditingController();
   final TextEditingController phoneCTRL = TextEditingController();
-  final TextEditingController addressCTRL = TextEditingController();
-  final TextEditingController locationCTRL = TextEditingController();
   final TextEditingController dateBirthCTRL = TextEditingController();
-  final TextEditingController businessCTRL = TextEditingController();
-  final TextEditingController workCTRL = TextEditingController();
-  final TextEditingController experienceCTRL = TextEditingController();
+  final TextEditingController locationCTRL = TextEditingController();
+  final TextEditingController ageCTRL = TextEditingController();
+  final TextEditingController heightCTRL = TextEditingController();
+  final TextEditingController marriedCTRL = TextEditingController();
+  final TextEditingController religionCTRL = TextEditingController();
+  final TextEditingController eduCTRL = TextEditingController();
+  final TextEditingController aboutCTRL = TextEditingController();
 
   //===============================> Image Picker <=============================
   Future pickImage(ImageSource source) async {
