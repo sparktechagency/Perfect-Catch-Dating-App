@@ -18,6 +18,7 @@ import '../views/screen/Matches/matches_screen.dart';
 import '../views/screen/Notifications/notifications_screen.dart';
 import '../views/screen/Payment/payment_screen.dart';
 import '../views/screen/PrivacyPolicy/privacy_policy_screen.dart';
+import '../views/screen/Profile/PersonalInformation/personal_information_screen.dart';
 import '../views/screen/Profile/profile_screen.dart';
 import '../views/screen/SelectMode/select_mode_screen.dart';
 import '../views/screen/Settings/settings_screen.dart';
@@ -57,6 +58,7 @@ class AppRoutes{
   static String aboutUsScreen="/about_us_screen";
   static String termsServicesScreen="/terms_services_screen";
   static String changePasswordScreen="/change_password_screen";
+  static String personalInformationScreen="/personal_information_screen";
   //static String locationScreen="/location_screen";
  // static String locationPickerScreen="/location_picker_screen";
 
@@ -88,6 +90,7 @@ class AppRoutes{
     GetPage(name:aboutUsScreen, page: ()=> AboutUsScreen()),
     GetPage(name:termsServicesScreen, page: ()=> TermsServicesScreen()),
     GetPage(name:changePasswordScreen, page: ()=> ChangePasswordScreen()),
+    GetPage(name:personalInformationScreen, page: ()=> PersonalInformationScreen()),
    // GetPage(name:locationScreen, page: ()=>const LocationScreen(),transition: Transition.noTransition),
     //GetPage(name:locationPickerScreen, page: ()=>const LocationPickerScreen(),transition: Transition.noTransition),
   ];

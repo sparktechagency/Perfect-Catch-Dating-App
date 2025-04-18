@@ -25,6 +25,7 @@ class AppStrings {
   static String openRelationship   = 'Open Relationship';
   static String save   = 'Save';
   static String myBio   = 'My Bio';
+  static String editBio   = 'Edit Bio';
   static String filters   = 'Filters';
   static String newPassword   = 'New Password';
   static String updatePassword   = 'Update Password';
@@ -133,7 +134,7 @@ class AppStrings {
   static String setting   = 'Setting';
   static String logout   = 'Logout';
   static String myProfile   = 'My Profile';
-  static String myPhotoAlbum   = 'My Photo Album';
+  static String myPhotoAlbum   = 'Photo Album';
   static String editMusic   = 'Edit Music';
   static String browseFiles   = 'Browse Files';
   static String updateProfile   = 'Update Profile';
