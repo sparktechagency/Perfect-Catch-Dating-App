@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:perfect_catch_dating_app/helpers/route.dart';
 import 'package:perfect_catch_dating_app/utils/app_colors.dart';
 import 'package:perfect_catch_dating_app/utils/app_strings.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_button.dart';
@@ -14,10 +15,12 @@ class SelectModeScreen extends StatefulWidget {
 }
 
 class _SelectModeScreenState extends State<SelectModeScreen> {
-  List<bool> selectedModes = [false, false, false];
+  List<bool> selectedModes = [false, false, false, false];
+  RxList<bool> selectedOptions = [false, false, false, false, false, false].obs;
 
   final List<Map<String, String>> modeOptions = [
     {'icon': 'person', 'title': AppStrings.bestFriend.tr, 'subtitle': AppStrings.openBestFriendMode.tr},
+    {'icon': 'person', 'title': AppStrings.relationship.tr, 'subtitle': AppStrings.openRelationshipMode.tr},
     {'icon': 'person', 'title': AppStrings.poly.tr, 'subtitle': AppStrings.openPolyMode.tr},
     {'icon': 'person', 'title': AppStrings.arrangeMarriage.tr, 'subtitle' : AppStrings.openArrangeMarriageMode.tr},
   ];
@@ -27,6 +30,19 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
       selectedModes = List.generate(modeOptions.length, (i) => i == index);
     });
   }
+
+
+
+
+  final List<String> options = [
+    AppStrings.aLongTermRelationship.tr,
+    AppStrings.fanCasualDates.tr,
+    AppStrings.aWhirlwindRomance.tr,
+    AppStrings.friendsWithBenefits.tr,
+    AppStrings.seriousCommitment.tr,
+    AppStrings.openRelationship.tr
+  ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,16 +92,16 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                         margin: EdgeInsets.symmetric(vertical: 8.h),
                         decoration: BoxDecoration(
                           color:
-                              selectedModes[index]
-                                  ? AppColors.primaryColor.withOpacity(0.1)
-                                  : const Color(0xFFE5F4F9),
+                          selectedModes[index]
+                              ? AppColors.primaryColor.withOpacity(0.1)
+                              : const Color(0xFFE5F4F9),
                           borderRadius: BorderRadius.circular(14.r),
                           border: Border.all(
                             color:
-                                selectedModes[index]
-                                    ? AppColors.primaryColor
-                                    : Colors.transparent,
-                            width: 2,
+                            selectedModes[index]
+                                ? AppColors.primaryColor
+                                : Colors.transparent,
+                            width: 2.w,
                           ),
                         ),
                         child: Row(
@@ -95,9 +111,9 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                               height: 99.h,
                               decoration: BoxDecoration(
                                 color:
-                                    selectedModes[index]
-                                        ? AppColors.primaryColor
-                                        : const Color(0xFF056C6E),
+                                selectedModes[index]
+                                    ? AppColors.primaryColor
+                                    : const Color(0xFF056C6E),
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(12.r),
                                   bottomLeft: Radius.circular(12.r),
@@ -115,9 +131,9 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                               child: Icon(
                                 Icons.person,
                                 color:
-                                    selectedModes[index]
-                                        ? AppColors.primaryColor
-                                        : const Color(0xFF056C6E),
+                                selectedModes[index]
+                                    ? AppColors.primaryColor
+                                    : const Color(0xFF056C6E),
                               ),
                             ),
                             SizedBox(width: 12.w),
@@ -140,7 +156,7 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                                 ],
                               ),
                             ),
-                            // Custom Checkbox Design
+                            //====================> Custom Checkbox Design <=======================
                             Checkbox(
                               value: selectedModes[index],
                               onChanged: (value) => onModeSelected(index),
@@ -158,18 +174,84 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                   },
                 ),
               ),
+              //=========================> Continue Button <====================
               CustomButton(
-                onTap: () {
-
-                  
-                },
+                onTap: _showBottomSheet,
                 text: AppStrings.continues.tr,
               ),
-              SizedBox(height: 32.h)
+              SizedBox(height: 48.h)
             ],
           ),
         ),
       ),
     );
   }
+//=============================> Bottom sheet <==========================
+  void _showBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.all(16.w),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 16.h),
+                SizedBox(
+                  height: 12.h,
+                  width: 48.w,
+                    child: Divider(thickness: 4.9, color: Colors.grey)),
+                SizedBox(height: 16.h),
+                CustomText(
+                  text: AppStrings.youCanChooseOption.tr,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w600,
+                ),
+                SizedBox(height: 16.h),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: options.length,
+                  itemBuilder: (context, index) {
+                    return Obx(()=> Container(
+                      margin: EdgeInsets.only(bottom: 8.h),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 2.w, color: AppColors.primaryColor),
+                          borderRadius: BorderRadius.circular(16.r)
+                      ),
+                      child: CheckboxListTile(
+                        key: Key('$index-${selectedOptions[index]}'),
+                        activeColor: AppColors.primaryColor,
+                        checkColor: Colors.white,
+                        side: BorderSide(color: AppColors.primaryColor, width: 1.w),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4.r),
+                        ),
+                        title: Align(
+                            alignment: Alignment.centerLeft,
+                            child: CustomText(text: options[index])),
+                        value: selectedOptions[index],
+                        onChanged: (bool? value) {
+                          setState(() {
+                            selectedOptions[index] = value!;
+                          });
+                        },
+                      ),
+                    ),
+                    );
+                  },
+                ),
+                CustomButton(onTap: (){Get.offAllNamed(AppRoutes.homeScreen);}, text: AppStrings.save.tr),
+                SizedBox(height: 16.h),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 }
