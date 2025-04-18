@@ -16,7 +16,14 @@ class OnboardingScreen extends StatelessWidget {
       body: Stack(
         children: [
           //=======================> Background Image <=========================
-          Image.asset(AppImages.onboardingImg, fit: BoxFit.cover),
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(AppImages.onboardingImg),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
           //=======================> Logo Container <===========================
           Positioned(
             top: MediaQuery.of(context).size.height * 0.3.h,
