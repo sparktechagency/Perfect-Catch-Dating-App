@@ -12,13 +12,14 @@ import '../../base/bottom_menu..dart';
 
 class MatchesScreen extends StatelessWidget {
   MatchesScreen({Key? key}) : super(key: key);
+
   final TextEditingController _searchCTRL = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomSheet: BottomMenu(1),
-      appBar: AppBar(title: CustomText(text: AppStrings.matches.tr)),
+      appBar: AppBar(title: CustomText(text: AppStrings.matches.tr, fontSize: 16.sp, fontWeight: FontWeight.w600)),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Column(

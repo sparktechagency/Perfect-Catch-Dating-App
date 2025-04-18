@@ -44,5 +44,9 @@ class AppIcons{
   static String trems="$baseUrl/trems.svg";
   static String privacy="$baseUrl/privacy.svg";
   static String rightArrow="$baseUrl/rightArrow.svg";
-
+  static String sub="$baseUrl/sub.svg";
+  static String myWallet ="$baseUrl/myWallet.svg";
+  static String setting ="$baseUrl/setting.svg";
+  static String logout ="$baseUrl/logout.svg";
+  static String edit ="$baseUrl/edit.svg";
 }

@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                                 child: Container(
                                   padding: EdgeInsets.zero,
-                                  height: 755.h,
+                                  height: 752.h,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(16.r),
                                   ),
@@ -113,8 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: TCard(
                                           size: Size.infinite,
                                           controller: _cardController,
-                                          cards:
-                                              _images.asMap().entries.map((
+                                          cards: _images.asMap().entries.map((
                                                 entry,
                                               ) {
                                                 return Stack(
