@@ -491,49 +491,50 @@ class _MessageScreenState extends State<MessageScreen> {
             color: AppColors.cardColor,
           ),
           height: 265.h,
-          padding: EdgeInsets.all(16.w),
+          padding: EdgeInsets.symmetric(horizontal:  16.w, vertical: 8.h),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(
+                width: 48.w,
+                child: Divider(color: AppColors.greyColor, thickness: 5.5,),
+              ),
+              SizedBox(height: 12.h),
               CustomText(
                 text: AppStrings.deleteConversation.tr,
                 fontWeight: FontWeight.w600,
                 fontSize: 18.sp,
               ),
               SizedBox(
-                width: 215.w,
+                width: 190.w,
                 child: Divider(color: AppColors.primaryColor),
               ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 16.h),
               CustomText(
                 text: 'Are you sure you want to delete this conversation?'.tr,
                 maxLine: 5,
               ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 48.h),
               Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    width: 115.w,
-                    child: CustomButton(
-                      onTap: () {
-                        Get.back();
-                      },
-                      text: "No",
-                      color: Colors.white,
-                      textColor: AppColors.primaryColor,
-                    ),
+                  CustomButton(
+                    width: 124.w,
+                    height: 46.h,
+                    onTap: () {
+                      Get.back();
+                    },
+                    text: "No",
+                    color: Colors.white,
+                    textColor: AppColors.primaryColor,
                   ),
                   SizedBox(width: 16.w),
-                  SizedBox(
-                    width: 115.w,
-                    child: CustomButton(
-                      onTap: () {
-                        // Get.offAllNamed(AppRoutes.signInScreen);
-                      },
-                      text: "Yes",
-                    ),
+                  CustomButton(
+                    width: 124.w,
+                    height: 46.h,
+                    onTap: () {
+                      // Get.offAllNamed(AppRoutes.signInScreen);
+                    },
+                    text: "Yes",
                   ),
                 ],
               ),

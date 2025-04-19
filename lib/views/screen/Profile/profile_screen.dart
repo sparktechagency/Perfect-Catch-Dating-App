@@ -178,51 +178,54 @@ class ProfileScreen extends StatelessWidget {
             color: AppColors.cardColor,
           ),
           height: 265,
-          padding: EdgeInsets.all(16.w),
+          padding: EdgeInsets.symmetric(horizontal:  16.w, vertical: 8.h),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(
+                width: 48.w,
+                child: Divider(color: AppColors.greyColor, thickness: 5.5,),
+              ),
+              SizedBox(height: 12.h),
               CustomText(
                 text: 'Logout',
                 fontWeight: FontWeight.w500,
                 fontSize: 24.sp,
               ),
-              SizedBox(height: 20.h),
-              Divider(
-                thickness: 1,
-                color: AppColors.primaryColor,
-                indent: 15.w,
+              SizedBox(
+                width: 98.w,
+                child: Divider(
+                  thickness: 1,
+                  color: AppColors.primaryColor,
+                  indent: 15.w,
+                ),
               ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 16.h),
               CustomText(
                 text: 'Are you sure you want to log out?',
                 fontSize: 16.sp,
               ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 48.h),
               Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    width: 115.w,
-                    child: CustomButton(
-                      onTap: () {
-                        Get.back();
-                      },
-                      text: "No",
-                      color: Colors.white,
-                      textColor: AppColors.primaryColor,
-                    ),
+                  CustomButton(
+                    width: 134.w,
+                    height: 46.h,
+                    onTap: () {
+                      Get.back();
+                    },
+                    text: "No",
+                    color: Colors.white,
+                    textColor: AppColors.primaryColor,
                   ),
                   SizedBox(width: 16.w),
-                  SizedBox(
-                    width: 115.w,
-                    child: CustomButton(
-                      onTap: () {
-                        Get.offAllNamed(AppRoutes.signInScreen);
-                      },
-                      text: "Yes",
-                    ),
+                  CustomButton(
+                    width: 134.w,
+                    height: 46.h,
+                    onTap: () {
+                      Get.offAllNamed(AppRoutes.signInScreen);
+                    },
+                    text: "Yes",
                   ),
                 ],
               ),
