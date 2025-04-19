@@ -62,7 +62,9 @@ class SettingsScreen extends StatelessWidget {
               ),
               //=====================> Delete Account List Tile <===================
               CustomListTile(
-                onTap: () {},
+                onTap: () {
+                  Get.toNamed(AppRoutes.supportScreen);
+                },
                 title: AppStrings.support.tr,
                 prefixIcon: SvgPicture.asset(AppIcons.support),
                 suffixIcon: SvgPicture.asset(AppIcons.rightArrow),

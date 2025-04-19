@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:perfect_catch_dating_app/helpers/route.dart';
 import 'package:perfect_catch_dating_app/utils/app_colors.dart';
 import 'package:perfect_catch_dating_app/utils/app_images.dart';
 import 'package:perfect_catch_dating_app/utils/app_strings.dart';
@@ -62,14 +63,19 @@ class _SongListScreenState extends State<SongListScreen> {
             ),
             SizedBox(height: 16.h),
             //====================> Song Tab <===================
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16.r),
-                border: Border.all(width: 1.w, color: AppColors.primaryColor),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(10.w),
-                child: CustomText(text: AppStrings.mostPopularSong.tr),
+            GestureDetector(
+              onTap: (){
+                Get.toNamed(AppRoutes.subscriptionScreen);
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.r),
+                  border: Border.all(width: 1.w, color: AppColors.primaryColor),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(10.w),
+                  child: CustomText(text: AppStrings.mostPopularSong.tr),
+                ),
               ),
             ),
             SizedBox(height: 16.h),

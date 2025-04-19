@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                                 child: Container(
                                   padding: EdgeInsets.zero,
-                                  height: 752.h,
+                                  height: 680.h,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(16.r),
                                   ),
@@ -129,12 +129,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         imageUrl: entry.value,
                                                         height: double.infinity,
                                                         width: double.infinity,
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                              topLeft: Radius.circular(16.r),
-                                                              topRight: Radius.circular(16.r),
-                                                            ),
-                                                      ),
+                                                        borderRadius: BorderRadius.circular(16.r)
+                                                      )
                                                     ),
                                                     //===========================> Name and Role Positioned <===================
                                                     Positioned(
@@ -181,10 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           Container(
                                                             decoration: BoxDecoration(
                                                               color: Colors.black.withOpacity(0.3),
-                                                              borderRadius:
-                                                                  BorderRadius.only(topLeft: Radius.circular(16.r),
-                                                                    topRight: Radius.circular(16.r),
-                                                                  ),
+                                                              borderRadius: BorderRadius.circular(16.r)
                                                             ),
                                                             child: Padding(
                                                               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),

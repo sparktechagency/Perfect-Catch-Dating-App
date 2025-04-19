@@ -78,12 +78,60 @@ class ResetPasswordScreen extends StatelessWidget {
               SizedBox(height: 32.h),
               //========================> Reset Password Button <==================
               CustomButton(onTap: () {
-                Get.toNamed(AppRoutes.yourInterestsScreen);
+                _showCustomBottomSheet(context);
               }, text: AppStrings.resetPassword.tr),
             ],
           ),
         ),
       ),
+    );
+  }
+  //===============================> Password Changed! Bottom Sheet <===============================
+  _showCustomBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
+      ),
+      builder: (BuildContext context) {
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(24.r),
+              topRight: Radius.circular(24.r),
+            ),
+            border: Border(
+              top: BorderSide(width: 2.w, color: AppColors.primaryColor),
+            ),
+            color: AppColors.cardColor,
+          ),
+          height: 265.h,
+          padding: EdgeInsets.all(16.w),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomText(
+                text: AppStrings.passwordChanged.tr,
+                fontWeight: FontWeight.w600,
+                fontSize: 18.sp,
+              ),
+              SizedBox(
+                width: 215.w,
+                child: Divider(color: AppColors.primaryColor),
+              ),
+              SizedBox(height: 20.h),
+              CustomText(
+                text: 'Return to the login page to enter your account with your new password.'.tr,
+                maxLine: 5,
+              ),
+              SizedBox(height: 20.h),
+             CustomButton(onTap: (){
+               Get.toNamed(AppRoutes.signInScreen);
+             }, text: AppStrings.backToSignIn.tr)
+            ],
+          ),
+        );
+      },
     );
   }
 }
