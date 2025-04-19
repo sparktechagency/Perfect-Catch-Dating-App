@@ -201,7 +201,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               SizedBox(height: 16.h),
               CustomText(
-                text: 'Are you sure you want to log out?',
+                text: 'Are you sure you want to log out?'.tr,
                 fontSize: 16.sp,
               ),
               SizedBox(height: 48.h),
@@ -209,7 +209,7 @@ class ProfileScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomButton(
-                    width: 134.w,
+                    width: 124.w,
                     height: 46.h,
                     onTap: () {
                       Get.back();
@@ -220,7 +220,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   SizedBox(width: 16.w),
                   CustomButton(
-                    width: 134.w,
+                    width: 124.w,
                     height: 46.h,
                     onTap: () {
                       Get.offAllNamed(AppRoutes.signInScreen);
