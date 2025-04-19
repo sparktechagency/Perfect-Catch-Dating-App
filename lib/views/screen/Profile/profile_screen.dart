@@ -115,7 +115,9 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   //===================> My friends list ListTile <=================
                   CustomListTile(
-                    onTap: (){},
+                    onTap: (){
+                      Get.toNamed(AppRoutes.friendsListScreen);
+                    },
                     title: AppStrings.myFriendsList.tr,
                     prefixIcon: SvgPicture.asset(AppIcons.profile),
                     suffixIcon: SvgPicture.asset(AppIcons.rightArrow),
