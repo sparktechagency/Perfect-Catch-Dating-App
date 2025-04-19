@@ -122,7 +122,9 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   //===================> My Wallet ListTile <=================
                   CustomListTile(
-                    onTap: (){},
+                    onTap: (){
+                      Get.toNamed(AppRoutes.myWalletScreen);
+                    },
                     title: AppStrings.myWallet.tr,
                     prefixIcon: SvgPicture.asset(AppIcons.myWallet),
                     suffixIcon: SvgPicture.asset(AppIcons.rightArrow),

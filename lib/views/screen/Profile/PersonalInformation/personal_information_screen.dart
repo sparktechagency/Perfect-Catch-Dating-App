@@ -361,6 +361,7 @@ class PersonalInformationScreen extends StatelessWidget {
                           Expanded(
                             child: GridView.builder(
                               shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,

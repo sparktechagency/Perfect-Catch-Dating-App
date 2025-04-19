@@ -54,4 +54,5 @@ class AppIcons{
   static String age ="$baseUrl/age.svg";
   static String religion ="$baseUrl/religion.svg";
   static String edu ="$baseUrl/edu.svg";
+  static String doller ="$baseUrl/doller.svg";
 }

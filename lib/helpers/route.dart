@@ -15,6 +15,7 @@ import '../views/screen/LiveStream/live_stream_screen.dart';
 import '../views/screen/Location/location_picker_screen.dart';
 import '../views/screen/Location/location_screen.dart';
 import '../views/screen/Matches/matches_screen.dart';
+import '../views/screen/MyWallet/my_wallet_screen.dart';
 import '../views/screen/Notifications/notifications_screen.dart';
 import '../views/screen/Payment/payment_screen.dart';
 import '../views/screen/PrivacyPolicy/privacy_policy_screen.dart';
@@ -60,7 +61,8 @@ class AppRoutes{
   static String termsServicesScreen="/terms_services_screen";
   static String changePasswordScreen="/change_password_screen";
   static String personalInformationScreen="/personal_information_screen";
-  static String editProfileScreen="/Edit_profile_screen";
+  static String editProfileScreen="/edit_profile_screen";
+  static String myWalletScreen="/my_wallet_screen";
   //static String locationScreen="/location_screen";
  // static String locationPickerScreen="/location_picker_screen";
 
@@ -94,6 +96,7 @@ class AppRoutes{
     GetPage(name:changePasswordScreen, page: ()=> ChangePasswordScreen()),
     GetPage(name:personalInformationScreen, page: ()=> PersonalInformationScreen()),
     GetPage(name:editProfileScreen, page: ()=> EditProfileScreen()),
+    GetPage(name:myWalletScreen, page: ()=> MyWalletScreen()),
    // GetPage(name:locationScreen, page: ()=>const LocationScreen(),transition: Transition.noTransition),
     //GetPage(name:locationPickerScreen, page: ()=>const LocationPickerScreen(),transition: Transition.noTransition),
   ];
