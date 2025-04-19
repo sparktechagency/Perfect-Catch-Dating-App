@@ -274,6 +274,7 @@ class UserDetailsScreen extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: GridView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   gridDelegate:
                                       SliverGridDelegateWithFixedCrossAxisCount(

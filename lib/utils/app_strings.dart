@@ -32,6 +32,13 @@ class AppStrings {
   static String age   = 'Age';
   static String education   = 'Education Qualification';
   static String addYourFavoriteInterest   = 'Add your favorite interest';
+  static String totalBalance   = 'Total Balance';
+  static String totalWithdrawal   = 'Total Withdrawal';
+  static String transactionsHistory   = 'Transactions History';
+  static String withdrawal   = 'Withdrawal';
+  static String payment   = 'Payment';
+  static String withdrawBalance   = 'Withdraw Balance';
+  static String rechargeBalance   = 'Recharge Balance';
 //=============================>  User Authentication <==============================
   static String signInToYourAccount   = 'Sign In To Your Account';
   static String welcomeSignIn   = 'Welcome! Sign in to your account to continue.';
