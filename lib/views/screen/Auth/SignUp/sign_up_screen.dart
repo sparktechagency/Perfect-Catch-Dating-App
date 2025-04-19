@@ -132,7 +132,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
               _checkboxSection(),
               SizedBox(height: 16.h),
               //========================> Sign Up Button <==================
-              CustomButton(onTap: () {}, text: AppStrings.signUp.tr),
+              CustomButton(
+                onTap: () {
+                  Get.toNamed(AppRoutes.otpScreen);
+                },
+                text: AppStrings.signUp.tr,
+              ),
               SizedBox(height: 32.h),
               //========================> Don’t have an account Sign In Button <==================
               Row(

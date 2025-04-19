@@ -244,7 +244,7 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                     );
                   },
                 ),
-                CustomButton(onTap: (){Get.offAllNamed(AppRoutes.homeScreen);}, text: AppStrings.save.tr),
+                CustomButton(onTap: (){Get.toNamed(AppRoutes.yourInterestsScreen);}, text: AppStrings.save.tr),
                 SizedBox(height: 16.h),
               ],
             ),

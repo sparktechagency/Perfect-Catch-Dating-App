@@ -29,6 +29,7 @@ import '../views/screen/SongList/song_list_screen.dart';
 import '../views/screen/Splash/onboarding_screen.dart';
 import '../views/screen/Splash/splash_screen.dart';
 import '../views/screen/Subscription/subscription_screen.dart';
+import '../views/screen/Support/support_screen.dart';
 import '../views/screen/TermsofServices/terms_services_screen.dart';
 import '../views/screen/UserDetails/user_details_screen.dart';
 import '../views/screen/YourInterests/your_interests_screen.dart';
@@ -65,6 +66,7 @@ class AppRoutes{
   static String editProfileScreen="/edit_profile_screen";
   static String myWalletScreen="/my_wallet_screen";
   static String friendsListScreen="/friends_list_screen";
+  static String supportScreen="/support_screen";
   //static String locationScreen="/location_screen";
  // static String locationPickerScreen="/location_picker_screen";
 
@@ -100,6 +102,7 @@ class AppRoutes{
     GetPage(name:editProfileScreen, page: ()=> EditProfileScreen()),
     GetPage(name:myWalletScreen, page: ()=> MyWalletScreen()),
     GetPage(name:friendsListScreen, page: ()=> FriendsListScreen()),
+    GetPage(name:supportScreen, page: ()=> SupportScreen()),
    // GetPage(name:locationScreen, page: ()=>const LocationScreen(),transition: Transition.noTransition),
     //GetPage(name:locationPickerScreen, page: ()=>const LocationPickerScreen(),transition: Transition.noTransition),
   ];

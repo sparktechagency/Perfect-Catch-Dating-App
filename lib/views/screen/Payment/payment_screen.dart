@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:perfect_catch_dating_app/helpers/route.dart';
 import 'package:perfect_catch_dating_app/utils/app_strings.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_button.dart';
 import '../../../utils/app_colors.dart';
@@ -94,7 +95,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
               hintText: 'MM/YY',
             ),
             Spacer(),
-            CustomButton(onTap: () {}, text: 'Make Payment'.tr),
+            //============================> Make Payment Button <======================
+            CustomButton(onTap: () {
+              Get.toNamed(AppRoutes.signUpScreen);
+            }, text: 'Make Payment'.tr),
             SizedBox(height: 48.h),
           ],
         ),
