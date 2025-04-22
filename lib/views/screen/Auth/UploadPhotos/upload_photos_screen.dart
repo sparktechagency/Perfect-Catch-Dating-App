@@ -133,7 +133,7 @@ class _UploadPhotosScreenState extends State<UploadPhotosScreen> {
             //=========================> Next Button <=======================
             CustomButton(
               onTap: () {
-                Get.toNamed(AppRoutes.songListScreen);
+                Get.toNamed(AppRoutes.signInScreen);
               },
               text: AppStrings.continues.tr,
             ),
