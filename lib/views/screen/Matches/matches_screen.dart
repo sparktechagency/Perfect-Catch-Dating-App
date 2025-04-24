@@ -37,8 +37,9 @@ class MatchesScreen extends StatelessWidget {
               SizedBox(height: 16.h),
               //=======================> Grid of User Cards <====================
               SizedBox(
-                height: 600.h,
+                height: 632.h,
                 child: GridView.builder(
+                  shrinkWrap: true,
                   clipBehavior: Clip.none,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,

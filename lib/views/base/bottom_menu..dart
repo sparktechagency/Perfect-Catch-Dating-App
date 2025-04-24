@@ -25,17 +25,26 @@ class BottomMenu extends StatelessWidget {
     return BottomNavigationBarItem(
       label: title,
       icon: Padding(
-        padding: const EdgeInsets.only(top: 8),
-        child: SvgPicture.asset(
-          isSelected
-              ? image
-              : image.replaceAll(
-                'fill',
-                'outline',
-              ), // Handle filling and outline icons
-          height: 24.0,
-          width: 24.0,
-          color: colorByIndex(theme, index),
+        padding: EdgeInsets.only(top: 8.h),
+        child: Container(
+          decoration: BoxDecoration(
+            color: isSelected ? AppColors.primaryColor : Colors.transparent,
+            borderRadius: BorderRadius.circular(48.r),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+            child: SvgPicture.asset(
+              isSelected
+                  ? image
+                  : image.replaceAll(
+                    'fill',
+                    'outline',
+                  ), // Handle filling and outline icons
+              height: 24.h,
+              width: 24.w,
+              color: isSelected ? AppColors.whiteColor : theme.disabledColor,
+            ),
+          ),
         ),
       ),
     );
