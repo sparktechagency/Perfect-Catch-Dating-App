@@ -58,7 +58,7 @@ class MatchesScreen extends StatelessWidget {
                           // Background Image
                           CustomNetworkImage(
                             imageUrl:
-                                'https://s3-alpha-sig.figma.com/img/157d/4a30/1e58f95239747f129212af44c3ef45b0?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=azoXeqCLH8mYcdF5BQCj1R8D4y9URj03GfvFOP3tYwofiVKxwNmdSKTMpHxky1klcfE5uXglYLwgIm1tlZ1SblVOhDHNf3FI1JkZSfPtTHnjxbL8uDa~Gy4HfHZOvUE6buDVWALONzq1SYziK6E5SwKY132eNShWawxMCg2SwKParvwIP1v3NhFDAzG6Tfc8jcQV33B~t9klrofBM~dtnzVgjEW9CV197YNab60TMwBRk19Bnda-CLGhRnUJuMHLnhXMLSDD-ubR88DOmnLM2As5jK1IJ35d7LWFU-ECBcNli-JG31H5urriB0MVXT7b7qNE13kBxvBEeFooZOGCUg__',
+                            'https://img.freepik.com/free-photo/medium-shot-guy-with-crossed-arms_23-2148227939.jpg?ga=GA1.1.1702237683.1725447794&semt=ais_hybrid&w=740',
                             height: 127.h,
                             width: 173.w,
                             borderRadius: BorderRadius.circular(16.r),

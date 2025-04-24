@@ -22,10 +22,10 @@ class _HomeScreenState extends State<HomeScreen> {
   final TCardController _cardController = TCardController();
   bool _allSwiped = false;
   final List<String> _images = [
-    'https://s3-alpha-sig.figma.com/img/bd14/28fd/dd867a79c8e5d0ed1c4a5f67028adb22?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HmIV9lKO0iWwnSbWDoyYfyIoqBgcuNN2KslVE16~Bf9PHyPeWSBgikhqNPcEj1xPFyi3~MeLHQeVZ5U-Zji00Qv3Ea20bMqOIy25NB4AxguwYT8~ICsy5E8uZ18jdfttfm4B-6Bu2BE2Qd70gJaZ6BzkznhgfzgrH77fCQrT2XZBb-Ol7W15OY0h50Kp-w45ScdeB1vldAna0D3gl9273GddA0GKNEePL3l0bOwU74a5CCC4ZlDkZqzZtEKAkmznyp1tJQ50nJ9OFXuMA~oQyA7vu0Nx~j80nkkDIc3YyIq7JPkhLI~11gX1hIiOoBRMUhZ2VCRhBcXdtUk~q950hg__',
-     'https://s3-alpha-sig.figma.com/img/bd14/28fd/dd867a79c8e5d0ed1c4a5f67028adb22?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HmIV9lKO0iWwnSbWDoyYfyIoqBgcuNN2KslVE16~Bf9PHyPeWSBgikhqNPcEj1xPFyi3~MeLHQeVZ5U-Zji00Qv3Ea20bMqOIy25NB4AxguwYT8~ICsy5E8uZ18jdfttfm4B-6Bu2BE2Qd70gJaZ6BzkznhgfzgrH77fCQrT2XZBb-Ol7W15OY0h50Kp-w45ScdeB1vldAna0D3gl9273GddA0GKNEePL3l0bOwU74a5CCC4ZlDkZqzZtEKAkmznyp1tJQ50nJ9OFXuMA~oQyA7vu0Nx~j80nkkDIc3YyIq7JPkhLI~11gX1hIiOoBRMUhZ2VCRhBcXdtUk~q950hg__',
-    'https://s3-alpha-sig.figma.com/img/bd14/28fd/dd867a79c8e5d0ed1c4a5f67028adb22?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HmIV9lKO0iWwnSbWDoyYfyIoqBgcuNN2KslVE16~Bf9PHyPeWSBgikhqNPcEj1xPFyi3~MeLHQeVZ5U-Zji00Qv3Ea20bMqOIy25NB4AxguwYT8~ICsy5E8uZ18jdfttfm4B-6Bu2BE2Qd70gJaZ6BzkznhgfzgrH77fCQrT2XZBb-Ol7W15OY0h50Kp-w45ScdeB1vldAna0D3gl9273GddA0GKNEePL3l0bOwU74a5CCC4ZlDkZqzZtEKAkmznyp1tJQ50nJ9OFXuMA~oQyA7vu0Nx~j80nkkDIc3YyIq7JPkhLI~11gX1hIiOoBRMUhZ2VCRhBcXdtUk~q950hg__',
-    'https://s3-alpha-sig.figma.com/img/bd14/28fd/dd867a79c8e5d0ed1c4a5f67028adb22?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HmIV9lKO0iWwnSbWDoyYfyIoqBgcuNN2KslVE16~Bf9PHyPeWSBgikhqNPcEj1xPFyi3~MeLHQeVZ5U-Zji00Qv3Ea20bMqOIy25NB4AxguwYT8~ICsy5E8uZ18jdfttfm4B-6Bu2BE2Qd70gJaZ6BzkznhgfzgrH77fCQrT2XZBb-Ol7W15OY0h50Kp-w45ScdeB1vldAna0D3gl9273GddA0GKNEePL3l0bOwU74a5CCC4ZlDkZqzZtEKAkmznyp1tJQ50nJ9OFXuMA~oQyA7vu0Nx~j80nkkDIc3YyIq7JPkhLI~11gX1hIiOoBRMUhZ2VCRhBcXdtUk~q950hg__',
+    'https://img.freepik.com/free-photo/medium-shot-guy-with-crossed-arms_23-2148227939.jpg?ga=GA1.1.1702237683.1725447794&semt=ais_hybrid&w=740',
+    'https://img.freepik.com/free-photo/medium-shot-guy-with-crossed-arms_23-2148227939.jpg?ga=GA1.1.1702237683.1725447794&semt=ais_hybrid&w=740',
+    'https://img.freepik.com/free-photo/medium-shot-guy-with-crossed-arms_23-2148227939.jpg?ga=GA1.1.1702237683.1725447794&semt=ais_hybrid&w=740',
+    'https://img.freepik.com/free-photo/medium-shot-guy-with-crossed-arms_23-2148227939.jpg?ga=GA1.1.1702237683.1725447794&semt=ais_hybrid&w=740',
   ];
 
   void _onSwipe(SwipDirection direction, int index) {

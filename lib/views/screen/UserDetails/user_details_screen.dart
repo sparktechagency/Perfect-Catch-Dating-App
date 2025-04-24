@@ -24,7 +24,7 @@ class UserDetailsScreen extends StatelessWidget {
             //==============================> Profile picture section <=======================
             CustomNetworkImage(
               imageUrl:
-                  'https://s3-alpha-sig.figma.com/img/0070/a04d/2bab51a081e3a54b73822719d5e8134d?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=oMLhkNk-ooLwpMYnX7bt1Ny0ohotznWdrlMOZUtiQa9~S1eOzX3OQuNH3bm9LIvy607skMewOPXx1mD4OMNL34gV~f3Yhxbp3q0slXWMz90GqpWl6xZUg20d~-z~8wVEcikLNQY0zd4HcRHrC8-B1NWQcZ7AREFEjU907jwn8nIGdZNjV72CnLIh~jFcDe~b13KPBefghmIkfoq72fnsDmHYW7udlvsCZHSjWKKUwYX5nwB0AJDcXhvs7PMnv-Dg2U5Z5Waz2RxQc1A9dhtVmwP13ZPDcozOfwZPCJawNFXa2O5ksggFQo-d2cMxDt4sgMxh4LU3e5h1aAMMf2bCsQ__',
+              'https://img.freepik.com/free-photo/medium-shot-guy-with-crossed-arms_23-2148227939.jpg?ga=GA1.1.1702237683.1725447794&semt=ais_hybrid&w=740',
               height: 457.h,
               width: 402.w,
               borderRadius: BorderRadius.circular(8.r),
@@ -287,7 +287,7 @@ class UserDetailsScreen extends StatelessWidget {
                                   itemBuilder: (context, index) {
                                     return CustomNetworkImage(
                                       imageUrl:
-                                          'https://s3-alpha-sig.figma.com/img/df34/29c4/c71ac3e69c9a56da15e2d40a3f795600?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=YqV-XMLYyQqcR9TcJgDoD5eZ3f8625iwAko3bkSKpDBfP-wINPufcCka3ubtozcrS7stJMyH44ci16Ud8ZXlmhJCAnXNcmvAVtG9EnLLQsSttwCdo3RyzdofIAwO9AIno~iilcvmuRaQg-REsoYMCM3hc4PXa6Pj1vzLNIsGzBRZPQe3dRQaRyDvaLjx8961rSR3HqJGb-d6UKuOJ~YAzw7Y5oxPnQfhwYJHCJdPmEAHjjl7ThFviqE4LfGfZYLU17Q6M1tJTlH~6WOcDLRJtZAe~KD1Ob6U8A4lwwFF3Aue-iNDD1BaZAMQi-EMaTIIFy~aEaGFPSIpyW4WS7floA__',
+                                      'https://img.freepik.com/free-photo/medium-shot-guy-with-crossed-arms_23-2148227939.jpg?ga=GA1.1.1702237683.1725447794&semt=ais_hybrid&w=740',
                                       height: 75.h,
                                       width: 70.w,
                                       borderRadius: BorderRadius.circular(16.r),

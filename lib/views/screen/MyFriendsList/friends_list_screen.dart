@@ -60,6 +60,12 @@ class _FriendsListScreenState extends State<FriendsListScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            Get.back();
+          },
+          child: Icon(Icons.arrow_back_ios),
+        ),
         title: Text('My Friends List'.tr),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(60.h),
@@ -67,7 +73,7 @@ class _FriendsListScreenState extends State<FriendsListScreen>
             margin: EdgeInsets.symmetric(horizontal: 48.w),
             padding: EdgeInsets.zero,
             decoration: BoxDecoration(
-             // border: Border.all(color: AppColors.primaryColor, width: 1.w),
+              // border: Border.all(color: AppColors.primaryColor, width: 1.w),
               borderRadius: BorderRadius.circular(24.r),
             ),
             child: TabBar(
@@ -131,7 +137,7 @@ class _FriendsListScreenState extends State<FriendsListScreen>
                           children: [
                             CustomNetworkImage(
                               imageUrl:
-                                  'https://s3-alpha-sig.figma.com/img/20b7/e70a/39319e91a805caf2e295a730292e5ce3?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=C7VJmVE0zslKEw0tG5FsFxeFVZBJ96eK7Dlo6lJWdDAUaOMm7A9Ady9DmhI67KXJxXweLUxJKz5ZbLyS1drBwAob8hoPtQ1v~H4m-PK52dQFX1FDSxY5d4-wm6Mg7UHxOcPVH0mQqYrM~Y0cHSQDFME~bBJMq2OYDWTnjGvotBhrMen94IPEiF3XMEotObtlHPZ4kcBI~oiVV90n0TKXEQHYgB1Hzl4n97U~uHn1AtbbQPsBLJaucFuvxYhyJo26aMi8iY8cVXN-TGlE5iw7QqQpXnKy01HsLMyhCrUYne5fnDbjr3w2E5ZByu4PkA3B0lybq4ZXyTQaPu4TPUorNw__',
+                                  'https://img.freepik.com/free-photo/medium-shot-guy-with-crossed-arms_23-2148227939.jpg?ga=GA1.1.1702237683.1725447794&semt=ais_hybrid&w=740',
                               height: 72.h,
                               width: 72.w,
                               borderRadius: BorderRadius.circular(8.r),
@@ -189,7 +195,7 @@ class _FriendsListScreenState extends State<FriendsListScreen>
                           children: [
                             CustomNetworkImage(
                               imageUrl:
-                                  'https://s3-alpha-sig.figma.com/img/20b7/e70a/39319e91a805caf2e295a730292e5ce3?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=C7VJmVE0zslKEw0tG5FsFxeFVZBJ96eK7Dlo6lJWdDAUaOMm7A9Ady9DmhI67KXJxXweLUxJKz5ZbLyS1drBwAob8hoPtQ1v~H4m-PK52dQFX1FDSxY5d4-wm6Mg7UHxOcPVH0mQqYrM~Y0cHSQDFME~bBJMq2OYDWTnjGvotBhrMen94IPEiF3XMEotObtlHPZ4kcBI~oiVV90n0TKXEQHYgB1Hzl4n97U~uHn1AtbbQPsBLJaucFuvxYhyJo26aMi8iY8cVXN-TGlE5iw7QqQpXnKy01HsLMyhCrUYne5fnDbjr3w2E5ZByu4PkA3B0lybq4ZXyTQaPu4TPUorNw__',
+                                  'https://img.freepik.com/free-photo/medium-shot-guy-with-crossed-arms_23-2148227939.jpg?ga=GA1.1.1702237683.1725447794&semt=ais_hybrid&w=740',
                               height: 72.h,
                               width: 72.w,
                               borderRadius: BorderRadius.circular(8.r),
