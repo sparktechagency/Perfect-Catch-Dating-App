@@ -27,7 +27,7 @@ class PersonalInformationScreen extends StatelessWidget {
               children: [
                 CustomNetworkImage(
                   imageUrl:
-                      'https://s3-alpha-sig.figma.com/img/aba5/7875/06b6763c27225f414df7f949639fd20d?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=BIM9NpRoedGzbRmOCOQwiVNR5~KnNHQyU-~zHD-zQ6niilUr5LM73jnCiN8Gii6tQL~UNbROSw4ojYsBWp6PBzymehTvt~3qZoXlGoIHavo7uIxXMKyK3Vxv~4Kls0MRboaDlqlZWbyTVGQzXuf~T08jG~Rvm5iPK8WATnHVZ-WmE5m0Ysf9eklTkd3JPZd4jyaA6W1twcCM6H2erKBSI0F~SroPsU3JRjet9LxsAIfT1FERORU~z~9MSbXzLWSB-ms98Ns2Ey0YYuSi1ceWrW~oCW9ASwMmYx~LQMJGCjJPfHHRCBVRGx3azfGrtqmxBbasTwGuKx~rHG8wUAIUAw__',
+                  'https://img.freepik.com/free-photo/medium-shot-guy-with-crossed-arms_23-2148227939.jpg?ga=GA1.1.1702237683.1725447794&semt=ais_hybrid&w=740',
                   height: 369.h,
                   width: 402.w,
                   borderRadius: BorderRadius.circular(8.r),
@@ -373,7 +373,7 @@ class PersonalInformationScreen extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 return CustomNetworkImage(
                                   imageUrl:
-                                      'https://s3-alpha-sig.figma.com/img/df34/29c4/c71ac3e69c9a56da15e2d40a3f795600?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=YqV-XMLYyQqcR9TcJgDoD5eZ3f8625iwAko3bkSKpDBfP-wINPufcCka3ubtozcrS7stJMyH44ci16Ud8ZXlmhJCAnXNcmvAVtG9EnLLQsSttwCdo3RyzdofIAwO9AIno~iilcvmuRaQg-REsoYMCM3hc4PXa6Pj1vzLNIsGzBRZPQe3dRQaRyDvaLjx8961rSR3HqJGb-d6UKuOJ~YAzw7Y5oxPnQfhwYJHCJdPmEAHjjl7ThFviqE4LfGfZYLU17Q6M1tJTlH~6WOcDLRJtZAe~KD1Ob6U8A4lwwFF3Aue-iNDD1BaZAMQi-EMaTIIFy~aEaGFPSIpyW4WS7floA__',
+                                  'https://img.freepik.com/free-photo/medium-shot-guy-with-crossed-arms_23-2148227939.jpg?ga=GA1.1.1702237683.1725447794&semt=ais_hybrid&w=740',
                                   height: 75.h,
                                   width: 70.w,
                                   borderRadius: BorderRadius.circular(16.r),

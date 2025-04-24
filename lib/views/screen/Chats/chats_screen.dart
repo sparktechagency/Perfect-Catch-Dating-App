@@ -55,7 +55,7 @@ class ChatsScreen extends StatelessWidget {
                       children: [
                         CustomNetworkImage(
                           imageUrl:
-                          'https://s3-alpha-sig.figma.com/img/f879/98fb/a1fa07b937baba14b0ff230ce8d5b0c7?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HffVv6KFHBElcw0KW5pb2hf7VgiLdJwUXVTMRYvx4XMBNqjqQuxw1IQINDjx3EVlU1dgT7ZFI5e-KoqGw9lRUknVg7fPLNvyHVZu9j3qERLa2QU~hJbgmx0I2FEIgwAcT2ccIDbJSRPo525VtJKjKy4E1dnNHiDISyAvTa~-JREipv6H-3CSfuawgOH6iGGmaPAKPG~nOlCDuvHj7GmyLpLzplATbalbvROP~0OzbRAe833wIAiFYcoXe3bXu6Zm3bEjiemh0onMDv5LRQx0otmy12shbcF18GHxK0sBLTe78LCiJ8yG9twupejMptq2CJiHelLiZmPVkHcGhgpsvw__',
+                          'https://img.freepik.com/free-photo/medium-shot-man-posing-indoors_23-2149438602.jpg?t=st=1745483014~exp=1745486614~hmac=c0fa59ea5ec97e9fe3107538064f3f58eba4716b83d95458b4cf8f458c544440&w=740',
                           height: 56.h,
                           width: 56.w,
                           boxShape: BoxShape.circle,
@@ -95,7 +95,7 @@ class ChatsScreen extends StatelessWidget {
                           children: [
                             CustomNetworkImage(
                               imageUrl:
-                              'https://s3-alpha-sig.figma.com/img/f879/98fb/a1fa07b937baba14b0ff230ce8d5b0c7?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HffVv6KFHBElcw0KW5pb2hf7VgiLdJwUXVTMRYvx4XMBNqjqQuxw1IQINDjx3EVlU1dgT7ZFI5e-KoqGw9lRUknVg7fPLNvyHVZu9j3qERLa2QU~hJbgmx0I2FEIgwAcT2ccIDbJSRPo525VtJKjKy4E1dnNHiDISyAvTa~-JREipv6H-3CSfuawgOH6iGGmaPAKPG~nOlCDuvHj7GmyLpLzplATbalbvROP~0OzbRAe833wIAiFYcoXe3bXu6Zm3bEjiemh0onMDv5LRQx0otmy12shbcF18GHxK0sBLTe78LCiJ8yG9twupejMptq2CJiHelLiZmPVkHcGhgpsvw__',
+                              'https://img.freepik.com/free-photo/medium-shot-man-posing-indoors_23-2149438602.jpg?t=st=1745483014~exp=1745486614~hmac=c0fa59ea5ec97e9fe3107538064f3f58eba4716b83d95458b4cf8f458c544440&w=740',
                               height: 56.h,
                               width: 56.w,
                               boxShape: BoxShape.circle,
