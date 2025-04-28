@@ -40,7 +40,7 @@ class SignInScreen extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                       SizedBox(
-                        width: 70.w,
+                        width: 65.w,
                         height: 8.h,
                         child: Divider(
                           thickness: 5.5,
