@@ -12,29 +12,30 @@ import '../utils/app_constants.dart';
 
 class AuthController extends GetxController {
   //================================> Sign Up <=================================
-  final TextEditingController nameCtrl = TextEditingController();
+  final TextEditingController firstNameCtrl = TextEditingController();
+  final TextEditingController lastNameCtrl = TextEditingController();
   final TextEditingController emailCtrl = TextEditingController();
   final TextEditingController phoneNumCtrl = TextEditingController();
   final TextEditingController dateOfBirthCtrl = TextEditingController();
   final TextEditingController passwordCtrl = TextEditingController();
   final TextEditingController confirmCtrl = TextEditingController();
   String? selectedGender;
-
-  // RxBool isSelectedRole = true.obs;
-  var selectDivision = ''.obs;
+  RxString selectedModes = ''.obs;
+  RxList<String> selectedOptions = <String>[].obs;
   var signUpLoading = false.obs;
   var token = "";
 
-  /*handleSignUp() async {
+  handleSignUp() async {
     signUpLoading(true);
-    var userRole = await PrefsHelper.getString(AppConstants.userRole);
     Map<String, dynamic> body = {
-      "name": nameCtrl.text.trim(),
+      "firstName": firstNameCtrl.text.trim(),
+      "lastName": lastNameCtrl.text.trim(),
+      "mode": selectedModes.value,
+      "modeOption": selectedOptions.toList(),
+      "gender":selectedGender,
       "email": emailCtrl.text.trim(),
       "password": passwordCtrl.text,
-      "division": selectDivision.value,
-      "role": userRole,
-      "fcmToken": "fcmToken..",
+     // "fcmToken": "fcmToken..",
 
     };
 
@@ -48,12 +49,14 @@ class AuthController extends GetxController {
         "email": emailCtrl.text.trim(),
         "screenType": "signup",
       });
-      nameCtrl.clear();
+      firstNameCtrl.clear();
+      lastNameCtrl.clear();
       emailCtrl.clear();
       passwordCtrl.clear();
-      confirmCtrl.clear();
+      selectedModes = ''.obs;
+      selectedOptions.value = [''].obs;
+      selectedGender = '';
       signUpLoading(false);
-      selectDivision.value ='';
       update();
     } else {
       ApiChecker.checkApi(response);
@@ -61,7 +64,6 @@ class AuthController extends GetxController {
       update();
     }
   }
-*/
   //==========================> Show Calender Function <=======================
   Future<void> pickBirthDate(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
@@ -88,7 +90,6 @@ class AuthController extends GetxController {
 
     }
   }
-  // Helper function to convert month number to name
   String _getMonthName(int month) {
     const List<String> months = [
       "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
@@ -96,85 +97,44 @@ class AuthController extends GetxController {
     return months[month - 1];
   }
 
-  //======================> Select Country and Birth Day <======================
-  final TextEditingController countryCTRL = TextEditingController();
-  final TextEditingController birthDayCTRL = TextEditingController();
-  var selectCountryLoading = false.obs;
-
-  /*selectCountry() async {
-    selectCountryLoading(true);
-    update();
-    Map<String, dynamic> body = {
-      "country": countryCTRL.text.trim(),
-      "dataOfBirth": birthDayCTRL.text.trim(),
-    };
-    Response response = await ApiClient.putData(
-        ApiConstants.profileDataEndPoint, jsonEncode(body));
-    if (response.statusCode == 200) {
-      Get.toNamed(AppRoutes.signInScreen);
-      countryCTRL.clear();
-      birthDayCTRL.clear();
-    } else {
-      ApiChecker.checkApi(response);
-    }
-
-    selectCountryLoading(false);
-    update();
-  }*/
-
-  //==================================> Sign In <================================
-  TextEditingController signInEmailCtrl = TextEditingController();
-  TextEditingController signInPassCtrl = TextEditingController();
-  var signInLoading = false.obs;
-
-
-  /*handleSignIn() async {
-    signInLoading(true);
-    var headers = {'Content-Type': 'application/json'};
-    Map<String, dynamic> body = {
-      'email': signInEmailCtrl.text.trim(),
-      'password': signInPassCtrl.text.trim(),
-      "fcmToken": "fcmToken..",
-    };
-    Response response = await ApiClient.postData(
-        ApiConstants.logInEndPoint, json.encode(body),
-        headers: headers);
-    print("====> ${response.body}");
-    if (response.statusCode == 200) {
-      await PrefsHelper.setString(AppConstants.bearerToken,
-          response.body['data']['attributes']['tokens']['access']['token']);
-      await PrefsHelper.setString(
-          AppConstants.id, response.body['data']['attributes']['user']['id']);
-      String userRole = response.body['data']['attributes']['user']['role'];
-      await PrefsHelper.setString(AppConstants.userRole, userRole);
-      await PrefsHelper.setBool(AppConstants.isLogged, true);
-      if (userRole == UserRole.player.name) {
-        Get.offAllNamed(AppRoutes.playerHomeScreen);
-        await PrefsHelper.setBool(AppConstants.isLogged, true);
-      } else if (userRole == UserRole.trainer.name) {
-        Get.offAllNamed(AppRoutes.trainerHomeScreen);
-        await PrefsHelper.setBool(AppConstants.isLogged, true);
-      } else if (userRole == UserRole.agency.name) {
-        Get.offAllNamed(AppRoutes.agencyHomeScreen);
-        await PrefsHelper.setBool(AppConstants.isLogged, true);
-      } else if (userRole == UserRole.club.name) {
-        Get.offAllNamed(AppRoutes.clubHomeScreen);
-        await PrefsHelper.setBool(AppConstants.isLogged, true);
+  //===================> Otp very <=======================
+  TextEditingController otpCtrl = TextEditingController();
+  var otpLoading = false.obs;
+  handleOtpVery(
+      {required String email,
+        required String otp,
+        required String screenType}) async {
+    try {
+      var body = {'code': otpCtrl.text, 'email': email};
+      var headers = {'Content-Type': 'application/json'};
+      otpLoading(true);
+      Response response = await ApiClient.postData(
+          ApiConstants.otpEndPoint, jsonEncode(body),
+          headers: headers);
+      print("============>${response.body} and ${response.statusCode}");
+      if (response.statusCode == 200) {
+        print('Token=============>${response.body["data"]['attributes']['tokens']['access']['token']}');
+        await PrefsHelper.setString(AppConstants.bearerToken, response.body["data"]['attributes']['tokens']['access']['token']);
+        otpCtrl.clear();
+        if (screenType == "forgetPasswordScreen") {
+          Get.offAllNamed(AppRoutes.resetPasswordScreen,
+              parameters: {"email": email});
+        } else {
+           Get.offAllNamed(AppRoutes.signInScreen, parameters: {"email": email});
+        }
+      } else {
+        ApiChecker.checkApi(response);
       }
-      signInEmailCtrl.clear();
-      signInPassCtrl.clear();
-      signInLoading(false);
-      update();
-    } else {
-      ApiChecker.checkApi(response);
-      Fluttertoast.showToast(msg: response.statusText ?? "");
+    } catch (e, s) {
+      print("===> e : $e");
+      print("===> s : $s");
     }
-    signInLoading(false);
-  }*/
+    otpLoading(false);
+  }
 
-  //=================> Resend otp <=====================
+//=================> Resend otp <=====================
   var resendOtpLoading = false.obs;
-  /*resendOtp(String email) async {
+  resendOtp(String email) async {
     resendOtpLoading(true);
     var body = {"email": email};
     Map<String, String> header = {'Content-Type': 'application/json'};
@@ -191,48 +151,49 @@ class AuthController extends GetxController {
           gravity: ToastGravity.CENTER);
     }
     resendOtpLoading(false);
-  }*/
+  }
+  //==================================> Sign In <================================
+  TextEditingController signInEmailCtrl = TextEditingController();
+  TextEditingController signInPassCtrl = TextEditingController();
 
-  //===================> Otp very <=======================
-  TextEditingController otpCtrl = TextEditingController();
-  var verifyLoading = false.obs;
-  /*handleOtpVery(
-      {required String email,
-      required String otp,
-      required String type}) async {
-    try {
-      var body = {'oneTimeCode': otpCtrl.text, 'email': email};
-      var headers = {'Content-Type': 'application/json'};
-      verifyLoading(true);
-      Response response = await ApiClient.postData(
-          ApiConstants.otpVerifyEndPoint, jsonEncode(body),
-          headers: headers);
-      print("============${response.body} and ${response.statusCode}");
-      if (response.statusCode == 200) {
-        print(
-            'token>>>>${response.body["data"]['attributes']['tokens']['access']['token']}');
-        await PrefsHelper.setString(AppConstants.userRole,
-            response.body["data"]['attributes']['user']['role']);
-        await PrefsHelper.setString(AppConstants.bearerToken,
-            response.body["data"]['attributes']['tokens']['access']['token']);
-        var role = response.body["data"]['attributes']['user']['role'];
-        print("===> role : $role");
-        otpCtrl.clear();
-        if (type == "forgetPasswordScreen") {
-          Get.toNamed(AppRoutes.setNewPasswordScreen,
-              parameters: {"email": email});
-        } else {
-          Get.toNamed(AppRoutes.selectCountryScreen);
-        }
+  var signInLoading = false.obs;
+  handleSignIn() async {
+    var fcmToken = await PrefsHelper.getString(AppConstants.fcmToken);
+    signInLoading(true);
+    var headers = {'Content-Type': 'application/json'};
+    Map<String, dynamic> body = {
+      'email': signInEmailCtrl.text.trim(),
+      'password': signInPassCtrl.text.trim(),
+      'loginType': "emailAndPassword",
+      "fcmToken": 'fcmToken',
+     // fcmToken.isNotEmpty?fcmToken:"test",
+    };
+    Response response = await ApiClient.postData(
+        ApiConstants.signInEndPoint, json.encode(body),
+        headers: headers);
+    print("====> ${response.body}");
+    if (response.statusCode == 200) {
+      await PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['attributes']['tokens']['access']['token']);
+      await PrefsHelper.setString(AppConstants.userId, response.body['data']['attributes']['user']['id']);
+      await PrefsHelper.setString(AppConstants.userName, response.body['data']['attributes']['user']['firstName']);
+      await PrefsHelper.setBool(AppConstants.isLogged, true);
+      bool condition = response.body['data']['attributes']['user']['isProfileCompleted'];
+      if(!condition){
+        Get.offAllNamed(AppRoutes.uploadPhotosScreen, arguments: false);
       } else {
-        ApiChecker.checkApi(response);
+        Get.offAllNamed(AppRoutes.homeScreen);
       }
-    } catch (e, s) {
-      print("===> e : $e");
-      print("===> s : $s");
+      await PrefsHelper.setBool(AppConstants.isLogged, true);
+      signInEmailCtrl.clear();
+      signInPassCtrl.clear();
+      signInLoading(false);
+      update();
+    } else {
+      ApiChecker.checkApi(response);
+      Fluttertoast.showToast(msg: response.statusText ?? "");
     }
-    verifyLoading(false);
-  }*/
+    signInLoading(false);
+  }
 
   //====================> Forgot pass word <=====================
   TextEditingController forgetEmailTextCtrl = TextEditingController();

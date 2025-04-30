@@ -51,12 +51,14 @@ class AppStrings {
   static String signUpWithEmail   = 'Sign Up With Email';
   static String welcomeBack   = 'Welcome Back! Please enter your details.';
   static String userName   = 'User name';
+  static String firstName   = 'First name';
+  static String lastName   = 'Last name';
   static String phoneNumber   = 'Phone number';
   static String dateOfBirth   = 'Date of birth';
   static String gender   = 'Gender';
   static String male   = 'Male';
   static String female   = 'Female';
-  static String nonBinary   = 'Non-Binary';
+  static String other   = 'Other';
   static String confirmPassword   = 'Confirm password';
   static String byCreatingAnAccount   = 'By creating an account, I accept the\n';
   static String termsConditions   = 'Terms & Conditions';
