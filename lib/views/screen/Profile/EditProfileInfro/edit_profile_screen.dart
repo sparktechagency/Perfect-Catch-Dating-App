@@ -383,12 +383,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         InkWell(
           onTap:
               () => setState(() {
-                _controller.selectedGender = 'non-binary';
+                _controller.selectedGender = 'other';
               }),
           child: Row(
             children: [
               Radio<String>(
-                value: 'non-binary',
+                value: 'other',
                 groupValue: _controller.selectedGender,
                 onChanged: (value) {
                   setState(() {
@@ -402,7 +402,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   return AppColors.primaryColor;
                 }),
               ),
-              CustomText(text: AppStrings.nonBinary.tr, fontSize: 14.sp),
+              CustomText(text: AppStrings.other.tr, fontSize: 14.sp),
             ],
           ),
         ),

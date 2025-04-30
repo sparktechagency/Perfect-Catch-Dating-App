@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:perfect_catch_dating_app/controllers/auth_controller.dart';
 import 'package:perfect_catch_dating_app/helpers/route.dart';
 import 'package:perfect_catch_dating_app/utils/app_colors.dart';
 import 'package:perfect_catch_dating_app/utils/app_strings.dart';
@@ -15,24 +16,33 @@ class SelectModeScreen extends StatefulWidget {
 }
 
 class _SelectModeScreenState extends State<SelectModeScreen> {
-  List<bool> selectedModes = [false, false, false, false];
-  RxList<bool> selectedOptions = [false, false, false, false, false, false].obs;
+  final AuthController _controller = Get.put(AuthController());
+
+  //RxList<String> selectedModes = <String>[].obs;
+  //RxList<String> selectedOptions = <String>[].obs;
 
   final List<Map<String, String>> modeOptions = [
-    {'icon': 'person', 'title': AppStrings.bestFriend.tr, 'subtitle': AppStrings.openBestFriendMode.tr},
-    {'icon': 'person', 'title': AppStrings.relationship.tr, 'subtitle': AppStrings.openRelationshipMode.tr},
-    {'icon': 'person', 'title': AppStrings.poly.tr, 'subtitle': AppStrings.openPolyMode.tr},
-    {'icon': 'person', 'title': AppStrings.arrangeMarriage.tr, 'subtitle' : AppStrings.openArrangeMarriageMode.tr},
+    {
+      'icon': 'person',
+      'title': AppStrings.bestFriend.tr,
+      'subtitle': AppStrings.openBestFriendMode.tr,
+    },
+    {
+      'icon': 'person',
+      'title': AppStrings.relationship.tr,
+      'subtitle': AppStrings.openRelationshipMode.tr,
+    },
+    {
+      'icon': 'person',
+      'title': AppStrings.poly.tr,
+      'subtitle': AppStrings.openPolyMode.tr,
+    },
+    {
+      'icon': 'person',
+      'title': AppStrings.arrangeMarriage.tr,
+      'subtitle': AppStrings.openArrangeMarriageMode.tr,
+    },
   ];
-
-  void onModeSelected(int index) {
-    setState(() {
-      selectedModes = List.generate(modeOptions.length, (i) => i == index);
-    });
-  }
-
-
-
 
   final List<String> options = [
     AppStrings.aLongTermRelationship.tr,
@@ -40,9 +50,13 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
     AppStrings.aWhirlwindRomance.tr,
     AppStrings.friendsWithBenefits.tr,
     AppStrings.seriousCommitment.tr,
-    AppStrings.openRelationship.tr
+    AppStrings.openRelationship.tr,
   ];
 
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,13 +66,17 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
           onPressed: () => Get.back(),
           icon: Icon(Icons.arrow_back_ios, color: Colors.black),
         ),
+        //========================> Skip Button <====================
         title: Align(
           alignment: Alignment.centerRight,
-          child: CustomText(
-            text: AppStrings.skip.tr,
-            fontSize: 20.sp,
-            fontWeight: FontWeight.w600,
-            textDecoration: TextDecoration.underline,
+          child: InkWell(
+            onTap: (){Get.toNamed(AppRoutes.signInScreen);},
+            child: CustomText(
+              text: AppStrings.skip.tr,
+              fontSize: 20.sp,
+              fontWeight: FontWeight.w600,
+              textDecoration: TextDecoration.underline,
+            ),
           ),
         ),
       ),
@@ -87,20 +105,25 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () => onModeSelected(index),
+                      onTap: () {
+                        String modeTitle = modeOptions[index]['title']!.toLowerCase();
+                        _controller.selectedModes.value = _controller.selectedModes.value == modeTitle ? '' : modeTitle;
+                        print('Selected Modes: ${_controller.selectedModes}');
+                      },
                       child: Container(
                         margin: EdgeInsets.symmetric(vertical: 8.h),
                         decoration: BoxDecoration(
                           color:
-                          selectedModes[index]
-                              ? AppColors.primaryColor.withOpacity(0.1)
-                              : const Color(0xFFE5F4F9),
+                          _controller.selectedModes.contains(modeOptions[index]['title'] ?? '')
+                                  ? AppColors.primaryColor.withOpacity(0.1)
+                                  : const Color(0xFFE5F4F9),
                           borderRadius: BorderRadius.circular(14.r),
                           border: Border.all(
                             color:
-                            selectedModes[index]
-                                ? AppColors.primaryColor
-                                : Colors.transparent,
+                            _controller.selectedModes.contains(
+                                      modeOptions[index]['title'] ?? '')
+                                    ? AppColors.primaryColor
+                                    : Colors.transparent,
                             width: 2.w,
                           ),
                         ),
@@ -111,9 +134,10 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                               height: 99.h,
                               decoration: BoxDecoration(
                                 color:
-                                selectedModes[index]
-                                    ? AppColors.primaryColor
-                                    : const Color(0xFF056C6E),
+                                _controller.selectedModes.contains(
+                                          modeOptions[index]['title'] ?? '')
+                                        ? AppColors.primaryColor
+                                        : const Color(0xFF056C6E),
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(12.r),
                                   bottomLeft: Radius.circular(12.r),
@@ -131,9 +155,9 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                               child: Icon(
                                 Icons.person,
                                 color:
-                                selectedModes[index]
-                                    ? AppColors.primaryColor
-                                    : const Color(0xFF056C6E),
+                                _controller.selectedModes.contains(modeOptions[index]['title'] ?? '')
+                                        ? AppColors.primaryColor
+                                        : const Color(0xFF056C6E),
                               ),
                             ),
                             SizedBox(width: 12.w),
@@ -156,16 +180,24 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                                 ],
                               ),
                             ),
-                            //====================> Custom Checkbox Design <=======================
-                            Checkbox(
-                              value: selectedModes[index],
-                              onChanged: (value) => onModeSelected(index),
-                              activeColor: AppColors.primaryColor,
-                              checkColor: Colors.white,
-                              side: BorderSide(color: AppColors.primaryColor),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4.r),
-                              ),
+                            Obx(
+                              () {
+                                String title = (modeOptions[index]['title'] ?? '').toLowerCase();
+                                return Checkbox(
+                                value: _controller.selectedModes.value == title,
+                                  onChanged: (value) {
+                                  String modeTitle = modeOptions[index]['title']!.toLowerCase();
+                                  _controller.selectedModes.value =
+                                  _controller.selectedModes.value == modeTitle ? '' : modeTitle;
+                                },
+                                activeColor: AppColors.primaryColor,
+                                checkColor: Colors.white,
+                                side: BorderSide(color: AppColors.primaryColor),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4.r),
+                                ),
+                              );
+                              }
                             ),
                           ],
                         ),
@@ -174,19 +206,33 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                   },
                 ),
               ),
-              //=========================> Continue Button <====================
               CustomButton(
-                onTap: _showBottomSheet,
+                onTap: _onContinuePressed,
                 text: AppStrings.continues.tr,
               ),
-              SizedBox(height: 48.h)
+              SizedBox(height: 48.h),
             ],
           ),
         ),
       ),
     );
   }
-//=============================> Bottom sheet <==========================
+
+  //================================> Handle the "Continue" button press <==============
+  void _onContinuePressed() {
+    if (_controller.selectedModes.isEmpty) {
+      Get.snackbar(
+        'Error'.tr,
+        'Please select a mode'.tr,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+    } else {
+      _showBottomSheet();
+    }
+  }
+
+  //=======================================> Show Bottom Sheet <=============================
   void _showBottomSheet() {
     showModalBottomSheet(
       context: context,
@@ -204,7 +250,8 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                 SizedBox(
                   height: 12.h,
                   width: 48.w,
-                    child: Divider(thickness: 4.9, color: Colors.grey)),
+                  child: Divider(thickness: 4.9, color: Colors.grey),
+                ),
                 SizedBox(height: 16.h),
                 CustomText(
                   text: AppStrings.youCanChooseOption.tr,
@@ -216,35 +263,52 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                   shrinkWrap: true,
                   itemCount: options.length,
                   itemBuilder: (context, index) {
-                    return Obx(()=> Container(
-                      margin: EdgeInsets.only(bottom: 8.h),
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 2.w, color: AppColors.primaryColor),
-                          borderRadius: BorderRadius.circular(16.r)
-                      ),
-                      child: CheckboxListTile(
-                        key: Key('$index-${selectedOptions[index]}'),
-                        activeColor: AppColors.primaryColor,
-                        checkColor: Colors.white,
-                        side: BorderSide(color: AppColors.primaryColor, width: 1.w),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4.r),
+                    return Obx(
+                      () => Container(
+                        margin: EdgeInsets.only(bottom: 8.h),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 2.w,
+                            color: AppColors.primaryColor,
+                          ),
+                          borderRadius: BorderRadius.circular(16.r),
                         ),
-                        title: Align(
+                        child: CheckboxListTile(
+                          key: Key('$index-${options[index]}'),
+                          activeColor: AppColors.primaryColor,
+                          checkColor: Colors.white,
+                          side: BorderSide(
+                            color: AppColors.primaryColor,
+                            width: 1.w,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4.r),
+                          ),
+                          title: Align(
                             alignment: Alignment.centerLeft,
-                            child: CustomText(text: options[index])),
-                        value: selectedOptions[index],
-                        onChanged: (bool? value) {
-                          setState(() {
-                            selectedOptions[index] = value!;
-                          });
-                        },
+                            child: CustomText(text: options[index]),
+                          ),
+                          value: _controller.selectedOptions.contains(options[index].toLowerCase()),
+                          onChanged: (bool? value) {
+                            if (value == true) {
+                              _controller.selectedOptions.add(options[index].toLowerCase());
+                            } else {
+                              _controller.selectedOptions.remove(options[index].toLowerCase());
+                            }
+                            print('==================> ${_controller.selectedOptions}');
+                          },
+                        ),
                       ),
-                    ),
                     );
                   },
                 ),
-                CustomButton(onTap: (){Get.toNamed(AppRoutes.yourInterestsScreen);}, text: AppStrings.save.tr),
+                //==========================> Save Button <=============================
+                CustomButton(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.signUpScreen);
+                  },
+                  text: AppStrings.save.tr,
+                ),
                 SizedBox(height: 16.h),
               ],
             ),
@@ -253,5 +317,4 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
       },
     );
   }
-
 }

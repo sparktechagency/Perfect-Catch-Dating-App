@@ -22,6 +22,8 @@ class OtpScreen extends StatefulWidget {
 
 class _OtpScreenState extends State<OtpScreen> {
   final AuthController _authController = Get.put(AuthController());
+  var parameters = Get.parameters;
+
   int _start = 180;
   Timer _timer = Timer(const Duration(seconds: 1), () {});
 
@@ -135,8 +137,12 @@ class _OtpScreenState extends State<OtpScreen> {
               ),
               SizedBox(height: 16.h),
               //========================> Verify Email Button <==================
-              CustomButton(onTap: () {
-                Get.toNamed(AppRoutes.resetPasswordScreen);
+              CustomButton(
+                loading: _authController.otpLoading.value,
+                  onTap: () {
+                _authController.handleOtpVery(email: "${parameters["email"]}",
+                    otp: _authController.otpCtrl.text,
+                    screenType: "${parameters["screenType"]}");
               }, text: AppStrings.verifyEmail.tr),
               SizedBox(height: 32.h),
               //========================> Didn’t receive code Resend it Button <==================
@@ -146,7 +152,10 @@ class _OtpScreenState extends State<OtpScreen> {
                   CustomText(text: AppStrings.didnotReceiveCode.tr),
                   SizedBox(width: 4.w),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      _authController.resendOtp("${parameters["email"]}");
+                      _authController.otpCtrl.clear();
+                    },
                     child: CustomText(
                       text: AppStrings.resendCode.tr,
                       fontWeight: FontWeight.w600,

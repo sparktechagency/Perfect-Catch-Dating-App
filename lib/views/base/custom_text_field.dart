@@ -118,7 +118,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         prefixIconColor: AppColors.primaryColor,
         labelText: widget.labelText,
         hintText: widget.hintText,
-        hintStyle: TextStyle(color: AppColors.hintColor, fontFamily: 'Quicksand', fontSize: 16.sp, fontWeight: FontWeight.w500),
+        hintStyle: TextStyle(color: AppColors.textColor, fontFamily: 'Quicksand', fontSize: 16.sp, fontWeight: FontWeight.w500),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.r),
           borderSide: BorderSide(

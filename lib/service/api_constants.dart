@@ -1,6 +1,6 @@
 class ApiConstants {
-  static const String baseUrl = "http://10.0.60.206:9090/api/v1";
-  static const String imageBaseUrl = "http://10.0.60.206:9090";
+  static const String baseUrl = "http://10.0.60.18:9090/api/v1";
+  static const String imageBaseUrl = "http://10.0.60.18:9090";
   static const String signUpEndPoint = "/auth/register";
   static const String signInEndPoint = "/auth/login";
   static const String otpEndPoint = "/auth/verify-email";
@@ -34,5 +34,5 @@ class ApiConstants {
   static const String termsConditionEndPoint = "/info/terms-condition";
   static const String privacyPolicyEndPoint = "/info/privacy-policy";
   static const String aboutUsEndPoint = "/info/about-us";
-  static const String setLocationEndPoint = "";
+  static const String setLocationEndPoint = "/info/location";
 }
