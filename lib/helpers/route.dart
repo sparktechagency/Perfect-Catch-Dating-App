@@ -67,8 +67,8 @@ class AppRoutes{
   static String myWalletScreen="/my_wallet_screen";
   static String friendsListScreen="/friends_list_screen";
   static String supportScreen="/support_screen";
-  //static String locationScreen="/location_screen";
- // static String locationPickerScreen="/location_picker_screen";
+  static String locationScreen="/location_screen";
+  static String locationPickerScreen="/location_picker_screen";
 
  static List<GetPage> page=[
     GetPage(name:splashScreen, page: ()=>const SplashScreen()),
@@ -103,7 +103,7 @@ class AppRoutes{
     GetPage(name:myWalletScreen, page: ()=> MyWalletScreen()),
     GetPage(name:friendsListScreen, page: ()=> FriendsListScreen()),
     GetPage(name:supportScreen, page: ()=> SupportScreen()),
-   // GetPage(name:locationScreen, page: ()=>const LocationScreen(),transition: Transition.noTransition),
-    //GetPage(name:locationPickerScreen, page: ()=>const LocationPickerScreen(),transition: Transition.noTransition),
+    GetPage(name:locationScreen, page: ()=>const LocationScreen(),transition: Transition.noTransition),
+    GetPage(name:locationPickerScreen, page: ()=>const LocationPickerScreen(),transition: Transition.noTransition),
   ];
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import '../helpers/prefs_helpers.dart';
@@ -9,6 +10,7 @@ import '../service/api_client.dart';
 import '../service/api_constants.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_constants.dart';
+import '../views/base/custom_text.dart';
 
 class AuthController extends GetxController {
   //================================> Sign Up <=================================
@@ -199,7 +201,7 @@ class AuthController extends GetxController {
   TextEditingController forgetEmailTextCtrl = TextEditingController();
   var forgotLoading = false.obs;
 
-  /*handleForget() async {
+  handleForget() async {
     forgotLoading(true);
     var body = {
       "email": forgetEmailTextCtrl.text.trim(),
@@ -218,37 +220,11 @@ class AuthController extends GetxController {
       ApiChecker.checkApi(response);
     }
     forgotLoading(false);
-  }*/
-
-  //======================> Handle Change password <============================
-  var changeLoading = false.obs;
-  TextEditingController oldPasswordCtrl = TextEditingController();
-  TextEditingController newPasswordCtrl = TextEditingController();
-  TextEditingController confirmPassController = TextEditingController();
-
-  /*handleChangePassword(String oldPassword, String newPassword) async {
-    changeLoading(true);
-    var body = {"oldPassword": oldPassword, "newPassword": newPassword};
-    var response = await ApiClient.postData(ApiConstants.changePassEndPoint, body);
-    print("===============> ${response.body}");
-    if (response.statusCode == 200) {
-      Fluttertoast.showToast(
-          msg: response.body['message'],
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: AppColors.cardLightColor,
-          textColor: Colors.white);
-      Get.back();
-      Get.back();
-    } else {
-      ApiChecker.checkApi(response);
-    }
-    changeLoading(false);
-  }*/
+  }
 
   //=============================> Set New password <===========================
   var resetPasswordLoading = false.obs;
-  /*resetPassword(String email, String password) async {
+  resetPassword(String email, String password) async {
     print("=======> $email, and $password");
     resetPasswordLoading(true);
     var body = {"email": email, "password": password};
@@ -261,21 +237,25 @@ class AuthController extends GetxController {
           context: Get.context!,
           barrierDismissible: false,
           builder: (_) => AlertDialog(
-                backgroundColor: AppColors.cardLightColor,
-                title: const Text("Password reset!"),
-                content:
-                    const Text("Your password has been reset successfully."),
-                actions: [
-                  TextButton(
-                      style: const ButtonStyle(
-                          backgroundColor:
-                              WidgetStatePropertyAll(Colors.white)),
-                      onPressed: () {
-                        Get.toNamed(AppRoutes.signInScreen);
-                      },
-                      child: const Text("Ok"))
-                ],
-              ));
+            backgroundColor: AppColors.cardColor,
+            title: CustomText(text: "Password Reset!", fontSize: 20.sp),
+            content: CustomText(
+              text: "Your password has been reset successfully.",
+              fontSize: 18.sp,
+              maxLine: 3,
+              textAlign: TextAlign.start,
+            ),
+            actions: [
+              TextButton(
+                  style: ButtonStyle(
+                      backgroundColor:
+                      WidgetStatePropertyAll(AppColors.primaryColor)),
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.signInScreen);
+                  },
+                  child: const Text("Ok"))
+            ],
+          ));
     } else {
       debugPrint("error set password ${response.statusText}");
       Fluttertoast.showToast(
@@ -284,7 +264,35 @@ class AuthController extends GetxController {
     }
     resetPasswordLoading(false);
   }
-}*/
+
+  //======================> Handle Change password <============================
+  var changePassLoading = false.obs;
+  TextEditingController currentPasswordCtrl = TextEditingController();
+  TextEditingController newPasswordCtrl = TextEditingController();
+  TextEditingController confirmPassController = TextEditingController();
+
+  handleChangePassword(String oldPassword, newPassword) async {
+    changePassLoading(true);
+    var body = {"oldPassword": oldPassword, "newPassword": newPassword};
+    var response =
+    await ApiClient.postData(ApiConstants.changePassEndPoint, body);
+    print("===============> ${response.body}");
+    if (response.statusCode == 200) {
+      Fluttertoast.showToast(
+          msg: response.body['message'],
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          backgroundColor: AppColors.cardLightColor,
+          textColor: Colors.black);
+      Get.back();
+      Get.back();
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    changePassLoading(false);
+  }
+
+
 
   //======================> Google login Info <============================
   /*handleGoogleSingIn(String email,String userRole) async {

@@ -1,13 +1,12 @@
-/*
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
 import '../../../controllers/location_controller.dart';
+import '../../../controllers/profile_controller.dart';
+import '../../../helpers/prefs_helpers.dart';
 import '../../../helpers/route.dart';
 import '../../../utils/app_colors.dart';
+import '../../../utils/app_constants.dart';
 import '../../../utils/app_images.dart';
 import '../../../utils/app_strings.dart';
 import '../../base/custom_app_bar.dart';
@@ -22,14 +21,14 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
-  final LocationController _commonLocationController =
-      Get.put(LocationController());
+  final LocationController _commonLocationController = Get.put(LocationController());
+
   var currentLat = 0.0;
   var currentLong = 0.0;
 
   @override
   void initState() {
-    _getCurrentLocation();
+    //_getCurrentLocation();
     // TODO: implement initState
     super.initState();
   }
@@ -37,7 +36,7 @@ class _LocationScreenState extends State<LocationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Location'.tr),
+      appBar: CustomAppBar(title: AppStrings.location.tr),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.w),
         child: Column(
@@ -57,9 +56,9 @@ class _LocationScreenState extends State<LocationScreen> {
             CustomButton(
                 loading: _commonLocationController.setLocationLoading.value,
                 onTap: () {
-                  _commonLocationController.setLocation(
-                      latitude: currentLat.toString(),
-                      longitude: currentLong.toString());
+                  _commonLocationController.setLocation();
+                  /* latitude: currentLat.toString(),
+                    longitude: currentLong.toString());*/
                 },
                 text: 'User Current Location'.tr),
             SizedBox(height: 16.h),
@@ -79,9 +78,8 @@ class _LocationScreenState extends State<LocationScreen> {
     );
   }
 
-  Future<void> _getCurrentLocation() async {
+/*Future<void> _getCurrentLocation() async {
     final status = await Permission.location.request();
-
     if (status.isGranted) {
       try {
         bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -117,21 +115,28 @@ class _LocationScreenState extends State<LocationScreen> {
           currentLong = position.longitude;
         });
 
-        // Get address for current location
+        // Get address details
         List<Placemark> placemarks = await placemarkFromCoordinates(
           position.latitude,
           position.longitude,
         );
 
-        if (mounted) {
-          setState(() {
-            _commonLocationController.locationNameController.text =
-                '${placemarks.first.street},'
-                '${placemarks.first.subLocality},'
-                '${placemarks.first.locality},'
-                ' ${placemarks.first.administrativeArea},'
-                ' ${placemarks.first.country}';
-          });
+        if (placemarks.isNotEmpty) {
+          Placemark place = placemarks.first;
+          String locationCountry = place.country ?? "";
+          String locationState = place.administrativeArea ?? "";
+          String locationCity = place.locality ?? "";
+          String locationAddress = "${place.street}, ${place.subLocality}, ${place.locality}, ${place.administrativeArea}, ${place.country}";
+          if (mounted) {
+            setState(() {
+              _commonLocationController.locationNameController.text =
+                  locationAddress;
+            });
+            await PrefsHelper.setString(AppConstants.userCountry, locationCountry);
+            await PrefsHelper.setString(AppConstants.userState, locationState);
+            await PrefsHelper.setString(AppConstants.userCity, locationCity);
+            await PrefsHelper.setString(AppConstants.userAddress, locationAddress);
+          }
         }
       } catch (e) {
         if (mounted) {
@@ -147,6 +152,6 @@ class _LocationScreenState extends State<LocationScreen> {
         );
       }
     }
-  }
+  }*/
+
 }
-*/

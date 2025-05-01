@@ -11,6 +11,7 @@ class AppConstants{
   static String isLogged = "IsLogged";
   static String userId = "userId";
   static String userName = "userName";
+  static String hasUpdateGallery = "hasUpdateGallery";
   static String id = "id";
 
   // share preference Key

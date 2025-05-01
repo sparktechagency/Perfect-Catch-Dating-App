@@ -1,11 +1,10 @@
-/*
 import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:map_picker/map_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../controllers/location_controller.dart';
@@ -21,8 +20,7 @@ class LocationPickerScreen extends StatefulWidget {
 class _LocationPickerScreenState extends State<LocationPickerScreen> {
   final _controller = Completer<GoogleMapController>();
   MapPickerController mapPickerController = MapPickerController();
-  final LocationController _commonLocationController =
-      Get.put(LocationController());
+  final LocationController _commonLocationController = Get.put(LocationController());
 
   CameraPosition cameraPosition = const CameraPosition(
     target: LatLng(41.311158, 69.279737),
@@ -36,7 +34,6 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
   }
 
   Future<void> _getCurrentLocation() async {
-    // Request location permission
     final status = await Permission.location.request();
 
     if (status.isGranted) {
@@ -48,8 +45,7 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
               context: context,
               builder: (BuildContext context) => AlertDialog(
                 title: const Text('Location Services Disabled'),
-                content: const Text(
-                    'Please enable location services to use this feature.'),
+                content: const Text('Please enable location services to use this feature.'),
                 actions: [
                   TextButton(
                     child: const Text('Open Settings'),
@@ -65,12 +61,10 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
           return;
         }
 
-        //=================> Get current position <=========================
         Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high,
         );
 
-        //===========================> Update camera position <================
         final newPosition = CameraPosition(
           target: LatLng(position.latitude, position.longitude),
           zoom: 14.4746,
@@ -80,11 +74,10 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
             cameraPosition = newPosition;
           });
         }
-        //=================> Move camera to current location <===================
+
         final GoogleMapController controller = await _controller.future;
         controller.animateCamera(CameraUpdate.newCameraPosition(newPosition));
 
-        //=================> Get address for current location <=================
         List<Placemark> placemarks = await placemarkFromCoordinates(
           position.latitude,
           position.longitude,
@@ -92,13 +85,13 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
 
         if (mounted) {
           setState(() {
-            _commonLocationController.locationNameController.text =
-                '${placemarks.first.name}, ${placemarks.first.administrativeArea}, ${placemarks.first.country}';
+            _commonLocationController.locationNameController.text = placemarks.isNotEmpty
+                ? '${placemarks.first.name}, ${placemarks.first.administrativeArea}, ${placemarks.first.country}'
+                : 'Unknown Location';
           });
         }
       } catch (e) {
         if (mounted) {
-          setState(() {});
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Error getting location: $e')),
           );
@@ -106,12 +99,28 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
       }
     } else {
       if (mounted) {
-        setState(() {});
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Location permission denied')),
         );
       }
     }
+  }
+
+  Future<void> _handleTapOnMap(LatLng tappedPosition) async {
+    final GoogleMapController controller = await _controller.future;
+    cameraPosition = CameraPosition(target: tappedPosition, zoom: 14.4746);
+    controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+    mapPickerController.mapMoving!();
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+      tappedPosition.latitude,
+      tappedPosition.longitude,
+    );
+    final place = placemarks.isNotEmpty ? placemarks.first : null;
+    final formattedAddress = place != null
+        ? '${place.street}, ${place.locality}, ${place.subLocality}, ${place.administrativeArea}, ${place.country}'
+        : 'Unknown Location';
+    _commonLocationController.locationNameController.text = formattedAddress;
+    mapPickerController.mapFinishedMoving!();
   }
 
   @override
@@ -135,22 +144,13 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
               onMapCreated: (GoogleMapController controller) {
                 _controller.complete(controller);
               },
+              onTap: _handleTapOnMap,
               onCameraMoveStarted: () {
                 mapPickerController.mapMoving!();
-                _commonLocationController.locationNameController.text =
-                    "checking ...";
+                _commonLocationController.locationNameController.text = "checking ...";
               },
-              onCameraMove: (cameraPosition) {
-                this.cameraPosition = cameraPosition;
-              },
-              onCameraIdle: () async {
-                mapPickerController.mapFinishedMoving!();
-                List<Placemark> placemarks = await placemarkFromCoordinates(
-                  cameraPosition.target.latitude,
-                  cameraPosition.target.longitude,
-                );
-                _commonLocationController.locationNameController.text =
-                    ' ${placemarks.first.street},${placemarks.first.locality}, ${placemarks.first.subLocality}, ${placemarks.first.administrativeArea}, ${placemarks.first.country}';
+              onCameraMove: (newCameraPosition) {
+                cameraPosition = newCameraPosition;
               },
             ),
           ),
@@ -176,8 +176,7 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
                 textAlign: TextAlign.center,
                 readOnly: true,
                 decoration: const InputDecoration(
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   border: InputBorder.none,
                 ),
                 controller: _commonLocationController.locationNameController,
@@ -189,21 +188,19 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
             left: 24,
             right: 24,
             child: CustomButton(
-                loading: _commonLocationController.setLocationLoading.value,
-                onTap: () {
-                  print(
-                      "Location ${cameraPosition.target.latitude} ${cameraPosition.target.longitude}");
-                  print(
-                      "Address: ${_commonLocationController.locationNameController.text}");
-                  _commonLocationController.setLocation(
-                      latitude: cameraPosition.target.latitude.toString(),
-                      longitude: cameraPosition.target.longitude.toString());
-                },
-                text: "Submit"),
+              loading: _commonLocationController.setLocationLoading.value,
+              onTap: () {
+                _commonLocationController.submitPickedLocation(
+                  lat: cameraPosition.target.latitude,
+                  lng: cameraPosition.target.longitude,
+                  locationName: _commonLocationController.locationNameController.text,
+                );
+              },
+              text: "Submit",
+            ),
           )
         ],
       ),
     );
   }
 }
-*/

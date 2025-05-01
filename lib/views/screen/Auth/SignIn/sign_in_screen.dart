@@ -104,13 +104,14 @@ class SignInScreen extends StatelessWidget {
                   ),
                 ),
                 //========================> Sign in Button <==================
-                CustomButton(
-                  loading: _controller.signInLoading.value,
-                    onTap: () {
-                      if (_formKey.currentState!.validate()) {
-                          _controller.handleSignIn();
-                      }
-                }, text: AppStrings.signIn.tr),
+                Obx(()=> CustomButton(
+                    loading: _controller.signInLoading.value,
+                      onTap: () {
+                        if (_formKey.currentState!.validate()) {
+                            _controller.handleSignIn();
+                        }
+                  }, text: AppStrings.signIn.tr),
+                ),
                 SizedBox(height: 32.h),
                 //========================> Don’t have an account Sign Up Button <==================
                 Row(

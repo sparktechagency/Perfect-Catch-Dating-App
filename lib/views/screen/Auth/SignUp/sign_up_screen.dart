@@ -186,20 +186,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 _checkboxSection(),
                 SizedBox(height: 16.h),
                 //========================> Sign Up Button <==================
-                CustomButton(
-                  loading: _controller.signUpLoading.value,
-                  onTap: () {
-                    if (_formKey.currentState!.validate()) {
-                      if (isChecked ) {
-                        _controller.handleSignUp();
+                Obx(()=> CustomButton(
+                    loading: _controller.signUpLoading.value,
+                    onTap: () {
+                      if (_formKey.currentState!.validate()) {
+                        if (isChecked ) {
+                          _controller.handleSignUp();
+                        }
+                        else {
+                          Fluttertoast.showToast(
+                              msg: 'Please accept Terms & Conditions'.tr);
+                        }
                       }
-                      else {
-                        Fluttertoast.showToast(
-                            msg: 'Please accept Terms & Conditions'.tr);
-                      }
-                    }
-                  },
-                  text: AppStrings.signUp.tr,
+                    },
+                    text: AppStrings.signUp.tr,
+                  ),
                 ),
                 SizedBox(height: 16.h),
                 //========================> Already have an account Sign In Button <==================
