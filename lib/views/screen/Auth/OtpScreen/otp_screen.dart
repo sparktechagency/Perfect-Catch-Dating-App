@@ -137,13 +137,14 @@ class _OtpScreenState extends State<OtpScreen> {
               ),
               SizedBox(height: 16.h),
               //========================> Verify Email Button <==================
-              CustomButton(
-                loading: _authController.otpLoading.value,
-                  onTap: () {
-                _authController.handleOtpVery(email: "${parameters["email"]}",
-                    otp: _authController.otpCtrl.text,
-                    screenType: "${parameters["screenType"]}");
-              }, text: AppStrings.verifyEmail.tr),
+              Obx(()=> CustomButton(
+                  loading: _authController.otpLoading.value,
+                    onTap: () {
+                  _authController.handleOtpVery(email: "${parameters["email"]}",
+                      otp: _authController.otpCtrl.text,
+                      screenType: "${parameters["screenType"]}");
+                }, text: AppStrings.verifyEmail.tr),
+              ),
               SizedBox(height: 32.h),
               //========================> Didn’t receive code Resend it Button <==================
               Row(

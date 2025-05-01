@@ -3,6 +3,7 @@ class ApiConstants {
   static const String imageBaseUrl = "http://10.0.60.18:9090";
   static const String signUpEndPoint = "/auth/register";
   static const String signInEndPoint = "/auth/login";
+  static const String updateGalleryEndPoint = "";
   static const String otpEndPoint = "/auth/verify-email";
   static const String forgotPassEndPoint = "/auth/forgot-password";
   static const String resetPassEndPoint = "/auth/reset-password";
