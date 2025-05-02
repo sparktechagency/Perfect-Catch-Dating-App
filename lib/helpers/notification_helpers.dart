@@ -1,4 +1,3 @@
-/*
 import 'dart:convert';
 import 'dart:io';
 import 'package:app_settings/app_settings.dart';
@@ -9,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
-import 'package:perfect_catch/helpers/prefs_helpers.dart';
+import 'package:perfect_catch_dating_app/helpers/prefs_helpers.dart';
 import '../utils/app_constants.dart';
 import 'logger_helpers.dart';
 
@@ -292,4 +291,3 @@ class NotificationHelper {
     //     message, flutterLocalNotificationsPlugin, false);
   }
 }
-*/

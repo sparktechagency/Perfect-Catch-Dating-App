@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../../../helpers/route.dart';
+import '../../../../controllers/update_gallery_controller.dart';
 import '../../../../utils/app_colors.dart';
 import '../../../../utils/app_icons.dart';
 import '../../../../utils/app_strings.dart';
@@ -20,7 +20,9 @@ class UploadPhotosScreen extends StatefulWidget {
 }
 
 class _UploadPhotosScreenState extends State<UploadPhotosScreen> {
-  List<String?> imagePaths = List.filled(6, null);
+  final UpdateGalleryController _galleryController = Get.put(
+    UpdateGalleryController(),
+  );
   final ImagePicker _picker = ImagePicker();
 
   //===================> Method to Pick an image <==========================
@@ -31,7 +33,7 @@ class _UploadPhotosScreenState extends State<UploadPhotosScreen> {
 
     if (pickedFile != null) {
       setState(() {
-        imagePaths[index] = pickedFile.path;
+        _galleryController.imagePaths[index] = pickedFile.path;
       });
     }
   }
@@ -39,7 +41,7 @@ class _UploadPhotosScreenState extends State<UploadPhotosScreen> {
   //====================> Method to remove an image <======================
   void removeImage(int index) {
     setState(() {
-      imagePaths[index] = null;
+      _galleryController.imagePaths[index] = '';
     });
   }
 
@@ -77,7 +79,7 @@ class _UploadPhotosScreenState extends State<UploadPhotosScreen> {
                   mainAxisSpacing: 16.h,
                   crossAxisSpacing: 16.w,
                 ),
-                itemCount: imagePaths.length,
+                itemCount: _galleryController.imagePaths.length,
                 itemBuilder: (context, index) {
                   return Stack(
                     clipBehavior: Clip.none,
@@ -94,11 +96,13 @@ class _UploadPhotosScreenState extends State<UploadPhotosScreen> {
                             color: AppColors.cardColor,
                           ),
                           child:
-                              imagePaths[index] != null
+                              _galleryController.imagePaths[index].isNotEmpty
                                   ? ClipRRect(
                                     borderRadius: BorderRadius.circular(8.r),
                                     child: Image.file(
-                                      File(imagePaths[index]!),
+                                      File(
+                                        _galleryController.imagePaths[index]!,
+                                      ),
                                       fit: BoxFit.cover,
                                     ),
                                   )
@@ -112,7 +116,7 @@ class _UploadPhotosScreenState extends State<UploadPhotosScreen> {
                                   ),
                         ),
                       ),
-                      if (imagePaths[index] != null)
+                      if (_galleryController.imagePaths[index].isNotEmpty)
                         Positioned(
                           top: 0.h,
                           right: 0.w,
@@ -131,11 +135,16 @@ class _UploadPhotosScreenState extends State<UploadPhotosScreen> {
               ),
             ),
             //=========================> Next Button <=======================
-            CustomButton(
-              onTap: () {
-                Get.toNamed(AppRoutes.signInScreen);
-              },
-              text: AppStrings.continues.tr,
+            Obx(
+              () => CustomButton(
+                loading: _galleryController.uploadGalleryLoading.value,
+                onTap: () {
+                  _galleryController.uploadGalleryImages(
+                    isUpdate: Get.arguments as bool,
+                  );
+                },
+                text: AppStrings.continues.tr,
+              ),
             ),
             SizedBox(height: 28.h),
           ],
