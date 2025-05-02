@@ -9,7 +9,7 @@ import '../utils/app_constants.dart';
 import '../utils/logger.dart';
 
 class UpdateGalleryController extends GetxController {
-  var imagePaths = List<String>.filled(6, '').obs; // This is an RxList
+  var imagePaths = List<String>.filled(6, '').obs;
   var uploadGalleryLoading = false.obs;
 
   uploadGalleryImages({bool isUpdate = false}) async {

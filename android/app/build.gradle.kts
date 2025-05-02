@@ -7,14 +7,18 @@ plugins {
 
 android {
     namespace = "com.vanie.perfect_catch_dating_app"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 35
     ndkVersion = "27.0.12077973"
+
+    dependencies {
+        coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
+    }
+
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
