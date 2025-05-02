@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+            'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,16 +28,19 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+              'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
+              'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
+              'you can reconfigure this by running the FlutterFire CLI again.',
         );
       default:
         throw UnsupportedError(
@@ -43,39 +49,20 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB5yMmSm5FKkblfw-qAKAJGwiolgn92QCI',
-    appId: '1:486403846707:web:62956612a24d67a3c86946',
-    messagingSenderId: '486403846707',
-    projectId: 'perfact-catch-dating-app',
-    authDomain: 'perfact-catch-dating-app.firebaseapp.com',
-    storageBucket: 'perfact-catch-dating-app.firebasestorage.app',
-    measurementId: 'G-T0780KBC0R',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyChLdt0_NqPubmqfcjzRywadYWlZzSYzY0',
-    appId: '1:486403846707:android:be85227e7ff1de3ec86946',
-    messagingSenderId: '486403846707',
-    projectId: 'perfact-catch-dating-app',
-    storageBucket: 'perfact-catch-dating-app.firebasestorage.app',
+    apiKey: 'AIzaSyDys3lCO8IEGgmQSEJf6ENyPbwq90xQjWc',
+    appId: '1:567526310666:android:64f0876363616f2379f0f3',
+    messagingSenderId: '567526310666',
+    projectId: 'vanie-perfect-catch',
+    storageBucket: 'vanie-perfect-catch.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDuAs0hLxRCoZxpq18fBJcwod2NVNJQjGw',
-    appId: '1:486403846707:ios:0051f3f7ed046455c86946',
-    messagingSenderId: '486403846707',
-    projectId: 'perfact-catch-dating-app',
-    storageBucket: 'perfact-catch-dating-app.firebasestorage.app',
-    iosBundleId: 'com.vanie.perfectCatchDatingApp',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDuAs0hLxRCoZxpq18fBJcwod2NVNJQjGw',
-    appId: '1:486403846707:ios:0051f3f7ed046455c86946',
-    messagingSenderId: '486403846707',
-    projectId: 'perfact-catch-dating-app',
-    storageBucket: 'perfact-catch-dating-app.firebasestorage.app',
+    apiKey: 'AIzaSyD4JOIKd_ZhI96YBUUdi6H-uUFVVKqTp4c',
+    appId: '1:567526310666:ios:dec435b55dde952579f0f3',
+    messagingSenderId: '567526310666',
+    projectId: 'vanie-perfect-catch',
+    storageBucket: 'vanie-perfect-catch.firebasestorage.app',
     iosBundleId: 'com.vanie.perfectCatchDatingApp',
   );
 }
