@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'vanie-perfect-catch.firebasestorage.app',
     iosBundleId: 'com.vanie.perfectCatchDatingApp',
   );
+
 }

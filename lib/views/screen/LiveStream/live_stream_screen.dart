@@ -113,55 +113,49 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
     return Scaffold(
       bottomNavigationBar: const BottomMenu(2),
       backgroundColor: Colors.black,
-      body: Stack(
+      body: Column(
         children: [
-          Center(child: _remoteVideo()),
-          Positioned(
-            top: 40,
-            left: 20,
+
+          Expanded(
             child: SizedBox(
-              width: 120,
-              height: 160,
-              child: _localUserJoined
-                  ? AgoraVideoView(
-                controller: VideoViewController(
-                  rtcEngine: _engine,
-                  canvas: const VideoCanvas(uid: 0),
-                ),
-              )
-                  : const Center(child: CircularProgressIndicator()),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(child: _remoteVideo()),
+                ],
+              ),
             ),
           ),
-          Positioned(
-            bottom: 40,
-            left: 0,
-            right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildControlButton(
-                  icon: _muted ? Icons.mic_off : Icons.mic,
-                  color: _muted ? Colors.red : Colors.white,
-                  onTap: _toggleMute,
-                ),
-                _buildControlButton(
-                  icon: Icons.call_end,
-                  color: Colors.red,
-                  onTap: _endCall,
-                ),
-                _buildControlButton(
-                  icon: Icons.cameraswitch,
-                  color: Colors.white,
-                  onTap: _switchCamera,
-                ),
-                _buildControlButton(
-                  icon: _speakerOn ? Icons.volume_up : Icons.volume_off,
-                  color: _speakerOn ? Colors.white : Colors.grey,
-                  onTap: _toggleSpeaker,
-                ),
-              ],
+
+          Expanded(
+            child: SizedBox(
+              width: double.infinity,
+              child: Stack(
+                children: [
+                  _localUserJoined
+                      ? AgoraVideoView(
+                    controller: VideoViewController(
+                      rtcEngine: _engine,
+                      canvas: const VideoCanvas(uid: 0),
+                    ),
+                  ) : const Center(child: CircularProgressIndicator()),
+
+                  Positioned(
+                    bottom: 40,
+                    left: 0,
+                    right: 0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        IconButton(onPressed: _endCall, icon: Icon(Icons.cancel, color: Colors.red, size: 48,))
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
-          )
+          ),
         ],
       ),
     );

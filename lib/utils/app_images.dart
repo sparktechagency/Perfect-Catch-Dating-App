@@ -11,5 +11,6 @@ class AppImages{
   static String onboardingImg ="$baseUrl/onboardingImg.png";
   static String music ="$baseUrl/music.png";
   static String demo ="$baseUrl/demo.png";
+  static String centerCardImage ="$baseUrl/center_card_image.png";
 
 }
