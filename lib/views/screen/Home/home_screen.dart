@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:perfect_catch_dating_app/controllers/home_controller.dart';
 import 'package:tcard/tcard.dart';
 import '../../../helpers/route.dart';
 import '../../../utils/app_icons.dart';
@@ -19,6 +20,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final HomeController homeController = Get.put(HomeController());
+
+  @override
+  void initState() {
+    super.initState();
+    homeController.getAllUsersProfiles();
+  }
+
   final TCardController _cardController = TCardController();
   bool _allSwiped = false;
   final List<String> _images = [
