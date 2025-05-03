@@ -17,7 +17,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin=FlutterLoc
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
