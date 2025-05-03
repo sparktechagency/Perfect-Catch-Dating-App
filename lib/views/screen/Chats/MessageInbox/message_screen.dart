@@ -1,15 +1,21 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:perfect_catch_dating_app/utils/app_strings.dart';
+import '../../../../controllers/message_controller.dart';
+import '../../../../helpers/prefs_helpers.dart' show PrefsHelper;
+import '../../../../helpers/time_formate.dart';
+import '../../../../models/message_model.dart';
+import '../../../../service/api_constants.dart';
+import '../../../../service/socket_services.dart';
 import '../../../../utils/app_colors.dart';
+import '../../../../utils/app_constants.dart';
 import '../../../../utils/app_icons.dart';
 import '../../../../utils/app_images.dart';
 import '../../../base/custom_button.dart';
@@ -26,99 +32,50 @@ class MessageScreen extends StatefulWidget {
 }
 
 class _MessageScreenState extends State<MessageScreen> {
-  final StreamController _streamController = StreamController();
-  final ScrollController _scrollController = ScrollController();
+  final MessageController _controller = Get.put(MessageController());
+  final SocketServices _socket = SocketServices();
   TextEditingController messageController = TextEditingController();
-  Uint8List? _image;
-  File? selectedIMage;
 
-  List<Map<String, String>> messageList = [
-    {
-      "name": "Alice",
-      "status": "sender",
-      "message": "Hey there!",
-      "image": AppImages.music,
-    },
-    {
-      "name": "Bob",
-      "status": "receiver",
-      "message": "Hi, what's up?",
-      "image": AppImages.music,
-    },
-    {
-      "name": "Charlie",
-      "status": "sender",
-      "message": "Just checking in.",
-      "image": AppImages.music,
-    },
-    {
-      "name": "David",
-      "status": "receiver",
-      "message": "Everything's good here, thanks!",
-      "image": AppImages.music,
-    },
-    {
-      "name": "Eve",
-      "status": "sender",
-      "message": "Cool.",
-      "image": AppImages.music,
-    },
-    {
-      "name": "Frank",
-      "status": "receiver",
-      "message": "Did you see the latest update?",
-      "image": AppImages.music,
-    },
-    {
-      "name": "Alice",
-      "status": "sender",
-      "message": "Hey there!",
-      "image": AppImages.music,
-    },
-    {
-      "name": "Bob",
-      "status": "receiver",
-      "message": "Hi, what's up?",
-      "image": AppImages.music,
-    },
-    {
-      "name": "Charlie",
-      "status": "sender",
-      "message": "Just checking in.",
-      "image": AppImages.music,
-    },
-    {
-      "name": "David",
-      "status": "receiver",
-      "message": "Everything's good here, thanks!",
-      "image": AppImages.music,
-    },
-    {
-      "name": "Eve",
-      "status": "sender",
-      "message": "Cool.",
-      "image": AppImages.music,
-    },
-    {
-      "name": "Frank",
-      "status": "receiver",
-      "message": "Did you see the latest update?",
-      "image": AppImages.music,
-    },
-  ];
+  final params = Get.parameters;
+  var conversationId = "";
+  var currentUserId = "";
+  var currentUserName = "";
+  var receiverImage = "";
+  var receiverName = "";
+  var receiverId = "";
 
   @override
   void initState() {
     super.initState();
+    _socket.init();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-      // If you want a smooth scroll animation instead of jumping directly, use animateTo:
-      // _scrollController.animateTo(
-      //   _scrollController.position.maxScrollExtent,
-      //   duration: Duration(milliseconds: 300),
-      //   curve: Curves.easeOut,
-      // );
+      getUserId();
+      conversationId = Get.parameters['conversationId']!;
+      currentUserId = params['currentUserId'] ?? "";
+      receiverImage = params['receiverImage'] ?? "";
+      receiverName = params['receiverName'] ?? "";
+      receiverId = params['receiverId'] ?? "";
+      _socket.emitMessagePage(receiverId);
+      //_controller.inboxFirstLoad(receiverId);
+      _controller.listenMessage(receiverId);
+      _controller.getMessage(receiverId);
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  getUserId() async {
+    currentUserId = await PrefsHelper.getString(AppConstants.userId);
+    currentUserName = await PrefsHelper.getString(AppConstants.userName);
+  }
+
+  Future<void> _refreshMessages() async {
+    getUserId();
+    // _controller.inboxFirstLoad(conversationId);
+    _controller.listenMessage(conversationId);
   }
 
   @override
@@ -140,7 +97,7 @@ class _MessageScreenState extends State<MessageScreen> {
           children: [
             CustomNetworkImage(
               imageUrl:
-                  'https://s3-alpha-sig.figma.com/img/0d5f/4dda/49cb09f2ad38026f413dfa61a56c4f80?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=PHldIpDAPspD0nQZwImBKXKPOAjivFZtkI3T-f7eUII0rqE2Q5-REQKF~hYiJ6RHD97GPnh2hJC8gkagrszi9va0YpHw3vWnpCLwfBX2Rr3wOOljNw-nGUczPFrL0PNnqjJ6XUzRZtiGcIRhM~Ebp0wAnEhMFZ6Rt~lRkvJus~lAji8LYA9zq3Oj2C-Y9Qqy5qXTt6tGV7XwHzomE5ADLAvBtG5ozIP5QItEZlPVpXEcCwRSVC0NwYGHFBgyAMUw57rH4Mz28zAu25~FOZqVyVmST-WYgeGzZ2NFDZQXzrzissKqeYkWdivQzKlq1vdt7y4tAd80ZQ4EpPJX3sl6Ww__',
+                  "${ApiConstants.imageBaseUrl}${Get.parameters["receiverImage"]}",
               height: 45.h,
               width: 45.w,
               boxShape: BoxShape.circle,
@@ -148,7 +105,7 @@ class _MessageScreenState extends State<MessageScreen> {
             SizedBox(width: 8.w),
             Flexible(
               child: CustomText(
-                text: 'Jane Cooper',
+                text: "${Get.parameters["receiverName"]}",
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w700,
                 color: Colors.white,
@@ -159,12 +116,7 @@ class _MessageScreenState extends State<MessageScreen> {
         centerTitle: false,
         actions: [
           //==============================> Audio Call Button <=======================
-          InkWell(
-            onTap: () {
-              _popupMenuButton();
-            },
-            child: SvgPicture.asset(AppIcons.audio),
-          ),
+          InkWell(onTap: () {}, child: SvgPicture.asset(AppIcons.audio)),
           SizedBox(width: 18.w),
           //==============================> Video Call Button <=======================
           InkWell(onTap: () {}, child: SvgPicture.asset(AppIcons.video)),
@@ -173,90 +125,46 @@ class _MessageScreenState extends State<MessageScreen> {
         ],
       ),
       //========================================> Body Section <=======================================
-      body: SafeArea(
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(24.r),
-              topRight: Radius.circular(24.r),
-            ),
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Stack(
-                    children: [
-                      StreamBuilder(
-                        stream: _streamController.stream,
-                        builder: (context, snapshot) {
-                          if (true) {
-                            return ListView.builder(
-                              controller: _scrollController,
-                              dragStartBehavior: DragStartBehavior.down,
-                              itemCount: messageList.length,
+      body: GetBuilder<MessageController>(
+        builder:
+            (controller) => Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(24.r),
+                  topRight: Radius.circular(24.r),
+                ),
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          RefreshIndicator(
+                            onRefresh: _refreshMessages,
+                            child: ListView.builder(
+                              itemCount: controller.messageModel.length,
+                              controller: _controller.scrollController,
+                              reverse: true,
                               itemBuilder: (context, index) {
-                                var message = messageList[index];
-                                return message['status'] == "sender"
+                                final message = controller.messageModel[index];
+                                return message.msgByUserId == currentUserId
                                     ? senderBubble(context, message)
                                     : receiverBubble(context, message);
                               },
-                            );
-                          } else {
-                            return const CustomLoading();
-                          }
-                        },
+                            ),
+                          ),
+                        ],
                       ),
-                      //========================================> Show Select Image <============================
-                      Positioned(
-                        bottom: 0.h,
-                        left: 0.w,
-                        child: Column(
-                          children: [
-                            if (_image != null)
-                              Stack(
-                                children: [
-                                  Container(
-                                    height: 120.h,
-                                    width: 120.w,
-                                    margin: EdgeInsets.only(bottom: 10.h),
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: MemoryImage(_image!),
-                                        fit: BoxFit.cover,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.r),
-                                      //border: Border.all(color: AppColors.primaryColor),
-                                    ),
-                                  ),
-                                  //========================================> Cancel Icon <============================
-                                  Positioned(
-                                    top: 0.h,
-                                    left: 0.w,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Get.back();
-                                      },
-                                      child: const Icon(Icons.cancel_outlined),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: 80.h),
+                  ],
                 ),
-                //===============================================> Write Sms Section <=============================
-                SizedBox(height: 80.h),
-              ],
+              ),
             ),
-          ),
-        ),
       ),
       bottomSheet: Container(
         color: Colors.white,
@@ -276,22 +184,32 @@ class _MessageScreenState extends State<MessageScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 8.w),
                     child: GestureDetector(
                       onTap: () {
-                        Map<String, String> newMessage = {
-                          "name": "John",
-                          "status": "sender",
-                          "message": messageController.text,
-                          "image": AppImages.music,
-                        };
-                        if (messageController.text.isNotEmpty) {
-                          messageList.add(newMessage);
-                          _streamController.sink.add(messageList);
-                          print(messageList);
-                          messageController.clear();
-                          _image = null;
+                        if (_controller.sentMsgCtrl.text.isNotEmpty &&
+                            !_controller.sentMessageLoading.value) {
+                          _controller.sentMessage(
+                            receiverId,
+                            PrefsHelper.userId,
+                            _controller.sentMsgCtrl.text,
+                            PrefsHelper.userId,
+                          );
+                          _controller.sentMsgCtrl.clear();
+                        } else {
+                          Fluttertoast.showToast(msg: 'Please write a message');
                         }
-                        setState(() {});
                       },
-                      child: SvgPicture.asset(AppIcons.sendIcon),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryColor,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(12.w),
+                          child: SvgPicture.asset(
+                            AppIcons.sendIcon,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -309,17 +227,16 @@ class _MessageScreenState extends State<MessageScreen> {
   }
 
   //=============================================> Receiver Bubble <=================================
-  receiverBubble(BuildContext context, Map<String, String> message) {
+  receiverBubble(BuildContext context, MessageModel message) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
+        CustomNetworkImage(
+          imageUrl: '${ApiConstants.imageBaseUrl}$receiverImage',
+          boxShape: BoxShape.circle,
           height: 38.h,
           width: 38.w,
-          clipBehavior: Clip.antiAlias,
-          decoration: const BoxDecoration(shape: BoxShape.circle),
-          child: Image.asset(message['image']!, fit: BoxFit.cover),
         ),
         SizedBox(width: 8.w),
         Expanded(
@@ -334,18 +251,26 @@ class _MessageScreenState extends State<MessageScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    message['message'] ?? "",
-                    style: TextStyle(color: Colors.black, fontSize: 14.sp),
-                    textAlign: TextAlign.start,
-                  ),
+                  message.type == 'image' && message.imageUrl != null
+                      ? CustomNetworkImage(
+                        imageUrl:
+                            '${ApiConstants.imageBaseUrl}${message.imageUrl}',
+                        borderRadius: BorderRadius.circular(8.r),
+                        height: 140.h,
+                        width: 155.w,
+                      )
+                      : Text(
+                        '${message.text}',
+                        style: TextStyle(color: Colors.black, fontSize: 16.sp),
+                        textAlign: TextAlign.start,
+                      ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Flexible(
                         child: Text(
-                          'time',
+                          '${TimeFormatHelper.timeAgo(message.createdAt!)}',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 12.sp,
@@ -365,7 +290,7 @@ class _MessageScreenState extends State<MessageScreen> {
   }
 
   //=============================================> Sender Bubble <========================================
-  senderBubble(BuildContext context, Map<String, String> message) {
+  senderBubble(BuildContext context, MessageModel message) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -383,38 +308,35 @@ class _MessageScreenState extends State<MessageScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  message.type == 'image' && message.imageUrl != null
+                      ? CustomNetworkImage(
+                        imageUrl:
+                            '${ApiConstants.imageBaseUrl}${message.imageUrl}',
+                        borderRadius: BorderRadius.circular(8.r),
+                        height: 140.h,
+                        width: 155.w,
+                      )
+                      : Text(
+                        "${message.text}",
+                        style: TextStyle(color: Colors.white, fontSize: 16.sp),
+                        textAlign: TextAlign.start,
+                      ),
                   Text(
-                    message['message'] ?? "",
-                    style: const TextStyle(color: Colors.white),
-                    textAlign: TextAlign.start,
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      'time',
-                      textAlign: TextAlign.end,
-                      style: TextStyle(color: Colors.white, fontSize: 12.sp),
-                    ),
+                    '${TimeFormatHelper.timeAgo(message.createdAt!)}',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(color: Colors.white, fontSize: 12.sp),
                   ),
                 ],
               ),
             ),
           ),
         ),
-        SizedBox(width: 8.w),
-        Container(
-          height: 38.h,
-          width: 38.w,
-          clipBehavior: Clip.antiAlias,
-          decoration: const BoxDecoration(shape: BoxShape.circle),
-          child: Image.asset(message['image']!, fit: BoxFit.cover),
-        ),
       ],
     );
   }
 
   //==================================> Gallery <===============================
-  Future openGallery() async {
+  /*  Future openGallery() async {
     final pickImage = await ImagePicker().pickImage(
       source: ImageSource.gallery,
     );
@@ -422,16 +344,6 @@ class _MessageScreenState extends State<MessageScreen> {
       selectedIMage = File(pickImage!.path);
       _image = File(pickImage.path).readAsBytesSync();
     });
-  }
-  /*Future _pickImageFromGallery() async {
-    final returnImage =
-    await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (returnImage == null) return;
-    setState(() {
-      selectedIMage = File(returnImage.path);
-      _image = File(returnImage.path).readAsBytesSync();
-    });
-    // Get.back();
   }*/
 
   //================================> Popup Menu Button Method <=============================
@@ -491,12 +403,12 @@ class _MessageScreenState extends State<MessageScreen> {
             color: AppColors.cardColor,
           ),
           height: 265.h,
-          padding: EdgeInsets.symmetric(horizontal:  16.w, vertical: 8.h),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
           child: Column(
             children: [
               SizedBox(
                 width: 48.w,
-                child: Divider(color: AppColors.greyColor, thickness: 5.5,),
+                child: Divider(color: AppColors.greyColor, thickness: 5.5),
               ),
               SizedBox(height: 12.h),
               CustomText(

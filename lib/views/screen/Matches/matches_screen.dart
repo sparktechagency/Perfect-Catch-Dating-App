@@ -95,8 +95,7 @@ class _MatchesScreenState extends State<MatchesScreen> {
                         ),
                     itemCount: _matchController.matchesModel.length,
                     itemBuilder: (context, index) {
-                      final MatchesModel user =
-                          _matchController.matchesModel[index];
+                      final MatchesModel user = _matchController.matchesModel[index];
                       return GestureDetector(
                         onTap: () {
                           Get.toNamed(

@@ -8,6 +8,7 @@ class PrefsHelper extends GetxController {
   static String? myImage = "";
   static String myName = "";
   static String myPhone = "";
+  static String userId = "";
   static bool isProvider = false;
   static String mySubscription = "premium-plus";
   static String localizationLanguageCode = 'en';
