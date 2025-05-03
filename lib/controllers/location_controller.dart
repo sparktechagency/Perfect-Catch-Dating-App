@@ -24,6 +24,7 @@ class LocationController extends GetxController {
       if (permission.isDenied || permission.isPermanentlyDenied) {
         permission = await Permission.location.request();
         if (permission.isDenied || permission.isPermanentlyDenied) {
+          permission = await Permission.location.request();
           Fluttertoast.showToast(msg: "Location permission is required to set your location.");
           return;
         }

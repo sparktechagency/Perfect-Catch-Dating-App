@@ -23,8 +23,8 @@ class UpdateGalleryController extends GetxController {
 
     uploadGalleryLoading(true);
     List<MultipartBody> multipartBody =
-        imagePaths.map((path) => MultipartBody('gallery', File(path))).toList();
-    var response = await ApiClient.putMultipartData(
+        imagePaths.map((path) => MultipartBody('photos', File(path))).toList();
+    var response = await ApiClient.patchMultipartData(
       ApiConstants.updateGalleryEndPoint,
       {},
       multipartBody: multipartBody,
