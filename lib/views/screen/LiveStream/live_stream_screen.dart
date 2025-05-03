@@ -1,5 +1,7 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:perfect_catch_dating_app/helpers/route.dart';
 import 'package:perfect_catch_dating_app/utils/app_images.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -100,8 +102,10 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
     _engine.switchCamera();
   }
 
-  void _endCall() {
-
+  void _endCall() async{
+    await _engine.leaveChannel();
+    await _engine.release();
+    Get.toNamed(AppRoutes.homeScreen);
   }
 
   @override

@@ -36,4 +36,5 @@ class ApiConstants {
   static const String privacyPolicyEndPoint = "/info/privacy-policy";
   static const String aboutUsEndPoint = "/info/about-us";
   static const String setLocationEndPoint = "/info/location";
+  static const String getAllUsersProfilesEndPoint = "/users/all/profiles";
 }
