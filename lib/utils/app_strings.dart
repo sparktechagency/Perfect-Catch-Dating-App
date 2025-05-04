@@ -106,6 +106,7 @@ class AppStrings {
   static String location   = 'Location';
   static String language   = 'Language';
   static String height   = 'Height';
+  static String weight   = 'Weight';
   static String maritalStatus   = 'Marital Status';
   static String religion   = 'Religion';
   static String qualification   = 'Qualification';

@@ -1,6 +1,10 @@
 class ProfileModel {
   final Location? location;
   final Subscription? subscription;
+  final dynamic callingCode;
+  final dynamic weight;
+  final dynamic personalStatus;
+  final dynamic educationQualification;
   final String? firstName;
   final String? lastName;
   final String? fullName;
@@ -11,11 +15,13 @@ class ProfileModel {
   final String? backgroundMusic;
   final String? gender;
   final String? role;
+  final dynamic phoneNumber;
+  final dynamic dateOfBirth;
   final dynamic country;
   final dynamic state;
   final dynamic city;
   final dynamic religion;
-  final List<String>? interested;
+  final List<dynamic>? interested;
   final List<dynamic>? lickList;
   final dynamic height;
   final List<dynamic>? idealMatch;
@@ -37,6 +43,10 @@ class ProfileModel {
   ProfileModel({
     this.location,
     this.subscription,
+    this.callingCode,
+    this.weight,
+    this.personalStatus,
+    this.educationQualification,
     this.firstName,
     this.lastName,
     this.fullName,
@@ -47,6 +57,8 @@ class ProfileModel {
     this.backgroundMusic,
     this.gender,
     this.role,
+    this.phoneNumber,
+    this.dateOfBirth,
     this.country,
     this.state,
     this.city,
@@ -74,6 +86,10 @@ class ProfileModel {
   factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
     location: json["location"] == null ? null : Location.fromJson(json["location"]),
     subscription: json["subscription"] == null ? null : Subscription.fromJson(json["subscription"]),
+    callingCode: json["callingCode"],
+    weight: json["weight"],
+    personalStatus: json["personalStatus"],
+    educationQualification: json["educationQualification"],
     firstName: json["firstName"],
     lastName: json["lastName"],
     fullName: json["fullName"],
@@ -84,11 +100,13 @@ class ProfileModel {
     backgroundMusic: json["backgroundMusic"],
     gender: json["gender"],
     role: json["role"],
+    phoneNumber: json["phoneNumber"],
+    dateOfBirth: json["dateOfBirth"],
     country: json["country"],
     state: json["state"],
     city: json["city"],
     religion: json["religion"],
-    interested: json["interested"] == null ? [] : List<String>.from(json["interested"]!.map((x) => x)),
+    interested: json["interested"] == null ? [] : List<dynamic>.from(json["interested"]!.map((x) => x)),
     lickList: json["lickList"] == null ? [] : List<dynamic>.from(json["lickList"]!.map((x) => x)),
     height: json["height"],
     idealMatch: json["idealMatch"] == null ? [] : List<dynamic>.from(json["idealMatch"]!.map((x) => x)),
@@ -111,6 +129,10 @@ class ProfileModel {
   Map<String, dynamic> toJson() => {
     "location": location?.toJson(),
     "subscription": subscription?.toJson(),
+    "callingCode": callingCode,
+    "weight": weight,
+    "personalStatus": personalStatus,
+    "educationQualification": educationQualification,
     "firstName": firstName,
     "lastName": lastName,
     "fullName": fullName,
@@ -121,6 +143,8 @@ class ProfileModel {
     "backgroundMusic": backgroundMusic,
     "gender": gender,
     "role": role,
+    "phoneNumber": phoneNumber,
+    "dateOfBirth": dateOfBirth,
     "country": country,
     "state": state,
     "city": city,
@@ -148,7 +172,7 @@ class ProfileModel {
 
 class Location {
   final String? type;
-  final List<double>? coordinates;
+  final List<num>? coordinates;  // Change List<int> to List<num> to handle both int and double
   final String? locationName;
 
   Location({
@@ -159,7 +183,9 @@ class Location {
 
   factory Location.fromJson(Map<String, dynamic> json) => Location(
     type: json["type"],
-    coordinates: json["coordinates"] == null ? [] : List<double>.from(json["coordinates"]!.map((x) => x?.toDouble())),
+    coordinates: json["coordinates"] == null
+        ? []
+        : List<num>.from(json["coordinates"]!.map((x) => x)),  // Use 'num' instead of 'int'
     locationName: json["locationName"],
   );
 

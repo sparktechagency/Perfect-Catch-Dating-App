@@ -25,10 +25,12 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _profileController.getProfileData();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _profileController.getProfileData();
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -266,12 +268,12 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                               Padding(
                                 padding: EdgeInsets.all(8.w),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
-                                    _languageText('English'),
-                                    _languageText('Bangla'),
-                                    _languageText('Hindi'),
+                                    if (_profileController.profileModel.value.language?.isEmpty ?? true)
+                                      _languageText('No languages available'),
+                                    ...( _profileController.profileModel.value.language ?? []).map((language) => _languageText(language)).toList(),
+
                                   ],
                                 ),
                               ),
@@ -302,12 +304,12 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                   children: [
                                     _detailColumn(
                                       AppStrings.dateOfBirth.tr,
-                                      '1-10-1995',
+                                      '${_profileController.profileModel.value.dateOfBirth}' ?? 'N/A',
                                     ),
-                                    _detailColumn(AppStrings.height.tr, '6.1 In'),
+                                    _detailColumn(AppStrings.height.tr, '${_profileController.profileModel.value.height}'),
                                     _detailColumn(
-                                      AppStrings.maritalStatus.tr,
-                                      'Single',
+                                      AppStrings.weight.tr,
+                                      '${_profileController.profileModel.value.weight}',
                                     ),
                                   ],
                                 ),
@@ -318,15 +320,15 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                   children: [
                                     _detailColumn(
                                       AppStrings.religion.tr,
-                                      'Islam',
+                                      '${_profileController.profileModel.value.religion}',
                                     ),
                                     _detailColumn(
                                       AppStrings.qualification.tr,
-                                      'BSC',
+                                      '${_profileController.profileModel.value.educationQualification}',
                                     ),
                                     _detailColumn(
-                                      AppStrings.politics.tr,
-                                      'Moderate',
+                                      AppStrings.maritalStatus.tr,
+                                      '${_profileController.profileModel.value.personalStatus}',
                                     ),
                                   ],
                                 ),
@@ -343,8 +345,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                           bottom: 8.h,
                         ),
                         CustomText(
-                          text:
-                              'Hello there! I\'m Vickie, seeking a lifelong adventure partner. A blend of tradition and modernity, I find joy in the simple moments and cherish family values. With a heart that believes in love\'s magic, I\'m looking someone to share happiness.'
+                          text: '${_profileController.profileModel.value.about}'
                                   .tr,
                           maxLine: 20,
                           textAlign: TextAlign.start,
@@ -361,9 +362,10 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                           spacing: 8.0,
                           runSpacing: 8.0,
                           children: [
-                            _interestChip('Reading'),
-                            _interestChip('Music'),
-                            _interestChip('Sports'),
+                            if (_profileController.profileModel.value.interested?.isEmpty ?? true)
+                              _interestChip('No interests available'),
+                            ...( _profileController.profileModel.value.interested ?? []).map((item) => _interestChip(item)).toList(),
+
                           ],
                         ),
                         SizedBox(height: 24.h),
@@ -387,11 +389,11 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                       mainAxisSpacing: 8.h,
                                       childAspectRatio: 0.9,
                                     ),
-                                itemCount: 4,
+                                itemCount: _profileController.profileModel.value.photos!.length,
                                 itemBuilder: (context, index) {
                                   return CustomNetworkImage(
                                     imageUrl:
-                                    'https://img.freepik.com/free-photo/medium-shot-guy-with-crossed-arms_23-2148227939.jpg?ga=GA1.1.1702237683.1725447794&semt=ais_hybrid&w=740',
+                                    '${ApiConstants.imageBaseUrl}${_profileController.profileModel.value.photos![index]}',
                                     height: 75.h,
                                     width: 70.w,
                                     borderRadius: BorderRadius.circular(16.r),
