@@ -5,15 +5,32 @@ import 'package:get/get.dart';
 import 'package:perfect_catch_dating_app/utils/app_icons.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_list_tile.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_network_image.dart';
+import '../../../controllers/profile_controller.dart';
 import '../../../helpers/route.dart';
+import '../../../service/api_constants.dart';
 import '../../../utils/app_colors.dart';
 import '../../../utils/app_strings.dart';
 import '../../base/bottom_menu..dart';
 import '../../base/custom_button.dart';
+import '../../base/custom_page_loading.dart';
 import '../../base/custom_text.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  final ProfileController _profileController = Get.put(ProfileController());
+
+  @override
+  void initState() {
+    _profileController.getProfileData();
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,132 +43,136 @@ class ProfileScreen extends StatelessWidget {
           fontWeight: FontWeight.w600,
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
-          child: Card(
-            elevation: 5.5,
-            shadowColor: AppColors.primaryColor,
-            color: Colors.white,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 16.h),
-              child: Center(
-                child: Column(
-                  children: [
-                    //====================> User Profile Image <====================
-                    CustomNetworkImage(
-                      imageUrl:
-                      'https://img.freepik.com/free-photo/medium-shot-guy-with-crossed-arms_23-2148227939.jpg?ga=GA1.1.1702237683.1725447794&semt=ais_hybrid&w=740',
-                      height: 135.h,
-                      width: 135.w,
-                      borderRadius: BorderRadius.circular(24.r),
-                      border: Border.all(
-                        width: 1.w,
-                        color: AppColors.primaryColor,
-                      ),
-                    ),
-                    SizedBox(height: 12.h),
-                    //=========================> User Name <========================
-                    CustomText(
-                      text: 'Bashar Islam',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20.sp,
-                    ),
-                    SizedBox(height: 24.h),
-                    //===================> Subscription Container <=================
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.cardColor,
-                        borderRadius: BorderRadius.circular(12.r),
+      body: Obx(
+            () => _profileController.profileLoading.value
+            ? const Center(child: CustomPageLoading())
+            : SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+            child: Card(
+              elevation: 5.5,
+              shadowColor: AppColors.primaryColor,
+              color: Colors.white,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 16.h),
+                child: Center(
+                  child: Column(
+                    children: [
+                      //====================> User Profile Image <====================
+                      CustomNetworkImage(
+                        imageUrl:
+                        '${ApiConstants.imageBaseUrl}${_profileController.profileModel.value.profileImage}',
+                        height: 135.h,
+                        width: 135.w,
+                        borderRadius: BorderRadius.circular(24.r),
                         border: Border.all(
-                          width: 2.w,
+                          width: 1.w,
                           color: AppColors.primaryColor,
                         ),
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.all(12.w),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(AppIcons.sub),
-                            SizedBox(width: 8.w),
-                            //===================> Subscription Pack <================
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomText(
-                                  text: AppStrings.basicPackage.tr,
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                CustomText(
-                                  text: AppStrings.months.tr,
-                                  fontSize: 12.sp,
-                                ),
-                              ],
-                            ),
-                            Spacer(),
-                            //===================> Explore Button <================
-                            CustomButton(
-                              onTap: () {
-                                Get.toNamed(AppRoutes.subscriptionScreen);
-                              },
-                              text: AppStrings.explore.tr,
-                              fontSize: 10.sp,
-                              width: 80.w,
-                              height: 27.h,
-                            ),
-                          ],
+                      SizedBox(height: 12.h),
+                      //=========================> User Name <========================
+                      CustomText(
+                        text: '${_profileController.profileModel.value.fullName}',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20.sp,
+                      ),
+                      SizedBox(height: 24.h),
+                      //===================> Subscription Container <=================
+                      Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.cardColor,
+                          borderRadius: BorderRadius.circular(12.r),
+                          border: Border.all(
+                            width: 2.w,
+                            color: AppColors.primaryColor,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(12.w),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(AppIcons.sub),
+                              SizedBox(width: 8.w),
+                              //===================> Subscription Pack <================
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomText(
+                                    text: AppStrings.basicPackage.tr,
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  CustomText(
+                                    text: AppStrings.months.tr,
+                                    fontSize: 12.sp,
+                                  ),
+                                ],
+                              ),
+                              Spacer(),
+                              //===================> Explore Button <================
+                              CustomButton(
+                                onTap: () {
+                                  Get.toNamed(AppRoutes.subscriptionScreen);
+                                },
+                                text: AppStrings.explore.tr,
+                                fontSize: 10.sp,
+                                width: 80.w,
+                                height: 27.h,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 20.h),
-                    //===================> Personal Information ListTile <=================
-                    CustomListTile(
-                      onTap: (){
-                        Get.toNamed(AppRoutes.personalInformationScreen);
-                      },
-                      title: AppStrings.personalInformation.tr,
-                      prefixIcon: SvgPicture.asset(AppIcons.profile),
-                      suffixIcon: SvgPicture.asset(AppIcons.rightArrow),
-                    ),
-                    //===================> My friends list ListTile <=================
-                    CustomListTile(
-                      onTap: (){
-                        Get.toNamed(AppRoutes.friendsListScreen);
-                      },
-                      title: AppStrings.myFriendsList.tr,
-                      prefixIcon: SvgPicture.asset(AppIcons.profile),
-                      suffixIcon: SvgPicture.asset(AppIcons.rightArrow),
-                    ),
-                    //===================> My Wallet ListTile <=================
-                    CustomListTile(
-                      onTap: (){
-                        Get.toNamed(AppRoutes.myWalletScreen);
-                      },
-                      title: AppStrings.myWallet.tr,
-                      prefixIcon: SvgPicture.asset(AppIcons.myWallet),
-                      suffixIcon: SvgPicture.asset(AppIcons.rightArrow),
-                    ),
-                    //===================> Setting ListTile <=================
-                    CustomListTile(
-                      onTap: (){
-                        Get.toNamed(AppRoutes.settingsScreen);
-                      },
-                      title: AppStrings.setting.tr,
-                      prefixIcon: SvgPicture.asset(AppIcons.setting),
-                      suffixIcon: SvgPicture.asset(AppIcons.rightArrow),
-                    ),
-                    //===================> Logout ListTile <=================
-                    CustomListTile(
-                      onTap: (){
-                        _showCustomBottomSheet(context);
-                      },
-                      title: AppStrings.logout.tr,
-                      prefixIcon: SvgPicture.asset(AppIcons.logout),
-                      suffixIcon: SvgPicture.asset(AppIcons.rightArrow),
-                    ),
-        
-                  ],
+                      SizedBox(height: 20.h),
+                      //===================> Personal Information ListTile <=================
+                      CustomListTile(
+                        onTap: (){
+                          Get.toNamed(AppRoutes.personalInformationScreen);
+                        },
+                        title: AppStrings.personalInformation.tr,
+                        prefixIcon: SvgPicture.asset(AppIcons.profile),
+                        suffixIcon: SvgPicture.asset(AppIcons.rightArrow),
+                      ),
+                      //===================> My friends list ListTile <=================
+                      CustomListTile(
+                        onTap: (){
+                          Get.toNamed(AppRoutes.friendsListScreen);
+                        },
+                        title: AppStrings.myFriendsList.tr,
+                        prefixIcon: SvgPicture.asset(AppIcons.profile),
+                        suffixIcon: SvgPicture.asset(AppIcons.rightArrow),
+                      ),
+                      //===================> My Wallet ListTile <=================
+                      CustomListTile(
+                        onTap: (){
+                          Get.toNamed(AppRoutes.myWalletScreen);
+                        },
+                        title: AppStrings.myWallet.tr,
+                        prefixIcon: SvgPicture.asset(AppIcons.myWallet),
+                        suffixIcon: SvgPicture.asset(AppIcons.rightArrow),
+                      ),
+                      //===================> Setting ListTile <=================
+                      CustomListTile(
+                        onTap: (){
+                          Get.toNamed(AppRoutes.settingsScreen);
+                        },
+                        title: AppStrings.setting.tr,
+                        prefixIcon: SvgPicture.asset(AppIcons.setting),
+                        suffixIcon: SvgPicture.asset(AppIcons.rightArrow),
+                      ),
+                      //===================> Logout ListTile <=================
+                      CustomListTile(
+                        onTap: (){
+                          _showCustomBottomSheet(context);
+                        },
+                        title: AppStrings.logout.tr,
+                        prefixIcon: SvgPicture.asset(AppIcons.logout),
+                        suffixIcon: SvgPicture.asset(AppIcons.rightArrow),
+                      ),
+
+                    ],
+                  ),
                 ),
               ),
             ),
