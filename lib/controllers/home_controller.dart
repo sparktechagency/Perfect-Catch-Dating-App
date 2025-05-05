@@ -81,7 +81,6 @@ class HomeController extends GetxController{
         ApiConstants.getSingleHomeUserEndPoint(userId),
         headers: headers
     );
-print("response details : ${response.body}");
     if(response.statusCode == 200 || response.statusCode == 201){
       isProfilesDetailsLoading.value = false;
       user.value = UserModel.fromJson(response.body['data']['attributes']);

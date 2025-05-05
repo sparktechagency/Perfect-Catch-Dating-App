@@ -1,16 +1,49 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:perfect_catch_dating_app/helpers/prefs_helpers.dart';
 import 'package:perfect_catch_dating_app/helpers/route.dart';
+import 'package:perfect_catch_dating_app/service/api_client.dart';
+import 'package:perfect_catch_dating_app/service/api_constants.dart';
+import 'package:perfect_catch_dating_app/utils/app_constants.dart';
 import 'package:perfect_catch_dating_app/utils/app_images.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../base/bottom_menu..dart';
 import '../../base/custom_text.dart';
 
-const appId = "4d1e6903e78845f5bcd26bbecf035f05";
+const appId = "1e699e1a1aa34149b92e62c83ff3bd22";
 const token = "007eJxTYJBwf7TEjlN1t/ybB0zzJl9V+VQol6+gIfPlnT3X3bav234oMJikGKaaWRoYp5pbWJiYppkmJacYmSUlpSanGRibphmY9q4TyWgIZGTwTsllYIRCEF+YoSwxLzM1viC1KC01uSQ+ObEkOYOBAQA9/CUq";
-const channel = "vanie_perfect_catch";
+const channel = "Test";
+
+class LiveStreamController extends GetxController{
+  RxBool isLiveStreamingLoading = false.obs;
+
+  Future<void> getLiveStreamingProfile({required String uuid}) async{
+    isLiveStreamingLoading.value = true;
+    final token = await PrefsHelper.getString(AppConstants.bearerToken);
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    Response response = await ApiClient.getData(
+        ApiConstants.getLiveStreamEndPoint(uuid),
+        headers: headers
+    );
+
+    print("response live streaming : ${response.body}");
+
+    if(response.statusCode == 200 || response.statusCode == 201){
+      isLiveStreamingLoading.value = false;
+      response.body['data']['token'];
+      response.body['data']['token'];
+    }
+
+    isLiveStreamingLoading.value = false;
+  }
+
+}
 
 class LiveStreamScreen extends StatefulWidget {
   const LiveStreamScreen({super.key});
@@ -21,6 +54,7 @@ class LiveStreamScreen extends StatefulWidget {
 
 class _LiveStreamScreenState extends State<LiveStreamScreen> {
 
+  final LiveStreamController liveStreamController = Get.put(LiveStreamController());
   int? _remoteUid;
   bool _localUserJoined = false;
   bool _muted = false;
@@ -30,7 +64,8 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
   @override
   void initState() {
     super.initState();
-    initAgora();
+    liveStreamController.getLiveStreamingProfile(uuid: "0");
+    // initAgora();
   }
 
   Future<void> initAgora() async {
