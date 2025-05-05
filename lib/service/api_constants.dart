@@ -1,6 +1,18 @@
 class ApiConstants {
+  //======================> Live Api <========================
+  // static const String baseUrl = "http://10.0.60.18:9090/api/v1";
+  // static const String socketBaseUrl = "http://10.0.60.18:9090/api/v1";
+  // static const String imageBaseUrl = "http://10.0.60.18:9090";
+
+
+
+  //======================> Local Api <========================
   static const String baseUrl = "http://10.0.60.18:9090/api/v1";
+  static const String socketBaseUrl = "http://10.0.60.18:9091";
   static const String imageBaseUrl = "http://10.0.60.18:9090";
+
+
+
   static const String signUpEndPoint = "/auth/register";
   static const String signInEndPoint = "/auth/login";
   static const String updateGalleryEndPoint = "/users/self/photos";
@@ -37,4 +49,5 @@ class ApiConstants {
   static const String aboutUsEndPoint = "/info/about-us";
   static const String setLocationEndPoint = "/info/location";
   static const String getAllUsersProfilesEndPoint = "/users/all/profiles";
+  static const String usersReactionEndPoint = "/users/reaction";
 }

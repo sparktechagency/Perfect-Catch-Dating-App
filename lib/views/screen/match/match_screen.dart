@@ -1,19 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:perfect_catch_dating_app/helpers/prefs_helpers.dart';
+import 'package:perfect_catch_dating_app/service/api_constants.dart';
+import 'package:perfect_catch_dating_app/service/socket_services.dart';
 import 'package:perfect_catch_dating_app/utils/app_colors.dart';
+import 'package:perfect_catch_dating_app/utils/app_constants.dart';
 import 'package:perfect_catch_dating_app/utils/app_icons.dart';
 import 'package:perfect_catch_dating_app/utils/app_images.dart';
 
 import '../../base/custom_text_field.dart';
 
-class HomeMatchScreen extends StatelessWidget {
+class HomeMatchScreen extends StatefulWidget {
   const HomeMatchScreen({super.key});
 
   @override
+  State<HomeMatchScreen> createState() => _HomeMatchScreenState();
+}
+
+class _HomeMatchScreenState extends State<HomeMatchScreen> {
+  final SocketServices _socket = SocketServices();
+  String userId = '';
+  String userImage = '';
+
+  @override
+  void initState() {
+    super.initState();
+    PrefsHelper.getString(AppConstants.userId).then((id) {
+      userId = id;
+      _initializeSocket(userId);
+    });
+    PrefsHelper.getString(AppConstants.userId).then((image) {
+      userImage = image;
+    });
+  }
+
+  @override
+  void dispose() {
+    _socket.disconnect();
+    super.dispose();
+  }
+
+  void _initializeSocket(String receiver) async {
+    await _socket.init();
+
+    _socket.socket!.on('message', (data) {
+      if(mounted){
+        if(data is List){
+          if(data.isNotEmpty){
+            Fluttertoast.showToast(msg: "Your message sent successfully");
+            Get.back();
+          }
+          else{
+            Fluttertoast.showToast(msg: "Something went wrong!!");
+          }
+        }
+        else{
+          Fluttertoast.showToast(msg: "Something went wrong!!");
+        }
+        print("data print : ${data}");
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+    final data = Get.arguments;
+    // data["matchesProfileId"]
+    final TextEditingController msgController = TextEditingController();
+
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -55,7 +115,7 @@ class HomeMatchScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: NetworkImage(
-                                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5j35_oC1j1LFQJDFrG8yTXRw7uovR3b1u4w&s',
+                                "${ApiConstants.imageBaseUrl}$userImage",
                               ),
                               fit: BoxFit.cover,
                             ),
@@ -76,7 +136,7 @@ class HomeMatchScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: NetworkImage(
-                                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5j35_oC1j1LFQJDFrG8yTXRw7uovR3b1u4w&s',
+                                data != null ? "${ApiConstants.imageBaseUrl}${data["matchesUserProfile"]}" : "",
                               ),
                               fit: BoxFit.cover,
                             ),
@@ -196,14 +256,24 @@ class HomeMatchScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: CustomTextField(
-                  controller: TextEditingController(),
+                  controller: msgController,
                   hintText: "Write your message...",
                 ),
               ),
 
               SizedBox(width: 10),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                 if(data != null){
+                   _socket.emit("new-message", {
+                     "sender": userId,
+                     "receiver": data["matchesProfileId"],
+                     "text": msgController.text,
+                     "msgByUserId": userId,
+                   });
+                   msgController.clear();
+                 }
+                },
                 child: SvgPicture.asset(AppIcons.sendIcon),
               ),
             ],
