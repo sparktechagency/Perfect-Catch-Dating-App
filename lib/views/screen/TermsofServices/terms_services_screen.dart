@@ -19,8 +19,8 @@ class TermsServicesScreen extends StatelessWidget {
       appBar: CustomAppBar(title: AppStrings.termsConditions.tr),
       body: Obx(
         () =>
-            _settingController.termContent.value.isEmpty
-                ? Center(child: CustomText(text: 'No data found'))
+        _settingController.termsConditionLoading.value
+            ? Center(child: CustomPageLoading())
                 : SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.symmetric(

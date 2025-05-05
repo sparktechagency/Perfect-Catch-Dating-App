@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../controllers/settings_controller.dart';
 import '../../../utils/app_strings.dart';
 import '../../base/custom_app_bar.dart';
+import '../../base/custom_page_loading.dart';
 import '../../base/custom_text.dart';
 
 class AboutUsScreen extends StatelessWidget {
@@ -18,8 +19,8 @@ class AboutUsScreen extends StatelessWidget {
       appBar: CustomAppBar(title: AppStrings.aboutUs.tr),
       body: Obx(
         () =>
-            _settingController.aboutContent.value.isEmpty
-                ? Center(child: CustomText(text: 'No data found'))
+        _settingController.aboutUsLoading.value
+            ? Center(child: CustomPageLoading())
                 : SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.symmetric(

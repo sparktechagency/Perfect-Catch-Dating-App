@@ -6,9 +6,11 @@ import 'package:perfect_catch_dating_app/utils/app_icons.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_list_tile.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_network_image.dart';
 import '../../../controllers/profile_controller.dart';
+import '../../../helpers/prefs_helpers.dart';
 import '../../../helpers/route.dart';
 import '../../../service/api_constants.dart';
 import '../../../utils/app_colors.dart';
+import '../../../utils/app_constants.dart';
 import '../../../utils/app_strings.dart';
 import '../../base/bottom_menu..dart';
 import '../../base/custom_button.dart';
@@ -243,7 +245,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   CustomButton(
                     width: 124.w,
                     height: 46.h,
-                    onTap: () {
+                    onTap: () async {
+                      await PrefsHelper.remove(AppConstants.isLogged);
+                      await PrefsHelper.remove(AppConstants.userId);
+                      await PrefsHelper.remove(AppConstants.bearerToken);
+                      await PrefsHelper.remove(AppConstants.hasUpdateGallery);
                       Get.offAllNamed(AppRoutes.signInScreen);
                     },
                     text: "Yes",
