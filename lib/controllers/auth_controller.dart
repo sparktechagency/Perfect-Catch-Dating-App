@@ -178,6 +178,7 @@ class AuthController extends GetxController {
       await PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['attributes']['tokens']['access']['token']);
       await PrefsHelper.setString(AppConstants.userId, response.body['data']['attributes']['user']['id']);
       await PrefsHelper.setString(AppConstants.userName, response.body['data']['attributes']['user']['firstName']);
+      await PrefsHelper.setString(AppConstants.userImage, response.body['data']['attributes']['user']['profileImage']);
       await PrefsHelper.setBool(AppConstants.isLogged, true);
       bool condition = response.body['data']['attributes']['user']['isProfileCompleted'];
       if(!condition){
