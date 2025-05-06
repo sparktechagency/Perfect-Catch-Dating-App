@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:perfect_catch_dating_app/controllers/song_controller.dart';
+import 'package:perfect_catch_dating_app/service/api_constants.dart';
 import 'package:perfect_catch_dating_app/utils/app_colors.dart';
 import 'package:perfect_catch_dating_app/utils/app_strings.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_network_image.dart';
@@ -15,6 +17,8 @@ class SongListScreen extends StatefulWidget {
 }
 
 class _SongListScreenState extends State<SongListScreen> {
+  final SongController _songController = Get.put(SongController());
+
   final List<Map<String, String>> songs = [
     {
       'title': 'Electric Feel',
@@ -64,6 +68,7 @@ class _SongListScreenState extends State<SongListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _songController.getSongList();
     return Scaffold(
       appBar: CustomAppBar(title: AppStrings.songList.tr),
       body: Padding(
@@ -111,7 +116,8 @@ class _SongListScreenState extends State<SongListScreen> {
                   return Row(
                     children: [
                       CustomNetworkImage(
-                        imageUrl: song['image']!,
+                        imageUrl: '${ApiConstants.imageBaseUrl}${_songController.songModel.value.image}',
+                        //song['image']!,
                         height: 60.h,
                         width: 60.w,
                         borderRadius: BorderRadius.circular(12.r),
@@ -122,14 +128,14 @@ class _SongListScreenState extends State<SongListScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             CustomText(
-                              text: song['title']!,
+                              text: '${_songController.songModel.value.name}',
                               fontWeight: FontWeight.bold,
                               fontSize: 16.sp,
                               maxLine: 2,
                               textAlign: TextAlign.start,
                               bottom: 4.h,
                             ),
-                            CustomText(text: song['artist']!),
+                            CustomText(text: '${_songController.songModel.value.subTitle}'),
                           ],
                         ),
                       ),

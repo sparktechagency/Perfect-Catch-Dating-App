@@ -18,7 +18,6 @@ class SupportScreen extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Container(
-          height: 215.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.r),
             color: AppColors.cardColor,
@@ -26,11 +25,12 @@ class SupportScreen extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 32.h),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 SvgPicture.asset(AppIcons.hello),
                 SizedBox(height: 32.h),
                 CustomListTile(
-                  title: 'Support@info.com',
+                  title: 'perfectcatchmanagment@gmail.com',
                   prefixIcon: SvgPicture.asset(AppIcons.mail),
                 ),
               ],

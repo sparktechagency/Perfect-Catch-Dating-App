@@ -154,6 +154,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         prefixIcon: SvgPicture.asset(AppIcons.myWallet),
                         suffixIcon: SvgPicture.asset(AppIcons.rightArrow),
                       ),
+                      //===================> All Song ListTile <=================
+                      CustomListTile(
+                        onTap: (){
+                          Get.toNamed(AppRoutes.songListScreen);
+                        },
+                        title: 'All Song List'.tr,
+                        prefixIcon: SvgPicture.asset(AppIcons.mus, color: Colors.grey),
+                        suffixIcon: SvgPicture.asset(AppIcons.rightArrow),
+                      ),
                       //===================> Setting ListTile <=================
                       CustomListTile(
                         onTap: (){

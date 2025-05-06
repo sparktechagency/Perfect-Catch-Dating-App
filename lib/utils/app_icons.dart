@@ -57,4 +57,5 @@ class AppIcons{
   static String doller ="$baseUrl/doller.svg";
   static String mail ="$baseUrl/mail.svg";
   static String hello ="$baseUrl/hello.svg";
+  static String mus ="$baseUrl/mus.svg";
 }
