@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:perfect_catch_dating_app/utils/app_strings.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_app_bar.dart';
 import '../../../../controllers/profile_controller.dart';
@@ -17,7 +18,8 @@ class PersonalInformationScreen extends StatefulWidget {
   const PersonalInformationScreen({super.key});
 
   @override
-  State<PersonalInformationScreen> createState() => _PersonalInformationScreenState();
+  State<PersonalInformationScreen> createState() =>
+      _PersonalInformationScreenState();
 }
 
 class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
@@ -31,15 +33,16 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: AppStrings.personalInformation.tr),
-      body: Obx(
-            () => _profileController.profileLoading.value
-            ? const Center(child: CustomPageLoading())
-            : SingleChildScrollView(
+      body: Obx(() {
+        if (_profileController.profileLoading.value) {
+          const Center(child: CustomPageLoading());
+        }
+        var data = _profileController.profileModel.value;
+        return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -47,7 +50,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
               Stack(
                 children: [
                   CustomNetworkImage(
-                    imageUrl: '${ApiConstants.imageBaseUrl}${_profileController.profileModel.value.profileImage}',
+                    imageUrl:
+                        '${ApiConstants.imageBaseUrl}${_profileController.profileModel.value.profileImage}',
                     height: 369.h,
                     width: 402.w,
                     borderRadius: BorderRadius.circular(8.r),
@@ -58,7 +62,15 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                     top: 16.h,
                     child: InkWell(
                       onTap: () {
-                        Get.toNamed(AppRoutes.editProfileScreen);
+                        Get.toNamed(
+                          AppRoutes.editProfileScreen,
+                          parameters: {
+                            'firstName': data.firstName ?? '',
+                            'lastName': data.lastName ?? '',
+                            'dateOfBirth': '${data.dateOfBirth}' ?? '',
+                            'phoneNumber': '${data.phoneNumber}' ?? '',
+                          },
+                        );
                       },
                       child: SvgPicture.asset(AppIcons.edit),
                     ),
@@ -72,7 +84,10 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16.r),
-                    border: Border.all(width: 1.w, color: AppColors.borderColor),
+                    border: Border.all(
+                      width: 1.w,
+                      color: AppColors.borderColor,
+                    ),
                   ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(
@@ -151,13 +166,17 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   CustomText(
-                                    text: '${_profileController.profileModel.value.fullName!.capitalize}',
+                                    text:
+                                        '${_profileController.profileModel.value.fullName!.capitalize}',
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.w600,
                                     maxLine: 3,
                                     bottom: 8.h,
                                   ),
-                                  CustomText(text: '${_profileController.profileModel.value.gender!.capitalize}'),
+                                  CustomText(
+                                    text:
+                                        '${_profileController.profileModel.value.gender!.capitalize}',
+                                  ),
                                 ],
                               ),
                             ),
@@ -183,7 +202,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                     bottom: 8.h,
                                   ),
                                   CustomText(
-                                    text: '${_profileController.profileModel.value.email}',
+                                    text:
+                                        '${_profileController.profileModel.value.email}',
                                     maxLine: 5,
                                     textAlign: TextAlign.start,
                                   ),
@@ -208,7 +228,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                     bottom: 8.h,
                                   ),
                                   CustomText(
-                                    text: '${_profileController.profileModel.value.location!.locationName}',
+                                    text:
+                                        '${_profileController.profileModel.value.phoneNumber}',
                                     maxLine: 5,
                                     textAlign: TextAlign.start,
                                   ),
@@ -233,7 +254,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                     bottom: 8.h,
                                   ),
                                   CustomText(
-                                    text: '${_profileController.profileModel.value.location!.locationName}',
+                                    text:
+                                        '${_profileController.profileModel.value.location!.locationName}',
                                     maxLine: 5,
                                     textAlign: TextAlign.start,
                                   ),
@@ -268,12 +290,16 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                               Padding(
                                 padding: EdgeInsets.all(8.w),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   children: [
                                     if (_profileController.profileModel.value.language?.isEmpty ?? true)
                                       _languageText('No languages available'),
-                                    ...( _profileController.profileModel.value.language ?? []).map((language) => _languageText(language)).toList(),
-
+                                    ...(_profileController.profileModel.value.language ?? [])
+                                        .map(
+                                          (language) => _languageText(language),
+                                        )
+                                        .toList(),
                                   ],
                                 ),
                               ),
@@ -304,9 +330,12 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                   children: [
                                     _detailColumn(
                                       AppStrings.dateOfBirth.tr,
-                                      '${_profileController.profileModel.value.dateOfBirth}' ?? 'N/A',
+                                      DateFormat('yyyy-MM-dd').format(DateTime.parse('${_profileController.profileModel.value.dateOfBirth}')) ?? '',
                                     ),
-                                    _detailColumn(AppStrings.height.tr, '${_profileController.profileModel.value.height}'),
+                                    _detailColumn(
+                                      AppStrings.height.tr,
+                                      '${_profileController.profileModel.value.height}',
+                                    ),
                                     _detailColumn(
                                       AppStrings.weight.tr,
                                       '${_profileController.profileModel.value.weight}',
@@ -345,7 +374,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                           bottom: 8.h,
                         ),
                         CustomText(
-                          text: '${_profileController.profileModel.value.about}'
+                          text:
+                              '${_profileController.profileModel.value.about}'
                                   .tr,
                           maxLine: 20,
                           textAlign: TextAlign.start,
@@ -362,10 +392,20 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                           spacing: 8.0,
                           runSpacing: 8.0,
                           children: [
-                            if (_profileController.profileModel.value.interested?.isEmpty ?? true)
+                            if (_profileController
+                                    .profileModel
+                                    .value
+                                    .interested
+                                    ?.isEmpty ??
+                                true)
                               _interestChip('No interests available'),
-                            ...( _profileController.profileModel.value.interested ?? []).map((item) => _interestChip(item)).toList(),
-
+                            ...(_profileController
+                                        .profileModel
+                                        .value
+                                        .interested ??
+                                    [])
+                                .map((item) => _interestChip(item))
+                                .toList(),
                           ],
                         ),
                         SizedBox(height: 24.h),
@@ -389,11 +429,16 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                       mainAxisSpacing: 8.h,
                                       childAspectRatio: 0.9,
                                     ),
-                                itemCount: _profileController.profileModel.value.photos!.length,
+                                itemCount:
+                                    _profileController
+                                        .profileModel
+                                        .value
+                                        .photos!
+                                        .length,
                                 itemBuilder: (context, index) {
                                   return CustomNetworkImage(
                                     imageUrl:
-                                    '${ApiConstants.imageBaseUrl}${_profileController.profileModel.value.photos![index]}',
+                                        '${ApiConstants.imageBaseUrl}${_profileController.profileModel.value.photos![index]}',
                                     height: 75.h,
                                     width: 70.w,
                                     borderRadius: BorderRadius.circular(16.r),
@@ -411,8 +456,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
               SizedBox(height: 32.h),
             ],
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 

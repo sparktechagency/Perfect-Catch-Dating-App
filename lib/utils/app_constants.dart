@@ -10,6 +10,7 @@ class AppConstants{
   static const String phoneNumber = "PhoneNumber";
   static String isLogged = "IsLogged";
   static String userId = "userId";
+  static String userImage = "userImage";
   static String userName = "userName";
   static String hasUpdateGallery = "hasUpdateGallery";
   static String id = "id";
