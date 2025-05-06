@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:perfect_catch_dating_app/helpers/route.dart';
 import 'package:perfect_catch_dating_app/utils/app_colors.dart';
-import 'package:perfect_catch_dating_app/utils/app_images.dart';
 import 'package:perfect_catch_dating_app/utils/app_strings.dart';
+import 'package:perfect_catch_dating_app/views/base/custom_network_image.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_text.dart';
 import '../../base/custom_app_bar.dart';
 
@@ -17,20 +16,47 @@ class SongListScreen extends StatefulWidget {
 
 class _SongListScreenState extends State<SongListScreen> {
   final List<Map<String, String>> songs = [
-    {'title': 'Electric Feel', 'artist': 'MGMT', 'image': AppImages.music},
-    {'title': 'Sweetener', 'artist': 'Ariana Grande', 'image': AppImages.music},
-    {'title': 'Lemonade', 'artist': 'Calum Scott', 'image': AppImages.music},
-    {'title': 'Sunset', 'artist': 'Maggie Rogers', 'image': AppImages.music},
+    {
+      'title': 'Electric Feel',
+      'artist': 'MGMT',
+      'image':
+          'https://t4.ftcdn.net/jpg/04/10/17/95/360_F_410179527_ExxSzamajaCtS16dyIjzBRNruqlU5KMA.jpg',
+    },
+    {
+      'title': 'Sweetener',
+      'artist': 'Ariana Grande',
+      'image':
+          'https://t4.ftcdn.net/jpg/04/10/17/95/360_F_410179527_ExxSzamajaCtS16dyIjzBRNruqlU5KMA.jpg',
+    },
+    {
+      'title': 'Lemonade',
+      'artist': 'Calum Scott',
+      'image':
+          'https://t4.ftcdn.net/jpg/04/10/17/95/360_F_410179527_ExxSzamajaCtS16dyIjzBRNruqlU5KMA.jpg',
+    },
+    {
+      'title': 'Sunset',
+      'artist': 'Maggie Rogers',
+      'image':
+          'https://t4.ftcdn.net/jpg/04/10/17/95/360_F_410179527_ExxSzamajaCtS16dyIjzBRNruqlU5KMA.jpg',
+    },
     {
       'title': 'Ocean Eyes',
       'artist': 'Billie Eilish',
-      'image': AppImages.music,
+      'image':
+          'https://t4.ftcdn.net/jpg/04/10/17/95/360_F_410179527_ExxSzamajaCtS16dyIjzBRNruqlU5KMA.jpg',
     },
-    {'title': 'Shape Of You', 'artist': 'Ed Sheeran', 'image': AppImages.music},
+    {
+      'title': 'Shape Of You',
+      'artist': 'Ed Sheeran',
+      'image':
+          'https://t4.ftcdn.net/jpg/04/10/17/95/360_F_410179527_ExxSzamajaCtS16dyIjzBRNruqlU5KMA.jpg',
+    },
     {
       'title': 'Blinding Lights',
       'artist': 'The Weeknd',
-      'image': AppImages.music,
+      'image':
+          'https://t4.ftcdn.net/jpg/04/10/17/95/360_F_410179527_ExxSzamajaCtS16dyIjzBRNruqlU5KMA.jpg',
     },
   ];
 
@@ -63,19 +89,14 @@ class _SongListScreenState extends State<SongListScreen> {
             ),
             SizedBox(height: 16.h),
             //====================> Song Tab <===================
-            GestureDetector(
-              onTap: (){
-                Get.toNamed(AppRoutes.subscriptionScreen);
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.r),
-                  border: Border.all(width: 1.w, color: AppColors.primaryColor),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(10.w),
-                  child: CustomText(text: AppStrings.mostPopularSong.tr),
-                ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16.r),
+                border: Border.all(width: 1.w, color: AppColors.primaryColor),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(10.w),
+                child: CustomText(text: AppStrings.mostPopularSong.tr),
               ),
             ),
             SizedBox(height: 16.h),
@@ -87,31 +108,52 @@ class _SongListScreenState extends State<SongListScreen> {
                 separatorBuilder: (context, index) => Divider(),
                 itemBuilder: (context, index) {
                   final song = songs[index];
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: AssetImage(song['image']!),
-                    ),
-                    title: CustomText(text: song['title']!),
-                    subtitle: CustomText(text: song['artist']!),
-                    trailing: IconButton(
-                      icon: Icon(
-                        selectedSong == song['title']
-                            ? Icons.check_circle
-                            : Icons.download,
-                        color:
-                            selectedSong == song['title']
-                                ? AppColors.primaryColor
-                                : Colors.blue,
+                  return Row(
+                    children: [
+                      CustomNetworkImage(
+                        imageUrl: song['image']!,
+                        height: 60.h,
+                        width: 60.w,
+                        borderRadius: BorderRadius.circular(12.r),
                       ),
-                      onPressed: () {
-                        setState(() {
-                          selectedSong =
+                      SizedBox(width: 14.w),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomText(
+                              text: song['title']!,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.sp,
+                              maxLine: 2,
+                              textAlign: TextAlign.start,
+                              bottom: 4.h,
+                            ),
+                            CustomText(text: song['artist']!),
+                          ],
+                        ),
+                      ),
+                      Spacer(),
+                      IconButton(
+                        icon: Icon(
+                          selectedSong == song['title']
+                              ? Icons.check_circle
+                              : Icons.download,
+                          color:
                               selectedSong == song['title']
-                                  ? null
-                                  : song['title'];
-                        });
-                      },
-                    ),
+                                  ? AppColors.primaryColor
+                                  : Colors.blue,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            selectedSong =
+                                selectedSong == song['title']
+                                    ? null
+                                    : song['title'];
+                          });
+                        },
+                      ),
+                    ],
                   );
                 },
               ),
