@@ -12,6 +12,7 @@ class AppConstants{
   static String userId = "userId";
   static String userImage = "userImage";
   static String userName = "userName";
+  static String userImage = "userImage";
   static String hasUpdateGallery = "hasUpdateGallery";
   static String id = "id";
 

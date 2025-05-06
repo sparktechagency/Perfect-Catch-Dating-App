@@ -321,8 +321,7 @@ class ApiClient extends GetxService {
       var mainHeaders = {'Authorization': 'Bearer $bearerToken'};
       debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
       debugPrint('====> API Body: $body with ${multipartBody?.length} picture');
-      var request =
-      http.MultipartRequest('PATCH', Uri.parse(ApiConstants.baseUrl + uri));
+      var  request = http.MultipartRequest('PATCH', Uri.parse(ApiConstants.baseUrl + uri));
       request.fields.addAll(body);
 
       if (multipartBody!.isNotEmpty) {

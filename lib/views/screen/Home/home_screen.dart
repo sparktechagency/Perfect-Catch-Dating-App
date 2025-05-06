@@ -3,6 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:perfect_catch_dating_app/controllers/home_controller.dart';
+import 'package:perfect_catch_dating_app/models/user_model.dart';
+import 'package:perfect_catch_dating_app/service/api_constants.dart';
+import 'package:perfect_catch_dating_app/utils/style.dart';
 import 'package:tcard/tcard.dart';
 import '../../../helpers/route.dart';
 import '../../../utils/app_icons.dart';
@@ -38,10 +41,15 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   void _onSwipe(SwipDirection direction, int index) {
+    debugPrint(direction.toString());
     if (direction == SwipDirection.Left) {
+      _cardController.forward(direction: direction);
       setState(() {});
+
       print('Disliked image ${index + 1}');
     } else if (direction == SwipDirection.Right) {
+      _cardController.forward(direction: direction);
+
       setState(() {});
       print('Liked image ${index + 1}');
     }
@@ -108,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Center(
                               child: GestureDetector(
                                 onTap: () {
-                                  Get.toNamed(AppRoutes.userDetailsScreen);
+                                  // Get.toNamed(AppRoutes.userDetailsScreen, arguments: user);
                                 },
                                 child: Container(
                                   padding: EdgeInsets.zero,
@@ -118,28 +126,44 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   child: Column(
                                     children: [
-                                      Expanded(
-                                        child: TCard(
-                                          size: Size.infinite,
-                                          controller: _cardController,
-                                          cards: _images.asMap().entries.map((
-                                                entry,
-                                              ) {
-                                                return Stack(
+                                      Obx(() {
+                                        if (homeController.isProfilesLoading.value) {
+                                          return const Center(child: CircularProgressIndicator());
+                                        }
+                                        final userList = homeController.usersList;
+
+                                        if (userList.isEmpty) {
+                                          return Column(
+                                            children: [
+                                              Expanded(child: Center(child: Text("No User Found", style: AppStyles.h3()))),
+                                            ],
+                                          );
+                                        }
+                                        return  Expanded(
+                                          child: TCard(
+                                            size: const Size(double.infinity, double.infinity),
+                                            controller: _cardController,
+                                            cards: List.generate(homeController.usersList.length, (index) {
+                                              final UserModel user = homeController.usersList[index];
+                                              return GestureDetector(
+                                                onTap: (){
+                                                  Get.toNamed(AppRoutes.userDetailsScreen, arguments: user.id);
+                                                },
+                                                child: Stack(
                                                   fit: StackFit.passthrough,
                                                   children: [
                                                     Card(
-                                                      elevation: 8,
-                                                      shape: RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.circular(16.r,),
-                                                      ),
-                                                      child: CustomNetworkImage(
-                                                        imageUrl: entry.value,
-                                                        height: double.infinity,
-                                                        width: double.infinity,
-                                                        borderRadius: BorderRadius.circular(16.r)
-                                                      )
+                                                        elevation: 8,
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius:
+                                                          BorderRadius.circular(16.r,),
+                                                        ),
+                                                        child: CustomNetworkImage(
+                                                            imageUrl: "${ApiConstants.imageBaseUrl}${user.profileImage}",
+                                                            height: double.infinity,
+                                                            width: double.infinity,
+                                                            borderRadius: BorderRadius.circular(16.r)
+                                                        )
                                                     ),
                                                     //===========================> Name and Role Positioned <===================
                                                     Positioned(
@@ -153,10 +177,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             children: [
                                                               //====================> BrokenHeart Button <=================
                                                               GestureDetector(
-                                                                onTap: () {
-                                                                  _onSwipe(
-                                                                    SwipDirection.Right, entry.key,
-                                                                  );
+                                                                onTap: () async {
+                                                                  await homeController.userReaction(profileId: user.id, reaction: "cupid", matchesProfileId: user.id, matchesUserProfile: user.profileImage );
+                                                                  _onSwipe(SwipDirection.Left, index);
                                                                 },
                                                                 child: SvgPicture.asset(
                                                                   AppIcons
@@ -168,25 +191,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               ),
                                                               //====================> Kiss Button <=================
                                                               GestureDetector(
-                                                                onTap: () {},
+                                                                onTap: () async {
+                                                                  await homeController.userReaction(profileId: user.id, reaction: "kiss", matchesProfileId: user.id, matchesUserProfile: user.profileImage);
+                                                                  _onSwipe(SwipDirection.Right, index);
+                                                                },
                                                                 child: SvgPicture.asset(AppIcons.kiss),
                                                               ),
                                                               SizedBox(width: 8.w),
                                                               //====================> Care Button <=================
                                                               GestureDetector(
-                                                                onTap: () {
-                                                                  _onSwipe(SwipDirection.Right,entry.key);
+                                                                onTap: () async{
+                                                                  await homeController.userReaction(profileId: user.id, reaction: "hug", matchesProfileId: user.id, matchesUserProfile: user.profileImage);
+                                                                  _onSwipe(SwipDirection.Left, index);
                                                                 },
                                                                 child:
-                                                                    SvgPicture.asset(AppIcons.care),
+                                                                SvgPicture.asset(AppIcons.care),
                                                               ),
                                                             ],
                                                           ),
                                                           SizedBox(height: 8.h),
                                                           Container(
                                                             decoration: BoxDecoration(
-                                                              color: Colors.black.withOpacity(0.3),
-                                                              borderRadius: BorderRadius.circular(16.r)
+                                                                color: Colors.black.withOpacity(0.3),
+                                                                borderRadius: BorderRadius.circular(16.r)
                                                             ),
                                                             child: Padding(
                                                               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
@@ -195,17 +222,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 children: [
                                                                   //==================> Name <===================
                                                                   CustomText(
-                                                                    text: 'Kalvin, 23',
+                                                                    text: user.fullName,
                                                                     fontSize: 32.sp,
                                                                     fontWeight: FontWeight.w600,
                                                                     color: Colors.white,
                                                                   ),
                                                                   //==================> Name <===================
-                                                                  CustomText(
-                                                                    text: 'Female',
-                                                                    color: Colors.white,
-                                                                    bottom: 6.h,
-                                                                  ),
+                                                                  //TODO Gender is not found
+                                                                  // CustomText(
+                                                                  //   text: user.,
+                                                                  //   color: Colors.white,
+                                                                  //   bottom: 6.h,
+                                                                  // ),
                                                                   //==================> Location Row <===================
                                                                   Row(
                                                                     children: [
@@ -215,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       ),
                                                                       SizedBox(width: 4.w),
                                                                       CustomText(
-                                                                        text: 'LOS Angeles • 20 kms away',
+                                                                        text: '${user.location.locationName} • ${user.formattedDistance} kms away',
                                                                         color: Colors.white,
                                                                         maxLine: 3,
                                                                       ),
@@ -230,21 +258,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       ),
                                                     ),
                                                   ],
-                                                );
-                                              }).toList(),
-                                          onForward: (index, info) {
-                                            _onSwipe(info.direction, index);
-                                          },
-                                          onEnd: () {
-                                            setState(() {
-                                              _allSwiped = true;
-                                            });
-                                            print(
-                                              '====================> All cards swiped!',
-                                            );
-                                          },
-                                        ),
-                                      ),
+                                                ),
+                                              );
+                                            }),
+                                            onForward: (index, info) {
+                                              _onSwipe(info.direction, index);
+                                            },
+                                            onEnd: () {
+                                              setState(() {
+                                                _allSwiped = true;
+                                              });
+                                            },
+                                          ),
+                                        );
+                                      })
+
                                     ],
                                   ),
                                 ),

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:perfect_catch_dating_app/controllers/home_controller.dart';
 import 'package:perfect_catch_dating_app/helpers/route.dart';
+import 'package:perfect_catch_dating_app/helpers/time_formate.dart';
+import 'package:perfect_catch_dating_app/service/api_constants.dart';
 import 'package:perfect_catch_dating_app/utils/app_colors.dart';
 import 'package:perfect_catch_dating_app/utils/app_icons.dart';
 import 'package:perfect_catch_dating_app/utils/app_strings.dart';
@@ -10,11 +13,25 @@ import 'package:perfect_catch_dating_app/views/base/custom_network_image.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_text.dart';
 import '../../base/custom_app_bar.dart';
 
-class UserDetailsScreen extends StatelessWidget {
+class UserDetailsScreen extends StatefulWidget {
   const UserDetailsScreen({super.key});
 
   @override
+  State<UserDetailsScreen> createState() => _UserDetailsScreenState();
+}
+
+class _UserDetailsScreenState extends State<UserDetailsScreen> {
+  final HomeController homeController = Get.put(HomeController());
+
+  @override
+  void initState() {
+    super.initState();
+    homeController.getUsersProfilesDetails(userId: Get.arguments);
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: CustomAppBar(title: AppStrings.profileDetails.tr),
       body: SingleChildScrollView(
@@ -23,8 +40,7 @@ class UserDetailsScreen extends StatelessWidget {
           children: [
             //==============================> Profile picture section <=======================
             CustomNetworkImage(
-              imageUrl:
-              'https://img.freepik.com/free-photo/medium-shot-guy-with-crossed-arms_23-2148227939.jpg?ga=GA1.1.1702237683.1725447794&semt=ais_hybrid&w=740',
+              imageUrl: "${ApiConstants.imageBaseUrl}${homeController.user.value?.profileImage}",
               height: 457.h,
               width: 402.w,
               borderRadius: BorderRadius.circular(8.r),
@@ -59,14 +75,15 @@ class UserDetailsScreen extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    CustomText(
-                                      text: 'Leilani Adam',
-                                      fontSize: 18.sp,
-                                      fontWeight: FontWeight.w600,
-                                      maxLine: 3,
-                                      bottom: 8.h,
-                                    ),
-                                    CustomText(text: 'Female'),
+                                   Obx(() =>  CustomText(
+                                     text: homeController.user.value != null ? homeController.user.value!.fullName : '',
+                                     fontSize: 18.sp,
+                                     fontWeight: FontWeight.w600,
+                                     maxLine: 3,
+                                     bottom: 8.h,
+                                   ),),
+                                    Obx(() =>  CustomText(text: homeController.user.value != null ? homeController.user.value!.gender : ''),),
+
                                   ],
                                 ),
                               ),
@@ -100,10 +117,12 @@ class UserDetailsScreen extends StatelessWidget {
                                       maxLine: 3,
                                       bottom: 8.h,
                                     ),
-                                    CustomText(
-                                      text: 'Chicago, IL United States',
-                                      maxLine: 5,
-                                      textAlign: TextAlign.start,
+                                    Obx(
+                                      ()=> CustomText(
+                                        text: homeController.user.value != null ? homeController.user.value!.location.locationName : "",
+                                        maxLine: 5,
+                                        textAlign: TextAlign.start,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -126,7 +145,7 @@ class UserDetailsScreen extends StatelessWidget {
                                     children: [
                                       SvgPicture.asset(AppIcons.location),
                                       SizedBox(width: 4.w),
-                                      CustomText(text: '1.3 km away'),
+                                      Obx(()=> CustomText(text: '${homeController.user.value?.formattedDistance} away')),
                                     ],
                                   ),
                                 ),
@@ -162,9 +181,8 @@ class UserDetailsScreen extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: [
-                                      _languageText('English'),
-                                      _languageText('Bangla'),
-                                      _languageText('Hindi'),
+                                      if(homeController.user.value != null)
+                                          for(int i = 0; i < homeController.user.value!.language.length; i++) _languageText(homeController.user.value!.language[i]),
                                     ],
                                   ),
                                 ),
@@ -189,42 +207,47 @@ class UserDetailsScreen extends StatelessWidget {
                               ),
                               child: Column(
                                 children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      _detailColumn(
-                                        AppStrings.dateOfBirth.tr,
-                                        '1-10-1995',
-                                      ),
-                                      _detailColumn(
-                                        AppStrings.height.tr,
-                                        '6.1 In',
-                                      ),
-                                      _detailColumn(
-                                        AppStrings.maritalStatus.tr,
-                                        'Single',
-                                      ),
-                                    ],
+                                  Obx(
+                                    () => Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        _detailColumn(
+                                          AppStrings.dateOfBirth.tr,
+                                          TimeFormatHelper.formatDates(homeController.user.value!.dateOfBirth),
+                                        ),
+                                        _detailColumn(
+                                          AppStrings.height.tr,
+                                          homeController.user.value?.height.toString(),
+                                        ),
+                                        _detailColumn(
+                                          AppStrings.maritalStatus.tr,
+                                          homeController.user.value?.weight.toString(),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   Divider(color: AppColors.borderColor),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      _detailColumn(
-                                        AppStrings.religion.tr,
-                                        'Islam',
-                                      ),
-                                      _detailColumn(
-                                        AppStrings.qualification.tr,
-                                        'BSC',
-                                      ),
-                                      _detailColumn(
-                                        AppStrings.politics.tr,
-                                        'Moderate',
-                                      ),
-                                    ],
+                                  Obx(
+                                    () => Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        _detailColumn(
+                                          AppStrings.religion.tr,
+                                          homeController.user.value?.religion,
+                                        ),
+                                        _detailColumn(
+                                          AppStrings.qualification.tr,
+                                            homeController.user.value?.educationQualification,
+                                        ),
+                                        //TODO Politics not found
+                                        // _detailColumn(
+                                        //   AppStrings.politics.tr,
+                                        //   'Moderate',
+                                        // ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
@@ -238,12 +261,12 @@ class UserDetailsScreen extends StatelessWidget {
                             fontSize: 18.sp,
                             bottom: 8.h,
                           ),
+                          //TODO about not found
                           CustomText(
-                            text:
-                                'Hello there! I\'m Vickie, seeking a lifelong adventure partner. A blend of tradition and modernity, I find joy in the simple moments and cherish family values. With a heart that believes in love\'s magic, I\'m looking someone to share happiness.'
-                                    .tr,
-                            maxLine: 20,
-                            textAlign: TextAlign.start,
+                              text: "",
+                              // text: homeController.user.value != null ? homeController.user.value!.abo : "",
+                              maxLine: 20,
+                              textAlign: TextAlign.start,
                           ),
                           SizedBox(height: 24.h),
                           //========================> Interest Section <==========================
@@ -253,6 +276,8 @@ class UserDetailsScreen extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                           SizedBox(height: 8.h),
+
+                          //TODO interested not found
                           Wrap(
                             spacing: 8.0,
                             runSpacing: 8.0,
@@ -270,32 +295,34 @@ class UserDetailsScreen extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                           SizedBox(height: 16.h),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: GridView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  gridDelegate:
+                          Obx(
+                              () => Row(
+                              children: [
+                                if(homeController.user.value != null)
+                                  Expanded(
+                                    child: GridView.builder(
+                                      physics: NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      gridDelegate:
                                       SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2,
                                         crossAxisSpacing: 8.w,
                                         mainAxisSpacing: 8.h,
                                         childAspectRatio: 0.9,
                                       ),
-                                  itemCount: 4,
-                                  itemBuilder: (context, index) {
-                                    return CustomNetworkImage(
-                                      imageUrl:
-                                      'https://img.freepik.com/free-photo/medium-shot-guy-with-crossed-arms_23-2148227939.jpg?ga=GA1.1.1702237683.1725447794&semt=ais_hybrid&w=740',
-                                      height: 75.h,
-                                      width: 70.w,
-                                      borderRadius: BorderRadius.circular(16.r),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
+                                      itemCount: homeController.user.value!.photos.length,
+                                      itemBuilder: (context, index) {
+                                        return CustomNetworkImage(
+                                          imageUrl: "${ApiConstants.imageBaseUrl}${homeController.user.value!.photos[index]}",
+                                          height: 75.h,
+                                          width: 70.w,
+                                          borderRadius: BorderRadius.circular(16.r),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -351,13 +378,13 @@ class UserDetailsScreen extends StatelessWidget {
   }
 
   //===============================> _Detail Column <======================
-  _detailColumn(String title, subTitle) {
+  _detailColumn(String title, String? subTitle) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomText(text: title, fontWeight: FontWeight.w500),
         SizedBox(height: 8.h),
-        CustomText(text: subTitle, fontSize: 12.sp),
+        CustomText(text: subTitle ?? '', fontSize: 12.sp),
       ],
     );
   }

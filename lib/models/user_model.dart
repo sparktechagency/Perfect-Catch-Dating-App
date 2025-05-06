@@ -8,16 +8,20 @@ class UserModel {
   final String coverImage;
   final List<String> photos;
   final String role;
-  final String country;
-  final String state;
-  final String city;
-  final int kids;
-  final String hobbiesAndActivities;
-  final String musicAndEntertainment;
-  final String sportsAndFitness;
-  final String foodAndDrinks;
-  final String lifestyleValues;
-  final String bio;
+  final String? country;
+  final String? state;
+  final String? city;
+  final int? kids;
+  final String? hobbiesAndActivities;
+  final String? musicAndEntertainment;
+  final String? sportsAndFitness;
+  final String? foodAndDrinks;
+  final String? lifestyleValues;
+  final List<dynamic> lickList;
+  final List<dynamic> idealMatch;
+  final List<dynamic> language;
+  final Location location;
+  final String? bio;
   final bool isEmailVerified;
   final bool isResetPassword;
   final int credits;
@@ -27,20 +31,27 @@ class UserModel {
   final int setDistance;
   final bool isSubscriptionTaken;
   final bool isDeleted;
-  final DateTime createdAt;
-  final DateTime updatedAt;
   final int liveCredits;
   final String interestedIn;
   final String lookingFor;
   final int loveCredits;
-  final int winkcredits;
   final String race;
-  final int age;
+  final int winkCredits;
+  final int? age;
   final String formattedDistance;
-  final Location location;
+  final String dateOfBirth;
+  final double weight;
+  final String gender;
+  final String religion;
+  final String educationQualification;
+  final double height;
 
   UserModel({
     required this.id,
+    required this.weight,
+    required this.gender,
+    required this.educationQualification,
+    required this.height,
     required this.firstName,
     required this.lastName,
     required this.fullName,
@@ -49,16 +60,22 @@ class UserModel {
     required this.coverImage,
     required this.photos,
     required this.role,
-    required this.country,
-    required this.state,
-    required this.city,
-    required this.kids,
-    required this.hobbiesAndActivities,
-    required this.musicAndEntertainment,
-    required this.sportsAndFitness,
-    required this.foodAndDrinks,
-    required this.lifestyleValues,
-    required this.bio,
+    required this.religion,
+    this.country,
+    this.state,
+    this.city,
+    this.kids,
+    required this.dateOfBirth,
+    this.hobbiesAndActivities,
+    this.musicAndEntertainment,
+    this.sportsAndFitness,
+    this.foodAndDrinks,
+    this.lifestyleValues,
+    required this.lickList,
+    required this.idealMatch,
+    required this.language,
+    required this.location,
+    this.bio,
     required this.isEmailVerified,
     required this.isResetPassword,
     required this.credits,
@@ -68,60 +85,64 @@ class UserModel {
     required this.setDistance,
     required this.isSubscriptionTaken,
     required this.isDeleted,
-    required this.createdAt,
-    required this.updatedAt,
     required this.liveCredits,
     required this.interestedIn,
     required this.lookingFor,
     required this.loveCredits,
-    required this.winkcredits,
     required this.race,
-    required this.age,
+    required this.winkCredits,
+    this.age,
     required this.formattedDistance,
-    required this.location,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      id: json['_id'],
+      id: json['_id'] ?? json['id'],
       firstName: json['firstName'],
+      dateOfBirth: json['dateOfBirth'] ?? '',
       lastName: json['lastName'],
       fullName: json['fullName'],
       email: json['email'],
       profileImage: json['profileImage'],
       coverImage: json['coverImage'],
-      photos: List<String>.from(json['photos']),
+      photos: List<String>.from(json['photos'] ?? []),
       role: json['role'],
-      country: json['country'] ?? '',
-      state: json['state'] ?? '',
-      city: json['city'] ?? '',
-      kids: json['kids'] ?? 0,
-      hobbiesAndActivities: json['hobbiesAndActivities'] ?? '',
-      musicAndEntertainment: json['musicAndEntertainment'] ?? '',
-      sportsAndFitness: json['sportsAndFitness'] ?? '',
-      foodAndDrinks: json['FoodAndDrinks'] ?? '',
-      lifestyleValues: json['lifestyleValues'] ?? '',
-      bio: json['bio'] ?? '',
-      isEmailVerified: json['isEmailVerified'],
-      isResetPassword: json['isResetPassword'],
-      credits: json['credits'] ?? 0,
-      isProfileCompleted: json['isProfileCompleted'],
-      fcmToken: json['fcmToken'],
-      isBlocked: json['isBlocked'],
-      setDistance: json['setDistance'],
-      isSubscriptionTaken: json['isSubscriptionTaken'],
-      isDeleted: json['isDeleted'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
-      liveCredits: json['LiveCredits'] ?? 0,
-      interestedIn: json['interestedIn'],
-      lookingFor: json['lookingFor'],
-      loveCredits: json['loveCredits'] ?? 0,
-      winkcredits: json['winkcredits'] ?? 0,
-      race: json['race'] ?? '',
-      age: json['age'],
-      formattedDistance: json['formattedDistance'] ?? '',
+      country: json['country'],
+      state: json['state'],
+      city: json['city'],
+      kids: json['kids'],
+      hobbiesAndActivities: json['hobbiesAndActivities'],
+      musicAndEntertainment: json['musicAndEntertainment'],
+      sportsAndFitness: json['sportsAndFitness'],
+      foodAndDrinks: json['FoodAndDrinks'],
+      lifestyleValues: json['lifestyleValues'],
+      lickList: json['lickList'] ?? [],
+      idealMatch: json['idealMatch'] ?? [],
+      language: json['language'] ?? [],
       location: Location.fromJson(json['location']),
+      bio: json['bio'],
+      isEmailVerified: json['isEmailVerified'] ?? false,
+      isResetPassword: json['isResetPassword'] ?? false,
+      credits: json['credits'],
+      isProfileCompleted: json['isProfileCompleted'],
+      fcmToken: json['fcmToken'] ?? '',
+      isBlocked: json['isBlocked'] ?? false,
+      setDistance: json['setDistance'],
+      isSubscriptionTaken: json['isSubscriptionTaken'] ?? false,
+      isDeleted: json['isDeleted'] ?? false,
+      liveCredits: json['LiveCredits'] ?? 0,
+      interestedIn: json['interestedIn'] ?? '',
+      lookingFor: json['lookingFor'] ?? '',
+      loveCredits: json['loveCredits'] ?? 0,
+      race: json['race'] ?? '',
+      winkCredits: json['winkcredits'] ?? 0,
+      age: json['age'],
+      formattedDistance: json['formattedDistance'] ?? "",
+      weight: json['weight'] ?? 0.0,
+      gender: json['gender'] ?? "",
+      religion: json['religion'] ?? "",
+      educationQualification: json['educationQualification'] ?? "",
+      height: json['height'] ?? 0.0,
     );
   }
 }
