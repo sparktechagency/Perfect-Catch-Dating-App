@@ -4,13 +4,13 @@ import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:perfect_catch_dating_app/helpers/prefs_helpers.dart';
-import 'package:perfect_catch_dating_app/helpers/route.dart';
 import 'package:perfect_catch_dating_app/service/api_client.dart';
 import 'package:perfect_catch_dating_app/service/api_constants.dart';
 import 'package:perfect_catch_dating_app/utils/app_constants.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../base/bottom_menu..dart';
+
 const appId = "1e699e1a1aa34149b92e62c83ff3bd22";
 
 class LiveStreamController extends GetxController{
@@ -41,6 +41,8 @@ class LiveStreamController extends GetxController{
       isAutoScroll.value = false;
       agoraToken.value = response.body['data']['attributes']['token'];
       agoraTChannelName.value = response.body['data']['attributes']['channelName'];
+      print("token : ${agoraToken.value}");
+      print("token channel name: ${agoraTChannelName.value}");
       return true;
     }
     isLiveStreamingLoading.value = false;
@@ -111,10 +113,10 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
     bool result = await liveStreamController.getLiveStreamingProfile(uuid: "0");
     if(result){
       await _engine.joinChannel(
-        // token: liveStreamController.agoraToken.value,
-        // channelId: liveStreamController.agoraTChannelName.value,
-        token: "007eJxTYGAuOH7Ls4NZiufM1h5GnfrtnMwxl00sJz1nCo6pn+Tu5q7AYJhqZmmZaphomJhobGJoYplkaZRqZpRsYZyWZpyUYmS0SEc6oyGQkWG23lcWRgYIBPFZGTJSc3LyGRgAQtEcCA==",
-        channelId: "hello",
+        token: liveStreamController.agoraToken.value,
+        channelId: liveStreamController.agoraTChannelName.value,
+        // token: "007eJxTYGAuOH7Ls4NZiufM1h5GnfrtnMwxl00sJz1nCo6pn+Tu5q7AYJhqZmmZaphomJhobGJoYplkaZRqZpRsYZyWZpyUYmS0SEc6oyGQkWG23lcWRgYIBPFZGTJSc3LyGRgAQtEcCA==",
+        // channelId: "hello",
         uid: 0,
         options: const ChannelMediaOptions(
           clientRoleType: ClientRoleType.clientRoleBroadcaster,
@@ -153,12 +155,9 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
 
   void _endCall() async{
     liveStreamController.isAutoScroll.value = true;
-    bool result = await liveStreamController.getLiveStreamingProfile(uuid: "0");
-    if(result){
-     initAgora();
-    }
-    // await _engine.leaveChannel();
-    // await _engine.release();
+    await _engine.leaveChannel();
+    await _engine.release();
+    initAgora();
     // Get.toNamed(AppRoutes.homeScreen);
   }
 
@@ -174,7 +173,7 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
         return Column(
           children: [
             Expanded(
-              child: liveStreamController.isAutoScroll.value ? Center(child: SlotAutoScroll()) : _remoteVideo(channelId: "hello"),
+              child: liveStreamController.isAutoScroll.value ? Center(child: SlotAutoScroll()) : _remoteVideo(channelId: liveStreamController.agoraTChannelName.value),
               // child: _remoteVideo(channelId: "hello"),
             ),
             Expanded(
@@ -321,6 +320,9 @@ class _SlotAutoScrollState extends State<SlotAutoScroll> {
 
   void _alignReelToImage(int index) {
     final controller = controllers[index];
+
+    if (!controller.hasClients) return; // <-- ✅ Prevent crash
+
     final offset = controller.offset;
     final alignedOffset = (offset / 100).round() * 100;
 
@@ -330,6 +332,7 @@ class _SlotAutoScrollState extends State<SlotAutoScroll> {
       curve: Curves.easeOut,
     );
   }
+
 
   Widget _buildReel(int index) {
     return Expanded(
