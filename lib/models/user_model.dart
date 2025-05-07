@@ -126,7 +126,7 @@ class UserModel {
     reactBy: json["reactBy"] == null ? [] : List<dynamic>.from(json["reactBy"]!.map((x) => x)),
     reactions: json["reactions"] == null ? [] : List<dynamic>.from(json["reactions"]!.map((x) => x)),
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
-    id: json["id"],
+    id: json["id"] ?? json["_id"],
   );
 
   Map<String, dynamic> toJson() => {

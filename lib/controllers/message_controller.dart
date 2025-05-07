@@ -45,7 +45,7 @@ class MessageController extends GetxController {
   //===================================> GET CONVERSATIONS <===================================
   Future<void> conversation() async {
     print('Requesting conversations from the socket...');
-    _socket.socket!.on('conversation-page', (data) {
+    _socket.socket!.on('conversation', (data) {
       if (data != null && data.isNotEmpty) {
         conversationModel.value = List<ConversationModel>.from(data.map((x) {
           ConversationModel conversation = ConversationModel.fromJson(x);
@@ -64,10 +64,13 @@ class MessageController extends GetxController {
     });
   }
   Future<void> getConversation() async {
-    print(PrefsHelper.userId);
     print(AppConstants.bearerToken);
     print('Requesting conversations from the socket...');
-    _socket.socket!.emit('conversation-page', {"currentUserId": PrefsHelper.userId});
+    await PrefsHelper.getString(AppConstants.userId).then((id) {
+      print(" hello : ${id}");
+      _socket.socket!.emit('conversation-page', {"currentUserId": id});
+    });
+
   }
 
   //===================================> GET Messages <===================================
