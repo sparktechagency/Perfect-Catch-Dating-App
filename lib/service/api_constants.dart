@@ -1,7 +1,7 @@
 class ApiConstants {
   //======================> Live Api <========================
-  static const String baseUrl = "https://api.perfectcatchdating.com/api/v1";
-  static const String imageBaseUrl = "https://api.perfectcatchdating.com";
+  static const String baseUrl = "https://d8fd-103-174-189-193.ngrok-free.app/api/v1";
+  static const String imageBaseUrl = "https://d8fd-103-174-189-193.ngrok-free.app";
   static const String socketBaseUrl = "https://ws.perfectcatchdating.com";
 
   //======================> Local Api <========================
