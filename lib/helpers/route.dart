@@ -112,7 +112,7 @@ class AppRoutes {
       transition: Transition.noTransition,
     ),
     GetPage(name: messageScreen, page: () => const MessageScreen()),
-    GetPage(name: userDetailsScreen, page: () => const UserDetailsScreen()),
+    GetPage(name: userDetailsScreen, page: () => UserDetailsScreen()),
     GetPage(name: notificationsScreen, page: () => NotificationsScreen()),
     GetPage(name: filterScreen, page: () => FilterScreen()),
     GetPage(name: settingsScreen, page: () => SettingsScreen()),

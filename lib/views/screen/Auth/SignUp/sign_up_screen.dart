@@ -220,34 +220,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 16.h),
-                Center(
-                  child: CustomText(
-                    text: AppStrings.or.tr,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                //========================> Sign Up With Facebook Google Apple <==================
-                SizedBox(height: 16.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () {},
-                      child: SvgPicture.asset(AppIcons.fbIcon),
-                    ),
-                    SizedBox(width: 20.w),
-                    InkWell(
-                      onTap: () {},
-                      child: SvgPicture.asset(AppIcons.googleIcon),
-                    ),
-                    /*SizedBox(width: 20.w),
-                    InkWell(
-                      onTap: () {},
-                      child: SvgPicture.asset(AppIcons.appleIcon),
-                    ),*/
-                  ],
-                ),
                 SizedBox(height: 32.h),
               ],
             ),

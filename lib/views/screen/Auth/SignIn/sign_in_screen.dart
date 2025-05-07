@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:perfect_catch_dating_app/controllers/auth_controller.dart';
 import 'package:perfect_catch_dating_app/helpers/route.dart';
@@ -9,6 +10,7 @@ import 'package:perfect_catch_dating_app/views/base/custom_button.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_text.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_text_field.dart';
 
+import '../../../../utils/app_icons.dart';
 import '../../../../utils/app_images.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -128,6 +130,36 @@ class SignInScreen extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
+                  ],
+                ),
+                SizedBox(height: 16.h),
+                Center(
+                  child: CustomText(
+                    text: AppStrings.or.tr,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                //========================> Sign Up With Facebook Google Apple <==================
+                SizedBox(height: 16.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    /*InkWell(
+                      onTap: () {},
+                      child: SvgPicture.asset(AppIcons.fbIcon),
+                    ),
+                    SizedBox(width: 20.w),*/
+                    InkWell(
+                      onTap: () {
+                        _controller.handleGoogleSignIn(context);
+                      },
+                      child: SvgPicture.asset(AppIcons.googleIcon),
+                    ),
+                    /*SizedBox(width: 20.w),
+                    InkWell(
+                      onTap: () {},
+                      child: SvgPicture.asset(AppIcons.appleIcon),
+                    ),*/
                   ],
                 ),
               ],
