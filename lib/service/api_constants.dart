@@ -52,4 +52,5 @@ class ApiConstants {
   static const String getAllUsersProfilesEndPoint = "/users/all/profiles";
   static const String usersReactionEndPoint = "/users/reaction";
   static const String walletEndPoint = "/wallet/in";
+  static const String getMusicEndPoint = "/music";
 }
