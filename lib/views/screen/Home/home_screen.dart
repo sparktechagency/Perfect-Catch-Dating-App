@@ -133,11 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         final userList = homeController.usersList;
 
                                         if (userList.isEmpty) {
-                                          return Column(
-                                            children: [
-                                              Expanded(child: Center(child: Text("No User Found", style: AppStyles.h3()))),
-                                            ],
-                                          );
+                                          return Expanded(child: Center(child: Text("No User Found", style: AppStyles.h3())));
                                         }
                                         return  Expanded(
                                           child: TCard(
