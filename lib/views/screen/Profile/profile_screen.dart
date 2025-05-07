@@ -137,14 +137,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         suffixIcon: SvgPicture.asset(AppIcons.rightArrow),
                       ),
                       //===================> My friends list ListTile <=================
-                      CustomListTile(
+                      /*CustomListTile(
                         onTap: (){
                           Get.toNamed(AppRoutes.friendsListScreen);
                         },
                         title: AppStrings.myFriendsList.tr,
                         prefixIcon: SvgPicture.asset(AppIcons.profile),
                         suffixIcon: SvgPicture.asset(AppIcons.rightArrow),
-                      ),
+                      ),*/
                       //===================> My Wallet ListTile <=================
                       CustomListTile(
                         onTap: (){
