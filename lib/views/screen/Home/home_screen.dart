@@ -143,7 +143,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               final UserModel user = homeController.usersList[index];
                                               return GestureDetector(
                                                 onTap: (){
-                                                  Get.toNamed(AppRoutes.userDetailsScreen, arguments: user.id);
+                                                  Get.toNamed(AppRoutes.userDetailsScreen, parameters: {'id': '${user.id}'});
+                                                  print('=========================> ${user.id}');
                                                 },
                                                 child: Stack(
                                                   fit: StackFit.passthrough,
