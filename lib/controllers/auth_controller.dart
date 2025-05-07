@@ -321,7 +321,7 @@ class AuthController extends GetxController {
         Map<String, dynamic> body = {
           'email': '${user.email}',
           "fcmToken": fcmToken ?? "",
-          "loginType": 2
+          "loginType": 'google'
         };
         var headers = {
           'Content-Type': 'application/json',
