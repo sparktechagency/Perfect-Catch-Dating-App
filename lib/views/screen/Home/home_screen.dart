@@ -178,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               //====================> BrokenHeart Button <=================
                                                               GestureDetector(
                                                                 onTap: () async {
-                                                                  await homeController.userReaction(profileId: user.id, reaction: "cupid", matchesProfileId: user.id, matchesUserProfile: user.profileImage );
+                                                                  await homeController.userReaction(profileId: '${user.id}', reaction: "cupid", matchesProfileId: '${user.id}', matchesUserProfile: '${user.profileImage}' );
                                                                   _onSwipe(SwipDirection.Left, index);
                                                                 },
                                                                 child: SvgPicture.asset(
@@ -192,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               //====================> Kiss Button <=================
                                                               GestureDetector(
                                                                 onTap: () async {
-                                                                  await homeController.userReaction(profileId: user.id, reaction: "kiss", matchesProfileId: user.id, matchesUserProfile: user.profileImage);
+                                                                  await homeController.userReaction(profileId: '${user.id}', reaction: "kiss", matchesProfileId: '${user.id}', matchesUserProfile: '${user.profileImage}');
                                                                   _onSwipe(SwipDirection.Right, index);
                                                                 },
                                                                 child: SvgPicture.asset(AppIcons.kiss),
@@ -201,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               //====================> Care Button <=================
                                                               GestureDetector(
                                                                 onTap: () async{
-                                                                  await homeController.userReaction(profileId: user.id, reaction: "hug", matchesProfileId: user.id, matchesUserProfile: user.profileImage);
+                                                                  await homeController.userReaction(profileId: '${user.id}', reaction: "hug", matchesProfileId: '${user.id}', matchesUserProfile: '${user.profileImage}');
                                                                   _onSwipe(SwipDirection.Left, index);
                                                                 },
                                                                 child:
@@ -222,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 children: [
                                                                   //==================> Name <===================
                                                                   CustomText(
-                                                                    text: user.fullName,
+                                                                    text: '${user.fullName}',
                                                                     fontSize: 32.sp,
                                                                     fontWeight: FontWeight.w600,
                                                                     color: Colors.white,
@@ -243,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       ),
                                                                       SizedBox(width: 4.w),
                                                                       CustomText(
-                                                                        text: '${user.location.locationName} • ${user.formattedDistance} kms away',
+                                                                        text: '${user.location!.locationName} • ${user.setDistance} kms away',
                                                                         color: Colors.white,
                                                                         maxLine: 3,
                                                                       ),

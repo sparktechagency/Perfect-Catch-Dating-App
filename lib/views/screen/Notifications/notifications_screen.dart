@@ -5,33 +5,45 @@ import 'package:get/get.dart';
 import '../../../../../utils/app_colors.dart';
 import '../../../../../utils/app_icons.dart';
 import 'package:timeago/timeago.dart' as TimeAgo;
+import '../../../controllers/notification_controller.dart';
 import '../../../utils/app_strings.dart';
 import '../../base/custom_app_bar.dart';
+import '../../base/custom_page_loading.dart';
 import '../../base/custom_text.dart';
 
 class NotificationsScreen extends StatelessWidget {
   NotificationsScreen({super.key});
+  final NotificationController _controller = Get.put(NotificationController());
 
   @override
   Widget build(BuildContext context) {
+    _controller.getNotificationData();
     return Scaffold(
       appBar: CustomAppBar(title: AppStrings.notifications.tr),
       //================================> Body section <=======================
-      body: Padding(
+      body: Obx(() {
+        if (_controller.notificationLoading.value) {
+          return const Center(child: CustomPageLoading());
+        }
+        else if (_controller.notificationModel.isEmpty) {
+          return Center(child: CustomText(text: "Notification is empty".tr));
+        }
+        return Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.h),
           child: Column(
             children: [
               //================================> Notification section <=======================
               Expanded(
                 child: ListView.builder(
-                  itemCount: 6,
+                  itemCount: _controller.notificationModel.length,
                   itemBuilder: (context, index) {
+                    var data = _controller.notificationModel[index];
                     return Padding(
                       padding: EdgeInsets.only(
                           bottom: 16.h, top: index == 0 ? 16.h : 0),
                       child: _Notification(
-                        'Ariana your view this',
-                        DateTime.now().subtract(Duration(minutes: index * 10)),
+                        '${data.title}',
+                        DateTime.parse('${data.createdAt}')
                       ),
                     );
                   },
@@ -39,8 +51,9 @@ class NotificationsScreen extends StatelessWidget {
               ),
             ],
           ),
+        );
 
-      )
+      })
     );
   }
 }
