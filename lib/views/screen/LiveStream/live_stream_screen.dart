@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,9 +18,12 @@ class LiveStreamController extends GetxController{
   RxBool isLiveStreamingLoading = false.obs;
   RxString agoraToken = ''.obs;
   RxString agoraTChannelName = ''.obs;
+  RxBool isAutoScroll = false.obs;
 
   Future<bool> getLiveStreamingProfile({required String uuid}) async{
     isLiveStreamingLoading.value = true;
+    isAutoScroll.value = true;
+    Future.delayed(Duration(seconds: 3));
     final token = await PrefsHelper.getString(AppConstants.bearerToken);
     var headers = {
       'Content-Type': 'application/json',
@@ -33,6 +38,7 @@ class LiveStreamController extends GetxController{
 
     if(response.statusCode == 200 || response.statusCode == 201){
       isLiveStreamingLoading.value = false;
+      isAutoScroll.value = false;
       agoraToken.value = response.body['data']['attributes']['token'];
       agoraTChannelName.value = response.body['data']['attributes']['channelName'];
       return true;
@@ -83,12 +89,13 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
         },
         onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
           print("onUserJoined : $connection");
-
+          liveStreamController.isAutoScroll.value = false;
           setState(() {
             _remoteUid = remoteUid;
           });
         },
         onUserOffline: (RtcConnection connection, int remoteUid, UserOfflineReasonType reason) {
+          liveStreamController.isAutoScroll.value = true;
           print("onUserOffline : $connection");
           setState(() {
             _remoteUid = null;
@@ -104,12 +111,15 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
     bool result = await liveStreamController.getLiveStreamingProfile(uuid: "0");
     if(result){
       await _engine.joinChannel(
-        token: liveStreamController.agoraToken.value,
+        // token: liveStreamController.agoraToken.value,
         // channelId: liveStreamController.agoraTChannelName.value,
-        // token: "007eJxTYFD0fj3VYdfJOUnfGG/N6T2sNOvvj2KHzdtnuccYrFyaIN2pwGCYamZpmWqYaJiYaGxiaGKZZGmUamaUbGGclmaclGJkxCEundEQyMgwa6cpIyMDBIL4LAwhqcUlDAwAmeQfbQ==",
-        channelId: "Test",
+        token: "007eJxTYGAuOH7Ls4NZiufM1h5GnfrtnMwxl00sJz1nCo6pn+Tu5q7AYJhqZmmZaphomJhobGJoYplkaZRqZpRsYZyWZpyUYmS0SEc6oyGQkWG23lcWRgYIBPFZGTJSc3LyGRgAQtEcCA==",
+        channelId: "hello",
         uid: 0,
-        options: const ChannelMediaOptions(),
+        options: const ChannelMediaOptions(
+          clientRoleType: ClientRoleType.clientRoleBroadcaster,
+          channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
+        ),
       );
       liveStreamController.isAgoraInitialized.value = true;
     }
@@ -142,9 +152,14 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
   }
 
   void _endCall() async{
-    await _engine.leaveChannel();
-    await _engine.release();
-    Get.toNamed(AppRoutes.homeScreen);
+    liveStreamController.isAutoScroll.value = true;
+    bool result = await liveStreamController.getLiveStreamingProfile(uuid: "0");
+    if(result){
+     initAgora();
+    }
+    // await _engine.leaveChannel();
+    // await _engine.release();
+    // Get.toNamed(AppRoutes.homeScreen);
   }
 
   @override
@@ -159,9 +174,8 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
         return Column(
           children: [
             Expanded(
-              child: Center(
-                child: _remoteVideo(channelId: "Test"),
-              ),
+              child: liveStreamController.isAutoScroll.value ? Center(child: SlotAutoScroll()) : _remoteVideo(channelId: "hello"),
+              // child: _remoteVideo(channelId: "hello"),
             ),
             Expanded(
               child: Stack(
@@ -223,11 +237,139 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
         ),
       );
     } else {
-      return const Text(
-        'Waiting for remote user to join...',
-        style: TextStyle(color: Colors.white, fontSize: 16),
-        textAlign: TextAlign.center,
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Text(
+            'Waiting for remote user to join...',
+            style: TextStyle(color: Colors.white, fontSize: 16),
+            textAlign: TextAlign.center,
+          ),
+        ],
       );
     }
   }
 }
+
+class SlotAutoScroll extends StatefulWidget {
+  const SlotAutoScroll({super.key});
+
+  @override
+  State<SlotAutoScroll> createState() => _SlotAutoScrollState();
+}
+
+class _SlotAutoScrollState extends State<SlotAutoScroll> {
+  final LiveStreamController _liveStreamController = Get.find<LiveStreamController>();
+
+  final images = [
+    'assets/images/userImage1.png',
+    'assets/images/userImage2.png',
+    'assets/images/userImage3.png',
+  ];
+
+  final List<ScrollController> controllers =
+  List.generate(3, (_) => ScrollController());
+  final List<Timer?> timers = List.generate(3, (_) => null);
+  final List<double> speeds = [2.5, 3.2, 4.0];
+
+  final int itemCount = 9999; // simulate infinite
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Start infinite scroll for all reels
+    for (int i = 0; i < 3; i++) {
+      _startReel(i);
+    }
+
+    // Listen to the external RxBool
+    ever(_liveStreamController.isAutoScroll, (bool spinning) {
+      if (!spinning) {
+        _stopAllReels();
+      }
+    });
+  }
+
+  void _startReel(int index) {
+    timers[index]?.cancel();
+    timers[index] = Timer.periodic(const Duration(milliseconds: 16), (_) {
+      if (!_liveStreamController.isAutoScroll.value) return;
+
+      final controller = controllers[index];
+
+      try {
+        final newOffset = controller.offset + speeds[index];
+        if (newOffset >= controller.position.maxScrollExtent - 100) {
+          controller.jumpTo(0);
+        } else {
+          controller.jumpTo(newOffset);
+        }
+      } catch (_) {
+        // Ignore if layout not ready
+      }
+    });
+  }
+
+  void _stopAllReels() {
+    for (int i = 0; i < 3; i++) {
+      timers[i]?.cancel();
+      _alignReelToImage(i);
+    }
+  }
+
+  void _alignReelToImage(int index) {
+    final controller = controllers[index];
+    final offset = controller.offset;
+    final alignedOffset = (offset / 100).round() * 100;
+
+    controller.animateTo(
+      alignedOffset.toDouble(),
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOut,
+    );
+  }
+
+  Widget _buildReel(int index) {
+    return Expanded(
+      child: ListView.builder(
+        controller: controllers[index],
+        itemExtent: 100,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: itemCount,
+        itemBuilder: (context, i) {
+          final image = images[i % images.length];
+          return Center(
+            child: Image.asset(image, width: 50, height: 50),
+          );
+        },
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    for (var t in timers) {
+      t?.cancel();
+    }
+    for (var c in controllers) {
+      c.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 100,
+      width: Get.width * 0.5,
+      child: Row(
+        children: List.generate(3, _buildReel),
+      ),
+    );
+  }
+}
+
+
+
