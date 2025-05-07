@@ -6,20 +6,18 @@ import 'package:perfect_catch_dating_app/helpers/route.dart';
 import 'package:perfect_catch_dating_app/service/api_client.dart';
 import 'package:perfect_catch_dating_app/service/api_constants.dart';
 import 'package:perfect_catch_dating_app/utils/app_constants.dart';
-import 'package:perfect_catch_dating_app/utils/app_images.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../base/bottom_menu..dart';
-import '../../base/custom_text.dart';
-
 const appId = "1e699e1a1aa34149b92e62c83ff3bd22";
-const token = "007eJxTYJBwf7TEjlN1t/ybB0zzJl9V+VQol6+gIfPlnT3X3bav234oMJikGKaaWRoYp5pbWJiYppkmJacYmSUlpSanGRibphmY9q4TyWgIZGTwTsllYIRCEF+YoSwxLzM1viC1KC01uSQ+ObEkOYOBAQA9/CUq";
-const channel = "Test";
 
 class LiveStreamController extends GetxController{
+  RxBool isAgoraInitialized = false.obs;
   RxBool isLiveStreamingLoading = false.obs;
+  RxString agoraToken = ''.obs;
+  RxString agoraTChannelName = ''.obs;
 
-  Future<void> getLiveStreamingProfile({required String uuid}) async{
+  Future<bool> getLiveStreamingProfile({required String uuid}) async{
     isLiveStreamingLoading.value = true;
     final token = await PrefsHelper.getString(AppConstants.bearerToken);
     var headers = {
@@ -32,15 +30,15 @@ class LiveStreamController extends GetxController{
         headers: headers
     );
 
-    print("response live streaming : ${response.body}");
 
     if(response.statusCode == 200 || response.statusCode == 201){
       isLiveStreamingLoading.value = false;
-      response.body['data']['token'];
-      response.body['data']['token'];
+      agoraToken.value = response.body['data']['attributes']['token'];
+      agoraTChannelName.value = response.body['data']['attributes']['channelName'];
+      return true;
     }
-
     isLiveStreamingLoading.value = false;
+    return false;
   }
 
 }
@@ -64,10 +62,8 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
   @override
   void initState() {
     super.initState();
-    liveStreamController.getLiveStreamingProfile(uuid: "0");
-    // initAgora();
+    initAgora();
   }
-
   Future<void> initAgora() async {
     await [Permission.microphone, Permission.camera].request();
 
@@ -104,12 +100,20 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
     await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
     await _engine.enableVideo();
     await _engine.startPreview();
-    await _engine.joinChannel(
-      token: token,
-      channelId: channel,
-      uid: 0,
-      options: const ChannelMediaOptions(),
-    );
+
+    bool result = await liveStreamController.getLiveStreamingProfile(uuid: "0");
+    if(result){
+      await _engine.joinChannel(
+        token: liveStreamController.agoraToken.value,
+        // channelId: liveStreamController.agoraTChannelName.value,
+        // token: "007eJxTYFD0fj3VYdfJOUnfGG/N6T2sNOvvj2KHzdtnuccYrFyaIN2pwGCYamZpmWqYaJiYaGxiaGKZZGmUamaUbGGclmaclGJkxCEundEQyMgwa6cpIyMDBIL4LAwhqcUlDAwAmeQfbQ==",
+        channelId: "Test",
+        uid: 0,
+        options: const ChannelMediaOptions(),
+      );
+      liveStreamController.isAgoraInitialized.value = true;
+    }
+
   }
 
   @override
@@ -148,24 +152,18 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
     return Scaffold(
       bottomNavigationBar: const BottomMenu(2),
       backgroundColor: Colors.black,
-      body: Column(
-        children: [
-
-          Expanded(
-            child: SizedBox(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(child: _remoteVideo()),
-                ],
+      body: Obx(() {
+        if (!liveStreamController.isAgoraInitialized.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        return Column(
+          children: [
+            Expanded(
+              child: Center(
+                child: _remoteVideo(channelId: "Test"),
               ),
             ),
-          ),
-
-          Expanded(
-            child: SizedBox(
-              width: double.infinity,
+            Expanded(
               child: Stack(
                 children: [
                   _localUserJoined
@@ -174,7 +172,8 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
                       rtcEngine: _engine,
                       canvas: const VideoCanvas(uid: 0),
                     ),
-                  ) : const Center(child: CircularProgressIndicator()),
+                  )
+                      : const Center(child: CircularProgressIndicator()),
 
                   Positioned(
                     bottom: 40,
@@ -183,16 +182,19 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        IconButton(onPressed: _endCall, icon: Icon(Icons.cancel, color: Colors.red, size: 48,))
+                        IconButton(
+                          onPressed: _endCall,
+                          icon: const Icon(Icons.cancel, color: Colors.red, size: 48),
+                        )
                       ],
                     ),
                   )
                 ],
               ),
             ),
-          ),
-        ],
-      ),
+          ],
+        );
+      }),
     );
   }
 
@@ -211,13 +213,13 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
     );
   }
 
-  Widget _remoteVideo() {
+  Widget _remoteVideo({required String channelId}) {
     if (_remoteUid != null) {
       return AgoraVideoView(
         controller: VideoViewController.remote(
           rtcEngine: _engine,
           canvas: VideoCanvas(uid: _remoteUid),
-          connection: const RtcConnection(channelId: channel),
+          connection: RtcConnection(channelId: channelId),
         ),
       );
     } else {

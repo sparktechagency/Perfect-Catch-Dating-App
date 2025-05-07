@@ -100,7 +100,7 @@ class UserModel {
       id: json['_id'] ?? json['id'],
       firstName: json['firstName'],
       dateOfBirth: json['dateOfBirth'] ?? '',
-      lastName: json['lastName'],
+      lastName: json['lastName'] ?? "",
       fullName: json['fullName'],
       email: json['email'],
       profileImage: json['profileImage'],
