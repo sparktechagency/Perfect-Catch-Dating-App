@@ -13,6 +13,7 @@ class SongController extends GetxController {
 
   RxList<SongModel> songList = <SongModel>[].obs;
   RxBool songLoading = false.obs;
+  RxBool songUpDateLoading = false.obs;
 
   //========================> Fetch Song List <======================
   getSongList() async {
@@ -50,21 +51,19 @@ class SongController extends GetxController {
       }
       selectedSong = url;
       update();
-
-      // If a different song is playing, stop and play the new one
       await audioPlayer.stop();
       await audioPlayer.setAudioSource(AudioSource.uri(Uri.parse(fullUrl)));
       await audioPlayer.play();
       isPlaying(true);
     } catch (e) {
       print("Error playing song: $e");
-      Get.snackbar('Error', 'Failed to play the song');
       isPlaying(false);
     }
   }
 
   //====================> Update Background Music <======================
   updateBackgroundMusic() async {
+    songUpDateLoading(true);
     if (selectedSong == null) {
       Get.snackbar('Error', 'No song selected');
       return;
@@ -75,16 +74,14 @@ class SongController extends GetxController {
       ApiConstants.updatePersonalInfoEndPoint,
       jsonEncode(body),
     );
-
     if (response.statusCode == 200) {
+      songUpDateLoading(false);
       print('Background music updated successfully');
       Get.back();
-
-
     } else {
       ApiChecker.checkApi(response);
-      Get.snackbar('Error', 'Failed to update background music');
-      update(); // Refresh the UI if needed
+      songUpDateLoading(false);
+      update();
     }
   }
 }

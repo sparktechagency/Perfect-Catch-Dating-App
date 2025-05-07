@@ -5,6 +5,7 @@ import 'package:perfect_catch_dating_app/controllers/song_controller.dart';
 import 'package:perfect_catch_dating_app/service/api_constants.dart';
 import 'package:perfect_catch_dating_app/utils/app_colors.dart';
 import 'package:perfect_catch_dating_app/utils/app_strings.dart';
+import 'package:perfect_catch_dating_app/views/base/custom_button.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_network_image.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_page_loading.dart';
 import 'package:perfect_catch_dating_app/views/base/custom_text.dart';
@@ -94,22 +95,15 @@ class _SongListScreenState extends State<SongListScreen> {
                               ),
                             ),
                             SizedBox(height: 16.h),
-                            //====================> Song Tab <===================
-                            GestureDetector(
-                              onTap: _songController.updateBackgroundMusic,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16.r),
-                                  border: Border.all(
-                                    width: 1.w,
-                                    color: AppColors.primaryColor,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(10.w),
-                                  child: CustomText(text: 'Publish Song'.tr),
-                                ),
-                              ),
+                            //====================> Song Update Button <===================
+                            Obx(()=> CustomButton(
+                                loading: _songController.songUpDateLoading.value,
+                                width: 134.w,
+                                  height: 46.h,
+                                  onTap: _songController.updateBackgroundMusic,
+                                  text: 'Update'.tr,
+                              color: _songController.selectedSong != null ? AppColors.primaryColor : Colors.grey,
+                            ),
                             ),
                             SizedBox(height: 16.h),
                             //====================> Song List <===================
