@@ -1,18 +1,14 @@
 class ApiConstants {
   //======================> Live Api <========================
-  // static const String baseUrl = "http://10.0.60.18:9090/api/v1";
-  // static const String socketBaseUrl = "http://10.0.60.18:9090/api/v1";
-  // static const String imageBaseUrl = "http://10.0.60.18:9090";
-
-
+  static const String baseUrl = "https://api.perfectcatchdating.com/api/v1";
+  static const String imageBaseUrl = "https://api.perfectcatchdating.com";
+  static const String socketBaseUrl = "https://ws.perfectcatchdating.com";
 
   //======================> Local Api <========================
-  static const String baseUrl = "https://d8fd-103-174-189-193.ngrok-free.app/api/v1";
-  static const String socketBaseUrl = "https://d8fd-103-174-189-193.ngrok-free.app/";
-  static const String imageBaseUrl = "https://d8fd-103-174-189-193.ngrok-free.app/";
-
-
-
+  // static const String baseUrl = "http://10.0.60.18:9090/api/v1";
+   // static const String imageBaseUrl = "http://10.0.60.18:909";
+  // static const String socketBaseUrl = "http://10.0.60.18:9091";
+ 
   static const String signUpEndPoint = "/auth/register";
   static const String signInEndPoint = "/auth/login";
   static const String updateGalleryEndPoint = "/users/self/photos";
@@ -51,4 +47,6 @@ class ApiConstants {
   static const String setLocationEndPoint = "/info/location";
   static const String getAllUsersProfilesEndPoint = "/users/all/profiles";
   static const String usersReactionEndPoint = "/users/reaction";
+  static const String walletEndPoint = "/wallet/in";
+  static const String getMusicEndPoint = "/music";
 }

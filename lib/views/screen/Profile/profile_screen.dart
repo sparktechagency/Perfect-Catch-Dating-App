@@ -137,14 +137,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         suffixIcon: SvgPicture.asset(AppIcons.rightArrow),
                       ),
                       //===================> My friends list ListTile <=================
-                      CustomListTile(
+                      /*CustomListTile(
                         onTap: (){
                           Get.toNamed(AppRoutes.friendsListScreen);
                         },
                         title: AppStrings.myFriendsList.tr,
                         prefixIcon: SvgPicture.asset(AppIcons.profile),
                         suffixIcon: SvgPicture.asset(AppIcons.rightArrow),
-                      ),
+                      ),*/
                       //===================> My Wallet ListTile <=================
                       CustomListTile(
                         onTap: (){
@@ -152,6 +152,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         },
                         title: AppStrings.myWallet.tr,
                         prefixIcon: SvgPicture.asset(AppIcons.myWallet),
+                        suffixIcon: SvgPicture.asset(AppIcons.rightArrow),
+                      ),
+                      //===================> All Song ListTile <=================
+                      CustomListTile(
+                        onTap: (){
+                          Get.toNamed(AppRoutes.songListScreen);
+                        },
+                        title: 'All Song List'.tr,
+                        prefixIcon: SvgPicture.asset(AppIcons.mus, color: Colors.grey),
                         suffixIcon: SvgPicture.asset(AppIcons.rightArrow),
                       ),
                       //===================> Setting ListTile <=================

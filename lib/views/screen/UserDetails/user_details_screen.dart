@@ -76,13 +76,13 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                    Obx(() =>  CustomText(
-                                     text: homeController.user.value != null ? homeController.user.value!.fullName : '',
+                                     text: '${homeController.user.value!.fullName}' ?? '',
                                      fontSize: 18.sp,
                                      fontWeight: FontWeight.w600,
                                      maxLine: 3,
                                      bottom: 8.h,
                                    ),),
-                                    Obx(() =>  CustomText(text: homeController.user.value != null ? homeController.user.value!.gender : ''),),
+                                    Obx(() =>  CustomText(text: '${homeController.user.value!.gender}' ?? ''),),
 
                                   ],
                                 ),
@@ -119,7 +119,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                     ),
                                     Obx(
                                       ()=> CustomText(
-                                        text: homeController.user.value != null ? homeController.user.value!.location.locationName : "",
+                                        text: '${homeController.user.value!.location!.locationName}',
                                         maxLine: 5,
                                         textAlign: TextAlign.start,
                                       ),
@@ -145,7 +145,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                     children: [
                                       SvgPicture.asset(AppIcons.location),
                                       SizedBox(width: 4.w),
-                                      Obx(()=> CustomText(text: '${homeController.user.value?.formattedDistance} away')),
+                                      Obx(()=> CustomText(text: '${homeController.user.value!.setDistance} away')),
                                     ],
                                   ),
                                 ),
@@ -182,7 +182,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                         MainAxisAlignment.spaceAround,
                                     children: [
                                       if(homeController.user.value != null)
-                                          for(int i = 0; i < homeController.user.value!.language.length; i++) _languageText(homeController.user.value!.language[i]),
+                                          for(int i = 0; i < homeController.user.value!.language!.length; i++) _languageText(homeController.user.value!.language![i]),
                                     ],
                                   ),
                                 ),
@@ -310,10 +310,10 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                         mainAxisSpacing: 8.h,
                                         childAspectRatio: 0.9,
                                       ),
-                                      itemCount: homeController.user.value!.photos.length,
+                                      itemCount: homeController.user.value!.photos!.length,
                                       itemBuilder: (context, index) {
                                         return CustomNetworkImage(
-                                          imageUrl: "${ApiConstants.imageBaseUrl}${homeController.user.value!.photos[index]}",
+                                          imageUrl: "${ApiConstants.imageBaseUrl}${homeController.user.value!.photos![index]}",
                                           height: 75.h,
                                           width: 70.w,
                                           borderRadius: BorderRadius.circular(16.r),
