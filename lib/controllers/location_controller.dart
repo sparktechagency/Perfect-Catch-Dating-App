@@ -79,6 +79,7 @@ class LocationController extends GetxController {
       setLocationLoading(false);
     }
   }
+
   //=====================================> Submit Picked Location <==============================
   Future<void> submitPickedLocation({
     required double lat,

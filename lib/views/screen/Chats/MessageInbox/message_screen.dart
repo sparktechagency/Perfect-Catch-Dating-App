@@ -11,7 +11,7 @@ import 'package:perfect_catch_dating_app/utils/app_strings.dart';
 import '../../../../controllers/message_controller.dart';
 import '../../../../helpers/prefs_helpers.dart' show PrefsHelper;
 import '../../../../helpers/time_formate.dart';
-import '../../../../models/message_model.dart';
+import '../../../../models/conversation_model.dart';
 import '../../../../service/api_constants.dart';
 import '../../../../service/socket_services.dart';
 import '../../../../utils/app_colors.dart';
@@ -150,7 +150,7 @@ class _MessageScreenState extends State<MessageScreen> {
                               controller: _controller.scrollController,
                               reverse: true,
                               itemBuilder: (context, index) {
-                                final message = controller.messageModel[index];
+                                final MessageModel message = controller.messageModel[index];
                                 return message.msgByUserId == currentUserId
                                     ? senderBubble(context, message)
                                     : receiverBubble(context, message);
@@ -184,14 +184,13 @@ class _MessageScreenState extends State<MessageScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 8.w),
                     child: GestureDetector(
                       onTap: () {
-                        if (_controller.sentMsgCtrl.text.isNotEmpty &&
-                            !_controller.sentMessageLoading.value) {
-                          _controller.sentMessage(
-                            receiverId,
-                            PrefsHelper.userId,
-                            _controller.sentMsgCtrl.text,
-                            PrefsHelper.userId,
-                          );
+                        if (messageController.text.isNotEmpty) {
+                          // _controller.sentMessage(
+                          //   receiverId,
+                          //   PrefsHelper.userId,
+                          //   _controller.sentMsgCtrl.text,
+                          //   PrefsHelper.userId,
+                          // );
                           _controller.sentMsgCtrl.clear();
                         } else {
                           Fluttertoast.showToast(msg: 'Please write a message');

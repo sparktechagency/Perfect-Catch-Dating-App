@@ -10,7 +10,6 @@ import '../../service/api_constants.dart';
 import '../../service/socket_services.dart';
 import '../../utils/app_constants.dart';
 import '../models/conversation_model.dart';
-import '../models/message_model.dart';
 
 class MessageController extends GetxController {
   final ScrollController scrollController = ScrollController();
@@ -44,23 +43,12 @@ class MessageController extends GetxController {
 
   //===================================> GET CONVERSATIONS <===================================
   Future<void> conversation() async {
-    print('Requesting conversations from the socket...');
     _socket.socket!.on('conversation', (data) {
-      if (data != null && data.isNotEmpty) {
-        conversationModel.value = List<ConversationModel>.from(data.map((x) {
-          ConversationModel conversation = ConversationModel.fromJson(x);
-          if (conversation.sender?.id == PrefsHelper.userId ||
-              conversation.receiver?.id == PrefsHelper.userId) {
-            return conversation;
-          } else {
-            return null;
-          }
-        }).where((conversation) => conversation != null));
-
-        update();
-      } else {
-        print('No new conversations');
+      List<ConversationModel> parseConversations(List<dynamic> json) {
+        return json.map((data) => ConversationModel.fromJson(data)).toList();
       }
+      conversationModel.clear();
+      conversationModel.addAll(parseConversations(data));
     });
   }
   Future<void> getConversation() async {
@@ -145,9 +133,6 @@ class MessageController extends GetxController {
 
   //===================================> SEND A TEXT MESSAGE <===================================
   void sentMessage(String receiverId, String senderId, String text, String msgById) async {
-    if (text.isEmpty || sentMessageLoading.value) return;
-    if (sentMessageLoading.value) return;
-    sentMessageLoading(true);
     try {
       if (_socket.socket != null) {
         _socket.socket?.emit("new-message", {
@@ -156,25 +141,29 @@ class MessageController extends GetxController {
           "text": text,
           "msgByUserId": msgById
         });
-        final newMessage = MessageModel(
-          text: text,
-          msgByUserId: senderId,
-          createdAt: DateTime.now(),
-          type: 'text',
-          id: UniqueKey().toString(),
-        );
-        messageModel.insert(0, newMessage);
-        messageModel.refresh();
-        update();
-        Future.delayed(const Duration(milliseconds: 100), () {
-          if (scrollController.hasClients) {
-            scrollController.animateTo(
-              scrollController.position.minScrollExtent,
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.easeInOut,
-            );
-          }
-        });
+
+        print("message send");
+        // final newMessage = MessageModel(
+        //   text: text,
+        //   msgByUserId: senderId,
+        //   createdAt: DateTime.now(),
+        //   type: 'text',
+        //   id: UniqueKey().toString(),
+        //   conversationId: '', imageUrl: '', videoUrl: '', fileUrl: '',
+        //   seen: false,
+        // );
+        // messageModel.insert(0, newMessage);
+        // messageModel.refresh();
+        // update();
+        // Future.delayed(const Duration(milliseconds: 100), () {
+        //   if (scrollController.hasClients) {
+        //     scrollController.animateTo(
+        //       scrollController.position.minScrollExtent,
+        //       duration: const Duration(milliseconds: 200),
+        //       curve: Curves.easeInOut,
+        //     );
+        //   }
+        // });
       } else {
         Fluttertoast.showToast(msg: "WebSocket not connected!");
       }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import 'package:perfect_catch_dating_app/helpers/time_formate.dart';
 
 import 'package:perfect_catch_dating_app/utils/app_strings.dart';
 
@@ -206,6 +207,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
             Obx(() {
 
+              print("obx read : ${controller.conversationModel}");
               if (controller.conversationModel.isEmpty) {
 
                 return Expanded(child: Center(child: CustomText(text: 'No conversations found'.tr)));
@@ -213,16 +215,13 @@ class _ChatsScreenState extends State<ChatsScreen> {
               }
 
               return Expanded(
-
-                flex: 5,
-
                 child: ListView.builder(
 
                   shrinkWrap: true,
 
                   addAutomaticKeepAlives: false,
 
-                  itemCount: 5,
+                  itemCount: controller.conversationModel.length,
 
                   itemBuilder: (context, index) {
 
@@ -230,11 +229,11 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
                     String? conversationId = conversation.id;
 
-                    String? displayName = conversation.receiver?.fullName;
+                    String? displayName = conversation.receiver.fullName;
 
-                    String? displayImage = conversation.receiver?.profileImage;
+                    String? displayImage = conversation.receiver.profileImage;
 
-                    String? receiverId = conversation.receiver?.id;
+                    String? receiverId = conversation.receiver.id;
 
                     return Padding(
 
@@ -246,7 +245,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
                           "conversationId": conversationId,
 
-                          "currentUserId": conversation.sender?.id,
+                          "currentUserId": conversation.sender.id,
 
                           "receiverId": receiverId,
 
@@ -298,9 +297,9 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
                                     CustomText(
 
-                                      text: 'Rida Anam',
+                                      text: controller.conversationModel[index].receiver.fullName,
 
-                                      fontSize: 16.sp,
+                                      fontSize: 12.sp,
 
                                       fontWeight: FontWeight.w700,
 
@@ -316,7 +315,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
                                     CustomText(
 
-                                      text: 'Hello, are you here?',
+                                      text: controller.conversationModel[index].lastMsg != null ? controller.conversationModel[index].lastMsg!.text : '',
 
                                       fontWeight: FontWeight.w500,
 
@@ -342,9 +341,9 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
                                   CustomText(
 
-                                    text: '7:09 PM',
+                                    text: controller.conversationModel[index].lastMsg != null ? TimeFormatHelper.timeAgo(controller.conversationModel[index].lastMsg!.createdAt) : '',
 
-                                    fontSize: 12.sp,
+                                    fontSize: 10.sp,
 
                                     color: Colors.grey,
 
@@ -366,8 +365,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
                                     child: CustomText(
 
-                                      text: '99+',
-
+                                      text: controller.conversationModel[index].lastMsg != null ? controller.conversationModel[index].unseenMsg.toString() : '',
                                       fontSize: 12.sp,
 
                                       color: Colors.white,

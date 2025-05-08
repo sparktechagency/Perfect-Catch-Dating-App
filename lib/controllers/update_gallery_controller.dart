@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:get/get.dart';
 import '../helpers/prefs_helpers.dart';
@@ -34,6 +35,7 @@ class UpdateGalleryController extends GetxController {
       imagePaths.assignAll(List.filled(6, ''));
       Future.delayed(const Duration(milliseconds: 500), () {
         if (!isUpdate) {
+          markProfileAsComplete();
           Get.offAllNamed(AppRoutes.locationScreen);
         } else {
           Get.back();
@@ -42,5 +44,19 @@ class UpdateGalleryController extends GetxController {
     } else {
       ApiChecker.checkApi(response);
     }
+  }
+
+  markProfileAsComplete() async {
+    String bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $bearerToken',
+    };
+    await ApiClient.patchData(
+        ApiConstants.updatePersonalInfoEndPoint,
+        jsonEncode({"isProfileCompleted": true,}),
+        headers: headers
+    );
   }
 }
