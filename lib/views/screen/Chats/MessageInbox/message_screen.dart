@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:perfect_catch_dating_app/helpers/route.dart';
 import 'package:perfect_catch_dating_app/utils/app_strings.dart';
 import '../../../../controllers/message_controller.dart';
 import '../../../../helpers/prefs_helpers.dart' show PrefsHelper;
@@ -116,7 +117,10 @@ class _MessageScreenState extends State<MessageScreen> {
         centerTitle: false,
         actions: [
           //==============================> Audio Call Button <=======================
-          InkWell(onTap: () {}, child: SvgPicture.asset(AppIcons.audio)),
+          InkWell(
+            onTap: (){
+            },
+            child: SvgPicture.asset(AppIcons.audio)),
           SizedBox(width: 18.w),
           //==============================> Video Call Button <=======================
           InkWell(onTap: () {}, child: SvgPicture.asset(AppIcons.video)),
@@ -148,7 +152,6 @@ class _MessageScreenState extends State<MessageScreen> {
                             child: ListView.builder(
                               itemCount: controller.messageModel.length,
                               controller: _controller.scrollController,
-                              reverse: true,
                               itemBuilder: (context, index) {
                                 final MessageModel message = controller.messageModel[index];
                                 return message.msgByUserId == currentUserId
@@ -185,13 +188,13 @@ class _MessageScreenState extends State<MessageScreen> {
                     child: GestureDetector(
                       onTap: () {
                         if (messageController.text.isNotEmpty) {
-                          // _controller.sentMessage(
-                          //   receiverId,
-                          //   PrefsHelper.userId,
-                          //   _controller.sentMsgCtrl.text,
-                          //   PrefsHelper.userId,
-                          // );
-                          _controller.sentMsgCtrl.clear();
+                          _controller.sentMessage(
+                            receiverId,
+                            currentUserId,
+                            messageController.text,
+                            currentUserId,
+                          );
+                          messageController.clear();
                         } else {
                           Fluttertoast.showToast(msg: 'Please write a message');
                         }
@@ -205,7 +208,8 @@ class _MessageScreenState extends State<MessageScreen> {
                           padding: EdgeInsets.all(12.w),
                           child: SvgPicture.asset(
                             AppIcons.sendIcon,
-                            color: Colors.white,
+                            width: 16,
+                            height: 16,
                           ),
                         ),
                       ),
@@ -352,7 +356,7 @@ class _MessageScreenState extends State<MessageScreen> {
       icon: SvgPicture.asset(AppIcons.dot, color: Colors.white),
       onSelected: (int result) {
         if (result == 0) {
-          print('View Profile');
+          Get.toNamed(AppRoutes.personalInformationScreen);
         } else if (result == 1) {
           print('Delete Chat ');
         }
@@ -363,16 +367,6 @@ class _MessageScreenState extends State<MessageScreen> {
               value: 0,
               child: const Text(
                 'View Profile',
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-            PopupMenuItem<int>(
-              onTap: () {
-                _showCustomBottomSheet(context);
-              },
-              value: 1,
-              child: const Text(
-                'Delete Chat',
                 style: TextStyle(color: Colors.black),
               ),
             ),

@@ -1,7 +1,7 @@
 // location_model.dart
 class LocationModel {
   final String type;
-  final List<double> coordinates;
+  final List<int> coordinates;
   final String locationName;
 
   LocationModel({
@@ -13,7 +13,7 @@ class LocationModel {
   factory LocationModel.fromJson(Map<String, dynamic> json) {
     return LocationModel(
       type: json['type'],
-      coordinates: List<double>.from(json['coordinates']),
+      coordinates: List<int>.from(json['coordinates']),
       locationName: json['locationName'],
     );
   }

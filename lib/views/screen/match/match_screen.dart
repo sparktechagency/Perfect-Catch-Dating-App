@@ -33,8 +33,11 @@ class _HomeMatchScreenState extends State<HomeMatchScreen> {
       userId = id;
       _initializeSocket(userId);
     });
-    PrefsHelper.getString(AppConstants.userId).then((image) {
+    PrefsHelper.getString(AppConstants.userImage).then((image) {
       userImage = image;
+      setState(() {
+
+      });
     });
   }
 

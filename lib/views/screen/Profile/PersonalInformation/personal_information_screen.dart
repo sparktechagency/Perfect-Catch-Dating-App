@@ -128,7 +128,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                             //========================> My photo album <========================
                             GestureDetector(
                               onTap: () {
-                                Get.toNamed(AppRoutes.uploadPhotosScreen);
+                                Get.toNamed(AppRoutes.uploadPhotosScreen, arguments: true);
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -167,7 +167,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 children: [
                                   CustomText(
                                     text:
-                                        '${_profileController.profileModel.value.fullName!.capitalize}',
+                                        '${_profileController.profileModel.value.fullName?.capitalize}',
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.w600,
                                     maxLine: 3,
@@ -175,13 +175,15 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                   ),
                                   CustomText(
                                     text:
-                                        '${_profileController.profileModel.value.gender!.capitalize}',
+                                        '${_profileController.profileModel.value.gender?.capitalize}',
                                   ),
                                 ],
                               ),
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: (){
+                                Get.toNamed(AppRoutes.songListScreen);
+                              },
                               child: SvgPicture.asset(AppIcons.music),
                             ),
                           ],
@@ -255,7 +257,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                   ),
                                   CustomText(
                                     text:
-                                        '${_profileController.profileModel.value.location!.locationName}',
+                                        '${_profileController.profileModel.value.location?.locationName}',
                                     maxLine: 5,
                                     textAlign: TextAlign.start,
                                   ),
@@ -330,15 +332,15 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                   children: [
                                     _detailColumn(
                                       AppStrings.dateOfBirth.tr,
-                                      DateFormat('yyyy-MM-dd').format(DateTime.parse('${_profileController.profileModel.value.dateOfBirth}')) ?? '',
+                                      _profileController.profileModel.value.dateOfBirth != null ?DateFormat('yyyy-MM-dd').format(DateTime.parse('${_profileController.profileModel.value.dateOfBirth}')) : '',
                                     ),
                                     _detailColumn(
                                       AppStrings.height.tr,
-                                      '${_profileController.profileModel.value.height}',
+                                      '${_profileController.profileModel.value.height ?? ''}',
                                     ),
                                     _detailColumn(
                                       AppStrings.weight.tr,
-                                      '${_profileController.profileModel.value.weight}',
+                                      '${_profileController.profileModel.value.weight ?? ''}',
                                     ),
                                   ],
                                 ),
@@ -349,15 +351,15 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                   children: [
                                     _detailColumn(
                                       AppStrings.religion.tr,
-                                      '${_profileController.profileModel.value.religion}',
+                                      '${_profileController.profileModel.value.religion ?? ''}',
                                     ),
                                     _detailColumn(
                                       AppStrings.qualification.tr,
-                                      '${_profileController.profileModel.value.educationQualification}',
+                                      '${_profileController.profileModel.value.educationQualification ?? ''}',
                                     ),
                                     _detailColumn(
                                       AppStrings.maritalStatus.tr,
-                                      '${_profileController.profileModel.value.personalStatus}',
+                                      '${_profileController.profileModel.value.personalStatus ?? ''}',
                                     ),
                                   ],
                                 ),
@@ -375,7 +377,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                         ),
                         CustomText(
                           text:
-                              '${_profileController.profileModel.value.about}'
+                              '${_profileController.profileModel.value.about ?? ''}'
                                   .tr,
                           maxLine: 20,
                           textAlign: TextAlign.start,
@@ -429,12 +431,15 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                       mainAxisSpacing: 8.h,
                                       childAspectRatio: 0.9,
                                     ),
-                                itemCount:
+                                itemCount: _profileController
+                                    .profileModel
+                                    .value
+                                    .photos != null ?
                                     _profileController
                                         .profileModel
                                         .value
                                         .photos!
-                                        .length,
+                                        .length : 0,
                                 itemBuilder: (context, index) {
                                   return CustomNetworkImage(
                                     imageUrl:
