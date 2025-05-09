@@ -31,26 +31,27 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: CustomAppBar(title: AppStrings.profileDetails.tr),
       body: SingleChildScrollView(
-        child:Obx(
-          () {
-            if(homeController.isProfilesDetailsLoading.value){
-              return SizedBox(
-                height: Get.height * .8,
-                width: Get.width,
-                child: Center(child: CircularProgressIndicator(color: AppColors.primaryColor,),)
-              );
-            }
-            return Column(
+        child: Obx(() {
+          if (homeController.isProfilesDetailsLoading.value) {
+            return SizedBox(
+              height: Get.height * .8,
+              width: Get.width,
+              child: Center(
+                child: CircularProgressIndicator(color: AppColors.primaryColor),
+              ),
+            );
+          }
+          return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //==============================> Profile picture section <=======================
               Obx(
                 () => CustomNetworkImage(
-                  imageUrl: "${ApiConstants.imageBaseUrl}${homeController.user.value?.profileImage}",
+                  imageUrl:
+                      "${ApiConstants.imageBaseUrl}${homeController.user.value?.profileImage}",
                   height: 457.h,
                   width: 402.w,
                   borderRadius: BorderRadius.circular(8.r),
@@ -84,17 +85,27 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                               children: [
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                     Obx(() =>  CustomText(
-                                       text: '${homeController.user.value == null ? "" : homeController.user.value!.fullName}' ?? '',
-                                       fontSize: 18.sp,
-                                       fontWeight: FontWeight.w600,
-                                       maxLine: 3,
-                                       bottom: 8.h,
-                                     ),),
-                                      Obx(() =>  CustomText(text: '${homeController.user.value == null ? "" : homeController.user.value!.gender}' ?? ''),),
-
+                                      Obx(
+                                        () => CustomText(
+                                          text:
+                                              '${homeController.user.value == null ? "" : homeController.user.value!.fullName}' ??
+                                              '',
+                                          fontSize: 18.sp,
+                                          fontWeight: FontWeight.w600,
+                                          maxLine: 3,
+                                          bottom: 8.h,
+                                        ),
+                                      ),
+                                      Obx(
+                                        () => CustomText(
+                                          text:
+                                              '${homeController.user.value == null ? "" : homeController.user.value!.gender}' ??
+                                              '',
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -119,7 +130,8 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                               children: [
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       CustomText(
                                         text: AppStrings.location.tr,
@@ -129,8 +141,9 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                         bottom: 8.h,
                                       ),
                                       Obx(
-                                        ()=> CustomText(
-                                          text: '${homeController.user.value == null ? "" :  homeController.user.value!.location!.locationName}',
+                                        () => CustomText(
+                                          text:
+                                              '${homeController.user.value == null ? "" : homeController.user.value!.location!.locationName}',
                                           maxLine: 5,
                                           textAlign: TextAlign.start,
                                         ),
@@ -156,7 +169,12 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                       children: [
                                         SvgPicture.asset(AppIcons.location),
                                         SizedBox(width: 4.w),
-                                        Obx(()=> CustomText(text: '${homeController.user.value == null ? "" :  homeController.user.value!.setDistance} away')),
+                                        Obx(
+                                          () => CustomText(
+                                            text:
+                                                '${homeController.user.value == null ? "" : homeController.user.value!.setDistance} away',
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -192,8 +210,23 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
                                       children: [
-                                        if(homeController.user.value != null)
-                                            for(int i = 0; i < homeController.user.value!.language!.length; i++) _languageText(homeController.user.value!.language![i]),
+                                        if (homeController.user.value != null)
+                                          for (
+                                            int i = 0;
+                                            i <
+                                                homeController
+                                                    .user
+                                                    .value!
+                                                    .language!
+                                                    .length;
+                                            i++
+                                          )
+                                            _languageText(
+                                              homeController
+                                                  .user
+                                                  .value!
+                                                  .language![i],
+                                            ),
                                       ],
                                     ),
                                   ),
@@ -225,15 +258,24 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                         children: [
                                           _detailColumn(
                                             AppStrings.dateOfBirth.tr,
-                                            homeController.user.value == null ? "" :  TimeFormatHelper.formatDates(homeController.user.value!.dateOfBirth),
+                                            homeController.user.value == null
+                                                ? ""
+                                                : TimeFormatHelper.formatDates(
+                                                  homeController
+                                                      .user
+                                                      .value!
+                                                      .dateOfBirth,
+                                                ),
                                           ),
                                           _detailColumn(
                                             AppStrings.height.tr,
-                                            homeController.user.value?.height.toString(),
+                                            homeController.user.value?.height
+                                                .toString(),
                                           ),
                                           _detailColumn(
                                             AppStrings.maritalStatus.tr,
-                                            homeController.user.value?.weight.toString(),
+                                            homeController.user.value?.weight
+                                                .toString(),
                                           ),
                                         ],
                                       ),
@@ -250,7 +292,10 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                           ),
                                           _detailColumn(
                                             AppStrings.qualification.tr,
-                                              homeController.user.value?.educationQualification,
+                                            homeController
+                                                .user
+                                                .value
+                                                ?.educationQualification,
                                           ),
                                           //TODO Politics not found
                                           // _detailColumn(
@@ -274,10 +319,10 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                             ),
                             //TODO about not found
                             CustomText(
-                                text: "",
-                                // text: homeController.user.value != null ? homeController.user.value!.abo : "",
-                                maxLine: 20,
-                                textAlign: TextAlign.start,
+                              text: "",
+                              // text: homeController.user.value != null ? homeController.user.value!.abo : "",
+                              maxLine: 20,
+                              textAlign: TextAlign.start,
                             ),
                             SizedBox(height: 24.h),
                             //========================> Interest Section <==========================
@@ -307,27 +352,35 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                             ),
                             SizedBox(height: 16.h),
                             Obx(
-                                () => Row(
+                              () => Row(
                                 children: [
-                                  if(homeController.user.value != null)
+                                  if (homeController.user.value != null)
                                     Expanded(
                                       child: GridView.builder(
                                         physics: NeverScrollableScrollPhysics(),
                                         shrinkWrap: true,
                                         gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          crossAxisSpacing: 8.w,
-                                          mainAxisSpacing: 8.h,
-                                          childAspectRatio: 0.9,
-                                        ),
-                                        itemCount: homeController.user.value!.photos!.length,
+                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 2,
+                                              crossAxisSpacing: 8.w,
+                                              mainAxisSpacing: 8.h,
+                                              childAspectRatio: 0.9,
+                                            ),
+                                        itemCount:
+                                            homeController
+                                                .user
+                                                .value!
+                                                .photos!
+                                                .length,
                                         itemBuilder: (context, index) {
                                           return CustomNetworkImage(
-                                            imageUrl: "${ApiConstants.imageBaseUrl}${homeController.user.value!.photos![index]}",
+                                            imageUrl:
+                                                "${ApiConstants.imageBaseUrl}${homeController.user.value!.photos![index]}",
                                             height: 75.h,
                                             width: 70.w,
-                                            borderRadius: BorderRadius.circular(16.r),
+                                            borderRadius: BorderRadius.circular(
+                                              16.r,
+                                            ),
                                           );
                                         },
                                       ),
@@ -370,8 +423,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
               SizedBox(height: 32.h),
             ],
           );
-          },
-        ),
+        }),
       ),
     );
   }
