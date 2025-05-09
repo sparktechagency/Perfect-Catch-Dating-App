@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../helpers/prefs_helpers.dart';
 import '../helpers/route.dart';
 import '../service/api_checker.dart';
@@ -297,31 +299,61 @@ class AuthController extends GetxController {
 
 
   //======================> Google login Info <============================
-  /*handleGoogleSingIn(String email,String userRole) async {
-    var fcmToken=await PrefsHelper.getString(AppConstants.fcmToken);
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+  handleGoogleSignIn(BuildContext context) async {
+    await _auth.signOut();
+    await googleSignIn.signOut();
 
-    Map<String, dynamic> body =
-    {
-      "email": email,
-      "fcmToken": fcmToken ?? "",
-       "role": userRole,
-      "loginType": 2
-    };
+    final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+      await googleSignInAccount.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(accessToken: googleSignInAuthentication.accessToken, idToken: googleSignInAuthentication.idToken);
 
-    var headers = {'Content-Type': 'application/json'};
-    Response response = await ApiClient.postData(ApiConstants.logInEndPoint, jsonEncode(body), headers: headers);
-    if (response.statusCode == 200) {
-      await PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['attributes']['tokens']['access']['token']);
-      await PrefsHelper.setString(AppConstants.userId, response.body['data']['attributes']['user']['id']);
-      await PrefsHelper.setBool(AppConstants.isLogged, true);
-      Get.offAllNamed(AppRoutes.homeScreen);
-      await PrefsHelper.setBool(AppConstants.isLogged, true);
-      update();
+      // Firebase Authentication
+      final UserCredential authResult = await _auth.signInWithCredential(credential);
+      final User? user = authResult.user;
+
+      if (user != null) {
+        var fcmToken = await PrefsHelper.getString(AppConstants.fcmToken);
+        var bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
+
+        Map<String, dynamic> body = {
+          'email': '${user.email}',
+          "fcmToken": fcmToken ?? "",
+          "loginType": 'google'
+        };
+        var headers = {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $bearerToken',
+        };
+        Response response = await ApiClient.postData(ApiConstants.signInEndPoint, jsonEncode(body), headers: headers);
+        print("response on google login :${response.body}");
+
+        if (response.statusCode == 200) {
+          await PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['attributes']['tokens']['access']['token']);
+          await PrefsHelper.setString(AppConstants.userId, response.body['data']['attributes']['user']['id']);
+          await PrefsHelper.setString(AppConstants.userName, response.body['data']['attributes']['user']['fullName']);
+          bool condition = response.body['data']['attributes']['user']['isProfileCompleted'];
+
+          if(!condition){
+            Get.offAllNamed(AppRoutes.uploadPhotosScreen);
+          } else {
+            await PrefsHelper.setBool(AppConstants.isLogged, true);
+            Get.offAllNamed(AppRoutes.homeScreen);
+          }
+          // Get.offAllNamed(AppRoutes.uploadPhotosScreen);
+          update();
+        } else {
+          ApiChecker.checkApi(response);
+          update();
+        }
+      }
     } else {
-      ApiChecker.checkApi(response);
-      update();
+      print("Sign in with Google canceled by user.");
     }
-  }*/
+  }
 
   //======================> Facebook login Info <============================
   /*handleFacebookSignIn(String email,String userRole) async {

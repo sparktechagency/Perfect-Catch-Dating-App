@@ -65,7 +65,7 @@ class HomeController extends GetxController{
     }
   }
 
-
+//==============================> Get User Details <=============================
   final Rxn<UserModel> user = Rxn<UserModel>();
   RxBool isProfilesDetailsLoading = false.obs;
 
