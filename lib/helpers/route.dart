@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:perfect_catch_dating_app/views/screen/call/one_to_one_audio_call.dart';
+import 'package:perfect_catch_dating_app/views/screen/call/one_to_one_video_call.dart';
 import '../views/screen/AboutUs/about_us_screen.dart';
 import '../views/screen/Auth/ChangePass/change_password_screen.dart';
 import '../views/screen/Auth/ForgotPass/forgot_password_screen.dart';
@@ -72,6 +74,9 @@ class AppRoutes {
   static String locationPickerScreen = "/location_picker_screen";
   static String homeMatchScreen = "/match_screen";
 
+  static String oneToOneAudioCallScreen = "/one_to_one_audio_call_screen";
+  static String oneToOneVideoCallScreen = "/one_to_one_video_call_screen";
+
   static List<GetPage> page = [
     GetPage(name: splashScreen, page: () => const SplashScreen()),
     GetPage(name: onboardingScreen, page: () => const OnboardingScreen()),
@@ -141,6 +146,18 @@ class AppRoutes {
     GetPage(
       name: homeMatchScreen,
       page: () => const HomeMatchScreen(),
+      transition: Transition.noTransition,
+    ),
+
+    GetPage(
+      name: oneToOneAudioCallScreen,
+      page: () => const OneToOneAudioCall(),
+      transition: Transition.noTransition,
+    ),
+
+    GetPage(
+      name: oneToOneVideoCallScreen,
+      page: () => const OneToOneVideoCall(),
       transition: Transition.noTransition,
     ),
   ];
