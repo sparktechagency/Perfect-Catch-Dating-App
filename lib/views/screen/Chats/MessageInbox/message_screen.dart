@@ -441,8 +441,7 @@ class _MessageScreenState extends State<MessageScreen> {
                     },
                     text: "No",
                     color: Colors.white,
-                    textColor: AppColors.primaryColor,
-                  ),
+                    textColor: AppColors.primaryColor),
                   SizedBox(width: 16.w),
                   CustomButton(
                     width: 124.w,
