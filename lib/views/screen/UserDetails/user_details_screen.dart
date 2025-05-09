@@ -35,329 +35,342 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
     return Scaffold(
       appBar: CustomAppBar(title: AppStrings.profileDetails.tr),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //==============================> Profile picture section <=======================
-            CustomNetworkImage(
-              imageUrl: "${ApiConstants.imageBaseUrl}${homeController.user.value?.profileImage}",
-              height: 457.h,
-              width: 402.w,
-              borderRadius: BorderRadius.circular(8.r),
-            ),
-            SizedBox(height: 32.h),
-            //==============================> My Bio section <=======================
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16.r),
-                      border: Border.all(
-                        width: 1.w,
-                        color: AppColors.borderColor,
-                      ),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 12.w,
-                        vertical: 32.h,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          //=====================> Name and Gender Row <=================
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                   Obx(() =>  CustomText(
-                                     text: '${homeController.user.value!.fullName}' ?? '',
-                                     fontSize: 18.sp,
-                                     fontWeight: FontWeight.w600,
-                                     maxLine: 3,
-                                     bottom: 8.h,
-                                   ),),
-                                    Obx(() =>  CustomText(text: '${homeController.user.value!.gender}' ?? ''),),
-
-                                  ],
-                                ),
-                              ),
-                              Spacer(),
-                              InkWell(
-                                onTap: () {
-                                  Get.toNamed(AppRoutes.messageScreen);
-                                },
-                                child: SvgPicture.asset(AppIcons.message),
-                              ),
-                              SizedBox(width: 10.w),
-                              InkWell(
-                                onTap: () {},
-                                child: SvgPicture.asset(AppIcons.music),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 24.h),
-                          //=====================> Location and Distance Row <=================
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CustomText(
-                                      text: AppStrings.location.tr,
-                                      fontSize: 18.sp,
-                                      fontWeight: FontWeight.w600,
-                                      maxLine: 3,
-                                      bottom: 8.h,
-                                    ),
-                                    Obx(
-                                      ()=> CustomText(
-                                        text: '${homeController.user.value!.location!.locationName}',
-                                        maxLine: 5,
-                                        textAlign: TextAlign.start,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: AppColors.cardColor,
-                                  borderRadius: BorderRadius.circular(12.r),
-                                  border: Border.all(
-                                    width: 1.w,
-                                    color: AppColors.primaryColor,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 5.w,
-                                    vertical: 8.h,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      SvgPicture.asset(AppIcons.location),
-                                      SizedBox(width: 4.w),
-                                      Obx(()=> CustomText(text: '${homeController.user.value!.setDistance} away')),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 24.h),
-                          //=====================> Language Container <=================
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12.r),
-                              border: Border.all(
-                                width: 1.w,
-                                color: AppColors.borderColor,
-                              ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.all(8.w),
-                                  child: CustomText(
-                                    text: AppStrings.language.tr,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                Divider(color: AppColors.borderColor),
-                                SizedBox(height: 8.h),
-                                Padding(
-                                  padding: EdgeInsets.all(8.w),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      if(homeController.user.value != null)
-                                          for(int i = 0; i < homeController.user.value!.language!.length; i++) _languageText(homeController.user.value!.language![i]),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: 12.h),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 24.h),
-                          //=====================> Details Container <=================
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16.r),
-                              border: Border.all(
-                                width: 1.w,
-                                color: AppColors.primaryColor,
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 16.w,
-                                vertical: 12.h,
-                              ),
-                              child: Column(
-                                children: [
-                                  Obx(
-                                    () => Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        _detailColumn(
-                                          AppStrings.dateOfBirth.tr,
-                                          TimeFormatHelper.formatDates(homeController.user.value!.dateOfBirth),
-                                        ),
-                                        _detailColumn(
-                                          AppStrings.height.tr,
-                                          homeController.user.value?.height.toString(),
-                                        ),
-                                        _detailColumn(
-                                          AppStrings.maritalStatus.tr,
-                                          homeController.user.value?.weight.toString(),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Divider(color: AppColors.borderColor),
-                                  Obx(
-                                    () => Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        _detailColumn(
-                                          AppStrings.religion.tr,
-                                          homeController.user.value?.religion,
-                                        ),
-                                        _detailColumn(
-                                          AppStrings.qualification.tr,
-                                            homeController.user.value?.educationQualification,
-                                        ),
-                                        //TODO Politics not found
-                                        // _detailColumn(
-                                        //   AppStrings.politics.tr,
-                                        //   'Moderate',
-                                        // ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 24.h),
-                          //=====================> About <=================
-                          CustomText(
-                            text: AppStrings.about.tr,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18.sp,
-                            bottom: 8.h,
-                          ),
-                          //TODO about not found
-                          CustomText(
-                              text: "",
-                              // text: homeController.user.value != null ? homeController.user.value!.abo : "",
-                              maxLine: 20,
-                              textAlign: TextAlign.start,
-                          ),
-                          SizedBox(height: 24.h),
-                          //========================> Interest Section <==========================
-                          CustomText(
-                            text: AppStrings.interests.tr,
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          SizedBox(height: 8.h),
-
-                          //TODO interested not found
-                          Wrap(
-                            spacing: 8.0,
-                            runSpacing: 8.0,
-                            children: [
-                              _interestChip('Reading'),
-                              _interestChip('Music'),
-                              _interestChip('Sports'),
-                            ],
-                          ),
-                          SizedBox(height: 24.h),
-                          //========================> Gallery GridView Section <==========================
-                          CustomText(
-                            text: AppStrings.galleryPhoto.tr,
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          SizedBox(height: 16.h),
-                          Obx(
-                              () => Row(
-                              children: [
-                                if(homeController.user.value != null)
-                                  Expanded(
-                                    child: GridView.builder(
-                                      physics: NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        crossAxisSpacing: 8.w,
-                                        mainAxisSpacing: 8.h,
-                                        childAspectRatio: 0.9,
-                                      ),
-                                      itemCount: homeController.user.value!.photos!.length,
-                                      itemBuilder: (context, index) {
-                                        return CustomNetworkImage(
-                                          imageUrl: "${ApiConstants.imageBaseUrl}${homeController.user.value!.photos![index]}",
-                                          height: 75.h,
-                                          width: 70.w,
-                                          borderRadius: BorderRadius.circular(16.r),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 15.w,
-                    top: -18.h,
-                    child: Container(
+        child:Obx(
+          () {
+            if(homeController.isProfilesDetailsLoading.value){
+              return SizedBox(
+                height: Get.height * .8,
+                width: Get.width,
+                child: Center(child: CircularProgressIndicator(color: AppColors.primaryColor,),)
+              );
+            }
+            return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //==============================> Profile picture section <=======================
+              Obx(
+                () => CustomNetworkImage(
+                  imageUrl: "${ApiConstants.imageBaseUrl}${homeController.user.value?.profileImage}",
+                  height: 457.h,
+                  width: 402.w,
+                  borderRadius: BorderRadius.circular(8.r),
+                ),
+              ),
+              SizedBox(height: 32.h),
+              //==============================> My Bio section <=======================
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Container(
                       decoration: BoxDecoration(
-                        color: AppColors.cardColor,
+                        borderRadius: BorderRadius.circular(16.r),
                         border: Border.all(
                           width: 1.w,
-                          color: AppColors.primaryColor,
+                          color: AppColors.borderColor,
                         ),
-                        borderRadius: BorderRadius.circular(12.r),
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal: 22.w,
-                          vertical: 4.h,
+                          horizontal: 12.w,
+                          vertical: 32.h,
                         ),
-                        child: CustomText(
-                          text: AppStrings.myBio.tr,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18.sp,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            //=====================> Name and Gender Row <=================
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                     Obx(() =>  CustomText(
+                                       text: '${homeController.user.value == null ? "" : homeController.user.value!.fullName}' ?? '',
+                                       fontSize: 18.sp,
+                                       fontWeight: FontWeight.w600,
+                                       maxLine: 3,
+                                       bottom: 8.h,
+                                     ),),
+                                      Obx(() =>  CustomText(text: '${homeController.user.value == null ? "" : homeController.user.value!.gender}' ?? ''),),
+
+                                    ],
+                                  ),
+                                ),
+                                Spacer(),
+                                InkWell(
+                                  onTap: () {
+                                    Get.toNamed(AppRoutes.messageScreen);
+                                  },
+                                  child: SvgPicture.asset(AppIcons.message),
+                                ),
+                                SizedBox(width: 10.w),
+                                InkWell(
+                                  onTap: () {},
+                                  child: SvgPicture.asset(AppIcons.music),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 24.h),
+                            //=====================> Location and Distance Row <=================
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      CustomText(
+                                        text: AppStrings.location.tr,
+                                        fontSize: 18.sp,
+                                        fontWeight: FontWeight.w600,
+                                        maxLine: 3,
+                                        bottom: 8.h,
+                                      ),
+                                      Obx(
+                                        ()=> CustomText(
+                                          text: '${homeController.user.value == null ? "" :  homeController.user.value!.location!.locationName}',
+                                          maxLine: 5,
+                                          textAlign: TextAlign.start,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: AppColors.cardColor,
+                                    borderRadius: BorderRadius.circular(12.r),
+                                    border: Border.all(
+                                      width: 1.w,
+                                      color: AppColors.primaryColor,
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 5.w,
+                                      vertical: 8.h,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(AppIcons.location),
+                                        SizedBox(width: 4.w),
+                                        Obx(()=> CustomText(text: '${homeController.user.value == null ? "" :  homeController.user.value!.setDistance} away')),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 24.h),
+                            //=====================> Language Container <=================
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12.r),
+                                border: Border.all(
+                                  width: 1.w,
+                                  color: AppColors.borderColor,
+                                ),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(8.w),
+                                    child: CustomText(
+                                      text: AppStrings.language.tr,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Divider(color: AppColors.borderColor),
+                                  SizedBox(height: 8.h),
+                                  Padding(
+                                    padding: EdgeInsets.all(8.w),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        if(homeController.user.value != null)
+                                            for(int i = 0; i < homeController.user.value!.language!.length; i++) _languageText(homeController.user.value!.language![i]),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: 12.h),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 24.h),
+                            //=====================> Details Container <=================
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16.r),
+                                border: Border.all(
+                                  width: 1.w,
+                                  color: AppColors.primaryColor,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 16.w,
+                                  vertical: 12.h,
+                                ),
+                                child: Column(
+                                  children: [
+                                    Obx(
+                                      () => Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          _detailColumn(
+                                            AppStrings.dateOfBirth.tr,
+                                            homeController.user.value == null ? "" :  TimeFormatHelper.formatDates(homeController.user.value!.dateOfBirth),
+                                          ),
+                                          _detailColumn(
+                                            AppStrings.height.tr,
+                                            homeController.user.value?.height.toString(),
+                                          ),
+                                          _detailColumn(
+                                            AppStrings.maritalStatus.tr,
+                                            homeController.user.value?.weight.toString(),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Divider(color: AppColors.borderColor),
+                                    Obx(
+                                      () => Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          _detailColumn(
+                                            AppStrings.religion.tr,
+                                            homeController.user.value?.religion,
+                                          ),
+                                          _detailColumn(
+                                            AppStrings.qualification.tr,
+                                              homeController.user.value?.educationQualification,
+                                          ),
+                                          //TODO Politics not found
+                                          // _detailColumn(
+                                          //   AppStrings.politics.tr,
+                                          //   'Moderate',
+                                          // ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 24.h),
+                            //=====================> About <=================
+                            CustomText(
+                              text: AppStrings.about.tr,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18.sp,
+                              bottom: 8.h,
+                            ),
+                            //TODO about not found
+                            CustomText(
+                                text: "",
+                                // text: homeController.user.value != null ? homeController.user.value!.abo : "",
+                                maxLine: 20,
+                                textAlign: TextAlign.start,
+                            ),
+                            SizedBox(height: 24.h),
+                            //========================> Interest Section <==========================
+                            CustomText(
+                              text: AppStrings.interests.tr,
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            SizedBox(height: 8.h),
+
+                            //TODO interested not found
+                            Wrap(
+                              spacing: 8.0,
+                              runSpacing: 8.0,
+                              children: [
+                                _interestChip('Reading'),
+                                _interestChip('Music'),
+                                _interestChip('Sports'),
+                              ],
+                            ),
+                            SizedBox(height: 24.h),
+                            //========================> Gallery GridView Section <==========================
+                            CustomText(
+                              text: AppStrings.galleryPhoto.tr,
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            SizedBox(height: 16.h),
+                            Obx(
+                                () => Row(
+                                children: [
+                                  if(homeController.user.value != null)
+                                    Expanded(
+                                      child: GridView.builder(
+                                        physics: NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          crossAxisSpacing: 8.w,
+                                          mainAxisSpacing: 8.h,
+                                          childAspectRatio: 0.9,
+                                        ),
+                                        itemCount: homeController.user.value!.photos!.length,
+                                        itemBuilder: (context, index) {
+                                          return CustomNetworkImage(
+                                            imageUrl: "${ApiConstants.imageBaseUrl}${homeController.user.value!.photos![index]}",
+                                            height: 75.h,
+                                            width: 70.w,
+                                            borderRadius: BorderRadius.circular(16.r),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    Positioned(
+                      left: 15.w,
+                      top: -18.h,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.cardColor,
+                          border: Border.all(
+                            width: 1.w,
+                            color: AppColors.primaryColor,
+                          ),
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 22.w,
+                            vertical: 4.h,
+                          ),
+                          child: CustomText(
+                            text: AppStrings.myBio.tr,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18.sp,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 32.h),
-          ],
+              SizedBox(height: 32.h),
+            ],
+          );
+          },
         ),
       ),
     );

@@ -119,11 +119,14 @@ class _MessageScreenState extends State<MessageScreen> {
           //==============================> Audio Call Button <=======================
           InkWell(
             onTap: (){
+              Get.toNamed(AppRoutes.oneToOneAudioCallScreen, arguments: conversationId);
             },
             child: SvgPicture.asset(AppIcons.audio)),
           SizedBox(width: 18.w),
           //==============================> Video Call Button <=======================
-          InkWell(onTap: () {}, child: SvgPicture.asset(AppIcons.video)),
+          InkWell(onTap: () {
+            Get.toNamed(AppRoutes.oneToOneVideoCallScreen, arguments: conversationId);
+          }, child: SvgPicture.asset(AppIcons.video)),
           _popupMenuButton(),
           SizedBox(width: 4.w),
         ],
