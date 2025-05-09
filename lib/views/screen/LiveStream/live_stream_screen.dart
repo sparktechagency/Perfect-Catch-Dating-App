@@ -35,7 +35,6 @@ class LiveStreamController extends GetxController{
         headers: headers
     );
 
-
     if(response.statusCode == 200 || response.statusCode == 201){
       isLiveStreamingLoading.value = false;
       isAutoScroll.value = false;
@@ -48,7 +47,6 @@ class LiveStreamController extends GetxController{
     isLiveStreamingLoading.value = false;
     return false;
   }
-
 }
 
 class LiveStreamScreen extends StatefulWidget {

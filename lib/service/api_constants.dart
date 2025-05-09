@@ -28,6 +28,7 @@ class ApiConstants {
   static const String sendMessageEndPoint = "/conversation/send-message";
   static String getSingleAllMessageEndPoint(String userID) => "/conversation/get-messages?conversationId=$userID";
   static String getLiveStreamEndPoint(String uid) => "/users/live/stream";
+  static String getCallTokenEndPoint(String callType, String receiverName) => "/conversation/get-call-token?callType=$callType&receiverName=$receiverName";
   static const String editMessageEndPoint = "/conversation/update-messages";
   static const String blockConversationEndPoint = "/conversation/profile/block";
   static const String getPersonalInfoEndPoint = "/users/self/in";
