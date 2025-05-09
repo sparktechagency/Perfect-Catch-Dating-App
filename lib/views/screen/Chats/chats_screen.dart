@@ -63,6 +63,8 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
     controller.getConversation();
 
+    controller.conversation();
+
   }
 
   @override
@@ -240,7 +242,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                       padding: EdgeInsets.only(bottom: 8.h),
 
                       child: GestureDetector(
-
+                        behavior: HitTestBehavior.opaque,
                         onTap: () => controller.updateMessageScreen({
 
                           "conversationId": conversationId,

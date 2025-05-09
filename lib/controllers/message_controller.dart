@@ -135,11 +135,11 @@ class MessageController extends GetxController {
   void sentMessage(String receiverId, String senderId, String text, String msgById) async {
     try {
       if (_socket.socket != null) {
-        _socket.socket?.emit("new-message", {
+        _socket.emit("new-message", {
           "sender": senderId,
           "receiver": receiverId,
           "text": text,
-          "msgByUserId": msgById
+          "msgByUserId": msgById,
         });
 
         print("message send");

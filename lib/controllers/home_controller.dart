@@ -56,7 +56,7 @@ class HomeController extends GetxController{
 
     if(response.statusCode == 200 || response.statusCode == 201){
       Fluttertoast.showToast(msg: response.body["message"]);
-      if(!response.body['data']['attributes']['match']){
+      if(response.body['data']['attributes']['match']){
         Get.toNamed(AppRoutes.homeMatchScreen, arguments: {
           "matchesProfileId": matchesProfileId,
           "matchesUserProfile": matchesUserProfile,

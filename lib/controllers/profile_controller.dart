@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:perfect_catch_dating_app/helpers/prefs_helpers.dart';
+import 'package:perfect_catch_dating_app/utils/app_constants.dart';
 import '../models/profile_model.dart';
 import '../service/api_checker.dart';
 import '../service/api_client.dart';
@@ -94,6 +96,7 @@ class ProfileController extends GetxController {
       multipartBody: multipartBody,
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
+      await PrefsHelper.setString(AppConstants.userImage, response.body['data']['attributes']['profileImage']);
       firstNameCTRL.clear();
       lastNameCTRL.clear();
       phoneCTRL.clear();
