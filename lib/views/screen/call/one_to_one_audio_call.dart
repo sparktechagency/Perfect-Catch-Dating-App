@@ -1,7 +1,9 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:perfect_catch_dating_app/controllers/call_controller.dart';
 import 'package:permission_handler/permission_handler.dart';
+
 
 class OneToOneAudioCall extends StatefulWidget {
   const OneToOneAudioCall({super.key});
@@ -14,12 +16,15 @@ const appId = "1e699e1a1aa34149b92e62c83ff3bd22";
 
 
 class _OneToOneAudioCallState extends State<OneToOneAudioCall> {
+  final CallController _callController = Get.put(CallController());
+
   int? _remoteUid;
   bool _localUserJoined = false;
   bool _muted = false;
   bool _speakerOn = true;
   late RtcEngine _engine;
-  String conversationId = Get.arguments;
+  final conversationId = Get.arguments["conversationId"];
+  final receiverName =  Get.arguments["receiverName"];
 
   @override
   void initState() {
@@ -60,21 +65,21 @@ class _OneToOneAudioCallState extends State<OneToOneAudioCall> {
 
     await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
 
-    // bool result = await liveStreamController.getLiveStreamingProfile(uuid: "0");
-    // if(result){
+    bool result = await _callController.getCallToken(type: "audio", receiverName: receiverName);
+    if(result){
       await _engine.joinChannel(
-        // token: liveStreamController.agoraToken.value,
-        // channelId: liveStreamController.agoraTChannelName.value,
-        token: "007eJxTYLieHS0z/dZF8Tz28slPebarzFSsPZEzR6F4Yv/3tTfLpDIVGAxTzSwtUw0TDRMTjU0MTSyTLI1SzYySLYzT0oyTUoyMvpXJZjQEMjJcS93OwAiFID4rQ0ZqTk4+AwMAbIsgMA==",
-        channelId: "hello",
+        token: _callController.agoraToken.value,
+        channelId: _callController.agoraTChannelName.value,
+        // token: "007eJxTYLieHS0z/dZF8Tz28slPebarzFSsPZEzR6F4Yv/3tTfLpDIVGAxTzSwtUw0TDRMTjU0MTSyTLI1SzYySLYzT0oyTUoyMvpXJZjQEMjJcS93OwAiFID4rQ0ZqTk4+AwMAbIsgMA==",
+        // channelId: "hello",
         uid: 0,
         options: const ChannelMediaOptions(
           clientRoleType: ClientRoleType.clientRoleBroadcaster,
           channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
         ),
       );
-      // liveStreamController.isAgoraInitialized.value = true;
-    // }
+      _callController.isAgoraInitialized.value = true;
+    }
 
   }
 
