@@ -63,7 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '567526310666',
     projectId: 'vanie-perfect-catch',
     storageBucket: 'vanie-perfect-catch.firebasestorage.app',
-    iosBundleId: 'com.vanie.perfectCatchDatingApp',
+    iosBundleId: 'com.vanie.perfectCatchDating',
   );
 
 }

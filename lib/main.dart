@@ -10,6 +10,7 @@ import 'package:perfect_catch_dating_app/utils/app_constants.dart';
 import 'package:perfect_catch_dating_app/utils/message.dart';
 import 'controllers/localization_controller.dart';
 import 'controllers/theme_controller.dart';
+import 'firebase_options.dart';
 import 'helpers/di.dart' as di;
 import 'helpers/notification_helpers.dart';
 import 'helpers/route.dart';
@@ -17,7 +18,9 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin=FlutterLoc
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

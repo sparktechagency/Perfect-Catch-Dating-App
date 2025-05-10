@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>567526310666-e4e6dla3baifl6s3hseigvf23p1ibh4s.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.567526310666-e4e6dla3baifl6s3hseigvf23p1ibh4s</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>567526310666-k7ku4u7rfldk3fji76m3vbeb3mbmf0me.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD4JOIKd_ZhI96YBUUdi6H-uUFVVKqTp4c</string>
+	<key>GCM_SENDER_ID</key>
+	<string>567526310666</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.vanie.perfectCatchDating</string>
+	<key>PROJECT_ID</key>
+	<string>vanie-perfect-catch</string>
+	<key>STORAGE_BUCKET</key>
+	<string>vanie-perfect-catch.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:567526310666:ios:dec435b55dde952579f0f3</string>
+</dict>
+</plist>
