@@ -18,7 +18,7 @@ class AppStrings {
   static String continues   = 'Continue';
   static String youCanChooseOption   = 'You can choose an options';
   static String aLongTermRelationship   = 'A Long-Term Relationship';
-  static String fanCasualDates   = 'Fan, Casual Dates';
+  static String fanCasualDates   = 'Fun, Casual Dates';
   static String aWhirlwindRomance   = 'A Whirlwind Romance';
   static String friendsWithBenefits   = 'Friends With Benefits';
   static String seriousCommitment   = 'Serious Commitment';
