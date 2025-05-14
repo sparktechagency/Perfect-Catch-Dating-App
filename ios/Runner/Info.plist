@@ -61,7 +61,13 @@
     <string>LaunchScreen</string>
     <key>UIMainStoryboardFile</key>
     <string>Main</string>
+    <key>NSCameraUsageDescription</key>
+    <string>We need camera access to allow you to take profile photos.</string>
+
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>We use your location to suggest nearby matches and improve app functionality.</string>
     <key>UISupportedInterfaceOrientations</key>
+
     <array>
         <string>UIInterfaceOrientationPortrait</string>
         <string>UIInterfaceOrientationLandscapeLeft</string>
