@@ -179,6 +179,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         SizedBox(height: 16.h),
                         //====================> Height Text Field <================
                         CustomTextField(
+                          onTab: ()=>_controller.pickHeight(context),
+                          readOnly: true,
                           keyboardType: TextInputType.number,
                           controller: _controller.heightCTRL,
                           hintText: AppStrings.height.tr,
@@ -193,6 +195,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         SizedBox(height: 16.h),
                         //====================> Weight Text Field <================
                         CustomTextField(
+                          onTab: ()=>_controller.pickWeight(context),
+                          readOnly: true,
                           keyboardType: TextInputType.number,
                           controller: _controller.weightCTRL,
                           hintText: AppStrings.weight.tr,
@@ -207,6 +211,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         SizedBox(height: 16.h),
                         //====================> Marital Status Text Field <================
                         CustomTextField(
+                          onTab: ()=>_controller.pickMaritalStatus(context),
+                          readOnly: true,
                           controller: _controller.marriedCTRL,
                           hintText: AppStrings.maritalStatus.tr,
                           prefixIcon: Padding(
@@ -220,6 +226,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         SizedBox(height: 16.h),
                         //====================> Religion Text Field <================
                         CustomTextField(
+                          onTab: ()=>_controller.pickReligion(context),
+                          readOnly: true,
                           controller: _controller.religionCTRL,
                           hintText: AppStrings.religion.tr,
                           prefixIcon: Padding(
@@ -233,6 +241,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         SizedBox(height: 16.h),
                         //====================> Education qualification Text Field <================
                         CustomTextField(
+                          onTab: ()=>_controller.pickEducation(context),
+                          readOnly: true,
                           controller: _controller.eduCTRL,
                           hintText: AppStrings.education.tr,
                           prefixIcon: Padding(
