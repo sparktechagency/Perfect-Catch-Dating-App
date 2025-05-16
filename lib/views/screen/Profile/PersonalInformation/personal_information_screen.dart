@@ -384,7 +384,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                         ),
                         SizedBox(height: 24.h),
                         //========================> Interest Section <==========================
-                        CustomText(
+                       /* CustomText(
                           text: AppStrings.interests.tr,
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w600,
@@ -410,7 +410,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 .toList(),
                           ],
                         ),
-                        SizedBox(height: 24.h),
+                        SizedBox(height: 24.h),*/
                         //========================> Gallery GridView Section <==========================
                         CustomText(
                           text: AppStrings.galleryPhoto.tr,

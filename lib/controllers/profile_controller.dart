@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:perfect_catch_dating_app/helpers/prefs_helpers.dart';
@@ -9,6 +10,7 @@ import '../service/api_checker.dart';
 import '../service/api_client.dart';
 import '../service/api_constants.dart';
 import '../utils/app_colors.dart';
+import '../views/base/custom_text.dart';
 
 class ProfileController extends GetxController {
   RxString profileImagePath = ''.obs;
@@ -84,7 +86,7 @@ class ProfileController extends GetxController {
       'gender': '$selectedGender',
       //'interested': '${selectedInterest.toList()}',
       'language': '${selectedLanguage.toList()}',
-      'bio': aboutCTRL.text,
+      'about': aboutCTRL.text,
     };
     List<MultipartBody> multipartBody = [
       MultipartBody('profileImage', File(profileImagePath.value)),
@@ -175,4 +177,389 @@ class ProfileController extends GetxController {
     ];
     return months[month - 1];
   }
+  //==========================> Show Height Function <=======================
+  Future<void> pickHeight(BuildContext context) async {
+    int? selectedFeet;
+    int? selectedInches;
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title:  CustomText(text: 'Select Your Height'),
+          content: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  //==========================> Feet Dropdown <===========================
+                  DropdownButton<int>(
+                    hint: const Text('Feet'),
+                    value: selectedFeet,
+                    items: List.generate(8, (index) => index + 1)
+                        .map((int value) {
+                      return DropdownMenuItem<int>(
+                        value: value,
+                        child: CustomText(text: '$value ft'),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedFeet = value;
+                      });
+                    },
+                  ),
+                  SizedBox(width: 16.w),
+                  Divider(thickness: 4.4, color: AppColors.borderColor),
+                  //==========================> Inches Dropdown <====================
+                  DropdownButton<int>(
+                    hint: const Text('Inches'),
+                    value: selectedInches,
+                    items: List.generate(12, (index) => index)
+                        .map((int value) {
+                      return DropdownMenuItem<int>(
+                        value: value,
+                        child: CustomText(text: '$value in'),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedInches = value;
+                      });
+                    },
+                  ),
+                ],
+              );
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: CustomText(text: 'Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                if (selectedFeet != null && selectedInches != null) {
+                  heightCTRL.text = '$selectedFeet\' $selectedInches"';
+                  Navigator.of(context).pop();
+                }
+              },
+              child: CustomText (text: 'OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  //==========================> Show Weight Function <=======================
+  Future<void> pickWeight(BuildContext context) async {
+    int? selectedWeight;
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: CustomText(text: 'Select Your Weight'),
+          content: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return DropdownButton<int>(
+                hint:  CustomText(text: 'select weight'),
+                value: selectedWeight,
+                items: List.generate(201, (index) => index + 1)
+                    .map((int value) {
+                  return DropdownMenuItem<int>(
+                    value: value,
+                    child: CustomText(text: '$value'),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedWeight = value;
+                  });
+                },
+              );
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: CustomText(text: 'Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                if (selectedWeight != null) {
+                  weightCTRL.text = '$selectedWeight';
+                  Navigator.of(context).pop();
+                }
+              },
+              child: CustomText(text: 'OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  //==========================> Show Marital Status Function <=======================
+  Future<void> pickMaritalStatus(BuildContext context) async {
+    String? selectedStatus;
+
+    const List<String> options = ['Single', 'Married', 'Unmarried'];
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: CustomText(text: 'Select Your Marital Status'),
+          content: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return DropdownButton<String>(
+                hint: CustomText(text: 'Select status'),
+                value: selectedStatus,
+                items: options.map((String status) {
+                  return DropdownMenuItem<String>(
+                    value: status,
+                    child: CustomText(text: status),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedStatus = value;
+                  });
+                },
+              );
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: CustomText(text: 'Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                if (selectedStatus != null) {
+                  marriedCTRL.text = selectedStatus!;
+                  Navigator.of(context).pop();
+                }
+              },
+              child: CustomText(text: 'OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+//==========================> Show Religion Function <=======================
+  Future<void> pickReligion(BuildContext context) async {
+    String? selectedReligion;
+    const List<String> religions = [
+      'Islam',
+      'Christianity',
+      'Hinduism',
+      'Buddhism',
+      'Sikhism',
+      'Judaism',
+    ];
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: CustomText(text: 'Select Your Religion'),
+          content: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return DropdownButton<String>(
+                hint: CustomText(text: 'Select religion'),
+                value: selectedReligion,
+                items: religions.map((String religion) {
+                  return DropdownMenuItem<String>(
+                    value: religion,
+                    child: CustomText(text: religion),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedReligion = value;
+                  });
+                },
+              );
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: CustomText(text: 'Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                if (selectedReligion != null) {
+                  religionCTRL.text = selectedReligion!;
+                  Navigator.of(context).pop();
+                }
+              },
+              child: CustomText(text: 'OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+//==========================> Show Education Function <=======================
+ /* Future<void> pickEducation(BuildContext context) async {
+    String? selectedEducation;
+
+    const List<String> educationOptions = [
+      'High school',
+      'Trade/tech school',
+      'In college',
+      'Undergraduate degree',
+      'In grad school',
+      'Graduate degree',
+    ];
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: CustomText(text: 'Select Your Education'),
+          content: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return DropdownButton<String>(
+                hint: CustomText(text: 'Select education'),
+                value: selectedEducation,
+                isExpanded: true,
+                items: educationOptions.map((String education) {
+                  return DropdownMenuItem<String>(
+                    value: education,
+                    child: CustomText(text: education),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedEducation = value;
+                  });
+                },
+              );
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: CustomText(text: 'Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                if (selectedEducation != null) {
+                  eduCTRL.text = selectedEducation!;
+                  Navigator.of(context).pop();
+                }
+              },
+              child: CustomText(text: 'OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }*/
+  Future<void> pickEducation(BuildContext context) async {
+    String? selectedEducation;
+
+    const List<String> educationOptions = [
+      'High school',
+      'Trade/tech school',
+      'In college',
+      'Undergraduate degree',
+      'In grad school',
+      'Graduate degree',
+    ];
+
+    await showModalBottomSheet(
+      backgroundColor: Colors.white,
+      context: context,
+      isScrollControlled: true,
+      shape:  RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
+      ),
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+                top: 16.h,
+                left: 16.w,
+                right: 16.w,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CustomText(
+                  text: 'Select Your Education',
+                  ),
+                  SizedBox(height: 12.h),
+                  SizedBox(
+                    height: 300.h,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: educationOptions.length,
+                      itemBuilder: (context, index) {
+                        final option = educationOptions[index];
+                        return RadioListTile<String>(
+                          title: CustomText(text: option, textAlign: TextAlign.start,),
+                          value: option,
+                          groupValue: selectedEducation,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedEducation = value;
+                            });
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: CustomText(text: 'Cancel'),
+                      ),
+                      const SizedBox(width: 8),
+                      TextButton(
+                        onPressed: selectedEducation == null
+                            ? null
+                            : () {
+                          eduCTRL.text = selectedEducation!;
+                          Navigator.of(context).pop();
+                        },
+                        child: CustomText(text: 'OK'),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
 }

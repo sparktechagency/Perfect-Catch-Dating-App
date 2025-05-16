@@ -240,11 +240,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       ),
                                                                       SizedBox(width: 4.w),
                                                                       CustomText(
-                                                                        text: '${user.location!.locationName} • ${user.setDistance} kms away',
+                                                                        text: '${user.location!.locationName}',
                                                                         color: Colors.white,
                                                                         maxLine: 3,
                                                                       ),
                                                                     ],
+                                                                  ),
+                                                                  CustomText(
+                                                                      text: '${user.setDistance} kms away',
+                                                                    color: Colors.white,
                                                                   ),
                                                                   SizedBox(height: 16.h,)
                                                                 ],
