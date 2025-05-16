@@ -1,7 +1,7 @@
 import 'dart:convert';
-
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:perfect_catch_dating_app/helpers/prefs_helpers.dart';
 import 'package:perfect_catch_dating_app/helpers/route.dart';
 import 'package:perfect_catch_dating_app/models/user_model.dart';
@@ -84,8 +84,42 @@ class HomeController extends GetxController{
     if(response.statusCode == 200 || response.statusCode == 201){
       isProfilesDetailsLoading.value = false;
       user.value = UserModel.fromJson(response.body['data']['attributes']);
+      playSong(user.value?.backgroundMusic);
     }
     isProfilesDetailsLoading.value = false;
+  }
+
+
+  late AudioPlayer audioPlayer;
+  playSong(String? url) async {
+    audioPlayer = AudioPlayer();
+    final fullUrl = "${ApiConstants.imageBaseUrl}$url";
+
+    print(fullUrl);
+
+    try {
+      if (audioPlayer.playing) {
+        await audioPlayer.stop();
+      }
+      await audioPlayer.setAudioSource(AudioSource.uri(Uri.parse(fullUrl)));
+      await audioPlayer.play();
+    } catch (e) {
+      print("Error playing song: $e");
+    }
+  }
+
+
+  @override
+  void dispose() {
+    super.dispose();
+    stopPlaying();
+  }
+
+  stopPlaying() async{
+    if (audioPlayer.playing) {
+      await audioPlayer.stop();
+    }
+    audioPlayer.dispose();
   }
 
 }
