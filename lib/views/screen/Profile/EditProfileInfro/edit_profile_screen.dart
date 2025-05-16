@@ -338,7 +338,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        _showLanguageDialog(context);
+                                        _controller.pickCountries(context);
                                       },
                                       child: Icon(
                                         Icons.add_box_rounded,
