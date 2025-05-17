@@ -196,13 +196,24 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                     SizedBox(height: 8.h),
                                     Padding(
                                       padding: EdgeInsets.all(8.w),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                        children: [
-                                          if(homeController.user.value != null)
-                                            for(int i = 0; i < homeController.user.value!.language!.length; i++) _languageText(homeController.user.value!.language![i]),
-                                        ],
+                                      child: SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                          children: [
+                                            if (homeController.user.value?.language?.isEmpty ?? true)
+                                              _languageText('No languages available')
+                                            else ...(homeController.user.value?.language.toString().replaceAll('[', '')
+                                                .replaceAll(']', '')
+                                                .split(',')
+                                                .map((e) => e.trim())
+                                                .toList())
+                                                !.map(
+                                                  (language) => _languageText(language),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                     SizedBox(height: 12.h),
@@ -237,11 +248,11 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                             ),
                                             _detailColumn(
                                               AppStrings.height.tr,
-                                              homeController.user.value?.height.toString(),
+                                              homeController.user.value?.height.toString() ?? '',
                                             ),
                                             _detailColumn(
                                               AppStrings.maritalStatus.tr,
-                                              homeController.user.value?.weight.toString(),
+                                              homeController.user.value?.weight.toString() ?? '',
                                             ),
                                           ],
                                         ),

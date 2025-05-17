@@ -269,47 +269,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                         ),
                         SizedBox(height: 24.h),
                         //=====================> Language Container <=================
-                        /*Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.r),
-                            border: Border.all(
-                              width: 1.w,
-                              color: AppColors.borderColor,
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.all(8.w),
-                                child: CustomText(
-                                  text: AppStrings.language.tr,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              Divider(color: AppColors.borderColor),
-                              SizedBox(height: 8.h),
-                              Padding(
-                                padding: EdgeInsets.all(8.w),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    if (_profileController.profileModel.value.language?.isEmpty ?? true)
-                                      _languageText('No languages available'),
-                                    ...(_profileController.profileModel.value.language ?? [])
-                                        .map(
-                                          (language) => _languageText(language),
-                                        )
-                                        .toList(),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: 12.h),
-                            ],
-                          ),
-                        ),*/
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12.r),
@@ -333,20 +292,90 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                               SizedBox(height: 8.h),
                               Padding(
                                 padding: EdgeInsets.all(8.w),
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceAround,
-                                  children: [
-                                    _languageText('English'),
-                                    _languageText('Bangla'),
-                                    _languageText('Hindi'),
-                                  ],
+                                // child: Obx((){
+                                //  final languages = _profileController.profileModel.value.language.toString().replaceAll('[', '')
+                                //      .replaceAll(']', '')
+                                //      .split(',')
+                                //      .map((e) => e.trim())
+                                //      .toList();
+                                //  final length = _profileController.profileModel.value.language.toString().replaceAll('[', '')
+                                //      .replaceAll(']', '')
+                                //      .split(',')
+                                //      .map((e) => e.trim())
+                                //      .toList().length;
+                                //
+                                //   if (_profileController.profileModel.value.language?.isEmpty ?? true) {
+                                //     return _languageText('No languages available');
+                                //   }
+                                //   else{
+                                //     ...(_profileController.profileModel.value.language ?? [])
+                                //           .map(
+                                //       (language) => _languageText(language),
+                                //       )
+                                //           .toList(),
+                                //   }
+                                // }),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                    children: [
+                                      if (_profileController.profileModel.value.language?.isEmpty ?? true)
+                                        _languageText('No languages available'),
+                                      ...(_profileController.profileModel.value.language.toString().replaceAll('[', '')
+                                          .replaceAll(']', '')
+                                          .split(',')
+                                          .map((e) => e.trim())
+                                          .toList())
+                                          .map(
+                                            (language) => _languageText(language),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                               SizedBox(height: 12.h),
                             ],
                           ),
                         ),
+                        // Container(
+                        //   decoration: BoxDecoration(
+                        //     borderRadius: BorderRadius.circular(12.r),
+                        //     border: Border.all(
+                        //       width: 1.w,
+                        //       color: AppColors.borderColor,
+                        //     ),
+                        //   ),
+                        //   child: Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: [
+                        //       Padding(
+                        //         padding: EdgeInsets.all(8.w),
+                        //         child: CustomText(
+                        //           text: AppStrings.language.tr,
+                        //           fontSize: 18,
+                        //           fontWeight: FontWeight.w600,
+                        //         ),
+                        //       ),
+                        //       Divider(color: AppColors.borderColor),
+                        //       SizedBox(height: 8.h),
+                        //       Padding(
+                        //         padding: EdgeInsets.all(8.w),
+                        //         child: Row(
+                        //           mainAxisAlignment:
+                        //           MainAxisAlignment.spaceAround,
+                        //           children: [
+                        //             _languageText('English'),
+                        //             _languageText('Bangla'),
+                        //             _languageText('Hindi'),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //       SizedBox(height: 12.h),
+                        //     ],
+                        //   ),
+                        // ),
                         SizedBox(height: 24.h),
                         //=====================> Details Container <=================
                         Container(
@@ -530,6 +559,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   //===============================> Language Text <======================
   _languageText(String language) {
     return Container(
+      margin: EdgeInsets.only(right: 8.0),
       decoration: BoxDecoration(
         color: AppColors.primaryColor,
         borderRadius: BorderRadius.circular(50.r),

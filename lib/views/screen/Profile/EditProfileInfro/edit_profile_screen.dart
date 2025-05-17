@@ -165,18 +165,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                         SizedBox(height: 16.h),
                         //====================> Location Text Field <================
-                        CustomTextField(
-                          controller: _controller.locationCTRL,
-                          hintText: AppStrings.location.tr,
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.w),
-                            child: SvgPicture.asset(
-                              AppIcons.location,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 16.h),
+                        // CustomTextField(
+                        //   controller: _controller.locationCTRL,
+                        //   hintText: AppStrings.location.tr,
+                        //   prefixIcon: Padding(
+                        //     padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        //     child: SvgPicture.asset(
+                        //       AppIcons.location,
+                        //       color: Colors.grey,
+                        //     ),
+                        //   ),
+                        // ),
+                        // SizedBox(height: 16.h),
                         //====================> Height Text Field <================
                         CustomTextField(
                           onTab: ()=>_controller.pickHeight(context),
@@ -263,7 +263,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         _genderRadioButton(),
                         SizedBox(height: 8.h),
                         //====================> Interest Container <================
-                       /* Container(
+                        Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -288,7 +288,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        _showInterestsDialog(context);
+                                        // _showInterestsDialog(context);
                                       },
                                       child: Icon(
                                         Icons.add_box_rounded,
@@ -312,7 +312,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 16.h),*/
+                        SizedBox(height: 16.h),
                         //====================> Language Container <================
                         Container(
                           width: double.infinity,

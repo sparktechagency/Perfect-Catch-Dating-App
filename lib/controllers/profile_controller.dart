@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_country/flutter_country.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:perfect_catch_dating_app/helpers/prefs_helpers.dart';
@@ -74,7 +76,6 @@ class ProfileController extends GetxController {
 
   var updateProfileLoading = false.obs;
   updateProfile() async {
-    updateProfileLoading(true);
     Map<String, String> body = {
       'firstName': firstNameCTRL.text,
       'lastName': lastNameCTRL.text,
@@ -87,18 +88,39 @@ class ProfileController extends GetxController {
       'educationQualification': eduCTRL.text,
       'gender': '$selectedGender',
       //'interested': '${selectedInterest.toList()}',
-      'language': '${selectedLanguage.toList()}',
+      'language': selectedLanguage.join(', '),
       'about': aboutCTRL.text,
     };
-    List<MultipartBody> multipartBody = [
-      MultipartBody('profileImage', File(profileImagePath.value)),
-    ];
 
-    var response = await ApiClient.patchMultipartData(
-      ApiConstants.updatePersonalInfoEndPoint,
-      body,
-      multipartBody: multipartBody,
-    );
+    for(final MapEntry<String, String> val in body.entries){
+      if(val.value.isEmpty){
+
+        return Fluttertoast.showToast(msg: 'You can not leave empty : ${val.key}'.tr);
+      }
+    }
+    updateProfileLoading(true);
+
+
+    Response response;
+
+    if(profileImagePath.value.isNotEmpty){
+      List<MultipartBody> multipartBody = [
+        MultipartBody('profileImage', File(profileImagePath.value)),
+      ];
+
+      response = await ApiClient.patchMultipartData(
+        ApiConstants.updatePersonalInfoEndPoint,
+        body,
+        multipartBody: multipartBody,
+      );
+    }
+    else{
+      response = await ApiClient.patchData(
+        ApiConstants.updatePersonalInfoEndPoint,
+        jsonEncode(body),
+      );
+    }
+
     if (response.statusCode == 200 || response.statusCode == 201) {
       await PrefsHelper.setString(AppConstants.userImage, response.body['data']['attributes']['profileImage']);
       firstNameCTRL.clear();
@@ -222,7 +244,10 @@ class ProfileController extends GetxController {
                       }
                       return Colors.grey;
                     }),
-                    onChanged: (val) => setState(() => selectedFeet = val),
+                    onChanged: (val){
+                      heightCTRL.text = val.toString();
+                      setState(() => selectedFeet = val);
+                    },
                   )).toList(),
                 ),
               ),
@@ -235,7 +260,7 @@ class ProfileController extends GetxController {
                     onPressed: selectedFeet == null
                         ? null
                         : () {
-                      heightCTRL.text = "$selectedFeet'";
+                      heightCTRL.text = "$selectedFeet";
                       Navigator.pop(context);
                     },
                     child: CustomText(text: 'OK'),
@@ -289,7 +314,9 @@ class ProfileController extends GetxController {
                       }
                       return Colors.grey;
                     }),
-                    onChanged: (val) => setState(() => selectedWeight = val),
+                    onChanged: (val) {
+                      setState(() => selectedWeight = val);
+                  },
                   )).toList(),
                 ),
               ),
@@ -353,7 +380,10 @@ class ProfileController extends GetxController {
                       }
                       return Colors.grey;
                     }),
-                    onChanged: (val) => setState(() => selected = val),
+                    onChanged: (val) {
+                      marriedCTRL.text = val!;
+                      setState(() => selected = val);
+                    },
                   )).toList(),
                 ),
               ),
@@ -404,14 +434,14 @@ class ProfileController extends GetxController {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomText(text: 'Select Your Religion'),
+              CustomText(text: 'Select Your Marital Status'),
               SizedBox(height: 12.h),
               SizedBox(
-                height: 300.h,
+                height: 200.h,
                 child: ListView(
-                  children: religions.map((religion) => RadioListTile<String>(
-                    title: CustomText(text: religion, textAlign: TextAlign.start),
-                    value: religion,
+                  children: religions.map((status) => RadioListTile<String>(
+                    title: CustomText(text: status, textAlign: TextAlign.start),
+                    value: status,
                     groupValue: selected,
                     activeColor: AppColors.primaryColor,
                     fillColor: MaterialStateProperty.resolveWith<Color>((states) {
@@ -420,7 +450,10 @@ class ProfileController extends GetxController {
                       }
                       return Colors.grey;
                     }),
-                    onChanged: (val) => setState(() => selected = val),
+                    onChanged: (val) {
+                      religionCTRL.text = val!;
+                      setState(() => selected = val);
+                    },
                   )).toList(),
                 ),
               ),
@@ -504,6 +537,7 @@ class ProfileController extends GetxController {
                           groupValue: selectedEducation,
                           onChanged: (value) {
                             setState(() {
+                              eduCTRL.text = value!;
                               selectedEducation = value;
                             });
                           },
