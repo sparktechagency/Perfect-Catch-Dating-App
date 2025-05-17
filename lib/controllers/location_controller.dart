@@ -122,6 +122,7 @@ class LocationController extends GetxController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         submitLocationLoading(false);
         await PrefsHelper.setBool(AppConstants.hasUpdateGallery, true);
+        Get.offAllNamed(AppRoutes.homeScreen);
         Fluttertoast.showToast(msg: "Your location has been submitted successfully");
       } else {
         ApiChecker.checkApi(response);
