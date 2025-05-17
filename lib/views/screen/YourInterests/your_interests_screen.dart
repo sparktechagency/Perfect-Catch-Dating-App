@@ -29,6 +29,7 @@ class _YourInterestsScreenState extends State<YourInterestsScreen> {
     'Sports',
     'Fashion',
   ];
+
   final Set<String> selectedInterests = {};
 
   @override

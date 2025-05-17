@@ -58,4 +58,7 @@ class AppIcons{
   static String mail ="$baseUrl/mail.svg";
   static String hello ="$baseUrl/hello.svg";
   static String mus ="$baseUrl/mus.svg";
+  static String book ="$baseUrl/book.svg";
+  static String ms ="$baseUrl/ms.svg";
+  static String sp ="$baseUrl/sp.svg";
 }
