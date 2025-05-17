@@ -71,6 +71,9 @@ dependencies:
   flutter_html: ^3.0.0
   audioplayers: ^6.4.0
   just_audio: ^0.10.2
+  flutter_country: ^1.0.1
+  country_codes: ^3.3.0
+
 
 
 
