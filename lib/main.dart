@@ -25,7 +25,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  //===========================> Generate to FCM Token <============================
+  // ===========================> Generate to FCM Token <============================
    try {
     if (GetPlatform.isMobile) {
       final RemoteMessage? remoteMessage = await FirebaseMessaging.instance.getInitialMessage();

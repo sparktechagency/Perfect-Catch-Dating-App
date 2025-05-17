@@ -97,7 +97,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         : Colors.grey,
               ),
               borderRadius: BorderRadius.circular(32.r),
-              color: Colors.white,
+              color: AppColors.whiteColor,
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 20.h),

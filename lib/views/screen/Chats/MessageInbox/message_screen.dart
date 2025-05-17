@@ -51,7 +51,6 @@ class _MessageScreenState extends State<MessageScreen> {
     _socket.init();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getUserId();
-      conversationId = Get.parameters['conversationId']!;
       currentUserId = params['currentUserId'] ?? "";
       receiverImage = params['receiverImage'] ?? "";
       receiverName = params['receiverName'] ?? "";
