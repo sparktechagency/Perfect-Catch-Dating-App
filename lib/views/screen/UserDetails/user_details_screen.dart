@@ -26,7 +26,13 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    homeController.getUsersProfilesDetails(userId: Get.arguments);
+    homeController.getUsersProfilesDetails(userId: Get.parameters['id']!);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    homeController.stopPlaying();
   }
 
   @override
@@ -87,13 +93,13 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Obx(() =>  CustomText(
-                                          text: '${homeController.user.value == null ? "" : homeController.user.value!.fullName}' ?? '',
+                                          text: '${homeController.user.value == null ? "" : homeController.user.value!.fullName}',
                                           fontSize: 18.sp,
                                           fontWeight: FontWeight.w600,
                                           maxLine: 3,
                                           bottom: 8.h,
                                         ),),
-                                        Obx(() =>  CustomText(text: '${homeController.user.value == null ? "" : homeController.user.value!.gender}' ?? ''),),
+                                        Obx(() =>  CustomText(text: '${homeController.user.value == null ? "" : homeController.user.value!.gender}'),),
 
                                       ],
                                     ),
@@ -107,7 +113,9 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                   ),
                                   SizedBox(width: 10.w),
                                   InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+
+                                    },
                                     child: SvgPicture.asset(AppIcons.music),
                                   ),
                                 ],
@@ -219,13 +227,13 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                   child: Column(
                                     children: [
                                       Obx(
-                                            () => Row(
+                                          () => Row(
                                           mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                           children: [
                                             _detailColumn(
                                               AppStrings.dateOfBirth.tr,
-                                              homeController.user.value == null ? "" :  TimeFormatHelper.formatDates(homeController.user.value!.dateOfBirth),
+                                              homeController.user.value == null ? "" :  homeController.user.value!.dateOfBirth != null ? TimeFormatHelper.formatDates(homeController.user.value!.dateOfBirth) : "",
                                             ),
                                             _detailColumn(
                                               AppStrings.height.tr,
