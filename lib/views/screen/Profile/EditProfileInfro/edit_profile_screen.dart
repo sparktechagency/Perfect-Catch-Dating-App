@@ -28,7 +28,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final ProfileController _controller = Get.put(ProfileController());
   var parameter = Get.parameters;
 
- /* final List<String> interests = [
+  /* final List<String> interests = [
     'Reading',
     'Photography',
     'Gaming',
@@ -66,338 +66,349 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: AppStrings.personalInformation.tr),
-      body: Obx(()=> SingleChildScrollView(
-          child: Column(
-            children: [
-              //==============================> Profile picture section <=======================
-              Stack(
-                children: [
-                  _controller.profileImagePath.value.isNotEmpty
-                      ? Container(
-                    width: 402.w,
-                    height: 369.h,
+      body: Obx(() =>
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                //==============================> Profile picture section <=======================
+                Stack(
+                  children: [
+                    _controller.profileImagePath.value.isNotEmpty
+                        ? Container(
+                        width: 402.w,
+                        height: 369.h,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.r),
+                            image: DecorationImage(
+                                image: FileImage(File(
+                                    _controller.profileImagePath.value)),
+                                fit: BoxFit.cover)))
+                        : CustomNetworkImage(
+                      imageUrl:
+                      '${ApiConstants.imageBaseUrl}${_controller.profileModel
+                          .value.profileImage}',
+                      height: 369.h,
+                      width: 402.w,
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    //==============================> Edit Profile Button <=======================
+                    Positioned(
+                      right: 16.w,
+                      top: 16.h,
+                      child: InkWell(
+                        onTap: () {
+                          //_controller.pickImage(ImageSource.gallery);
+                          _showImagePickerOption();
+                        },
+                        child: SvgPicture.asset(AppIcons.gallery),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 22.h),
+                //==============================> Container Text Field <=======================
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.r),
-                        image: DecorationImage(
-                            image: FileImage(File(_controller.profileImagePath.value)),
-                            fit: BoxFit.cover)))
-                      : CustomNetworkImage(
-                    imageUrl:
-                    '${ApiConstants.imageBaseUrl}${_controller.profileModel.value.profileImage}',
-                    height: 369.h,
-                    width: 402.w,
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  //==============================> Edit Profile Button <=======================
-                  Positioned(
-                    right: 16.w,
-                    top: 16.h,
-                    child: InkWell(
-                      onTap: () {
-                        //_controller.pickImage(ImageSource.gallery);
-                        _showImagePickerOption();
-                      },
-                      child: SvgPicture.asset(AppIcons.gallery),
+                      borderRadius: BorderRadius.circular(16.r),
+                      border: Border.all(
+                          width: 1.w, color: AppColors.borderColor),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 22.h),
-              //==============================> Container Text Field <=======================
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16.r),
-                    border: Border.all(width: 1.w, color: AppColors.borderColor),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(12.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        //====================> First Name Text Field <================
-                        CustomTextField(
-                          controller: _controller.firstNameCTRL,
-                          hintText: AppStrings.firstName.tr,
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.w),
-                            child: SvgPicture.asset(AppIcons.profile),
-                          ),
-                        ),
-                        SizedBox(height: 16.h),
-                        //====================> First Name Text Field <================
-                        CustomTextField(
-                          controller: _controller.lastNameCTRL,
-                          hintText: AppStrings.lastName.tr,
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.w),
-                            child: SvgPicture.asset(AppIcons.profile),
-                          ),
-                        ),
-                        SizedBox(height: 16.h),
-                        //====================> Phone Number Text Field <================
-                        CustomTextField(
-                          controller: _controller.phoneCTRL,
-                          hintText: AppStrings.phoneNumber.tr,
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.w),
-                            child: SvgPicture.asset(
-                              AppIcons.call,
-                              color: Colors.grey,
+                    child: Padding(
+                      padding: EdgeInsets.all(12.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          //====================> First Name Text Field <================
+                          CustomTextField(
+                            controller: _controller.firstNameCTRL,
+                            hintText: AppStrings.firstName.tr,
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
+                              child: SvgPicture.asset(AppIcons.profile),
                             ),
                           ),
-                        ),
-                        SizedBox(height: 16.h),
-                        //====================> Date Birth Text Field <================
-                        CustomTextField(
-                          onTab: ()=>_controller.pickBirthDate(context),
-                          readOnly: true,
-                          controller: _controller.dateBirthCTRL,
-                          hintText: AppStrings.dateOfBirth.tr,
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.w),
-                            child: SvgPicture.asset(
-                              AppIcons.calenderIcon,
-                              color: Colors.grey,
+                          SizedBox(height: 16.h),
+                          //====================> First Name Text Field <================
+                          CustomTextField(
+                            controller: _controller.lastNameCTRL,
+                            hintText: AppStrings.lastName.tr,
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
+                              child: SvgPicture.asset(AppIcons.profile),
                             ),
                           ),
-                        ),
-                        SizedBox(height: 16.h),
-                        //====================> Location Text Field <================
-                        // CustomTextField(
-                        //   controller: _controller.locationCTRL,
-                        //   hintText: AppStrings.location.tr,
-                        //   prefixIcon: Padding(
-                        //     padding: EdgeInsets.symmetric(horizontal: 16.w),
-                        //     child: SvgPicture.asset(
-                        //       AppIcons.location,
-                        //       color: Colors.grey,
-                        //     ),
-                        //   ),
-                        // ),
-                        // SizedBox(height: 16.h),
-                        //====================> Height Text Field <================
-                        CustomTextField(
-                          onTab: ()=>_controller.pickHeight(context),
-                          readOnly: true,
-                          keyboardType: TextInputType.number,
-                          controller: _controller.heightCTRL,
-                          hintText: AppStrings.height.tr,
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.w),
-                            child: SvgPicture.asset(
-                              AppIcons.age,
-                              color: Colors.grey,
+                          SizedBox(height: 16.h),
+                          //====================> Phone Number Text Field <================
+                          CustomTextField(
+                            controller: _controller.phoneCTRL,
+                            hintText: AppStrings.phoneNumber.tr,
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
+                              child: SvgPicture.asset(
+                                AppIcons.call,
+                                color: Colors.grey,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(height: 16.h),
-                        //====================> Weight Text Field <================
-                        CustomTextField(
-                          onTab: ()=>_controller.pickWeight(context),
-                          readOnly: true,
-                          keyboardType: TextInputType.number,
-                          controller: _controller.weightCTRL,
-                          hintText: AppStrings.weight.tr,
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.w),
-                            child: SvgPicture.asset(
-                              AppIcons.age,
-                              color: Colors.grey,
+                          SizedBox(height: 16.h),
+                          //====================> Date Birth Text Field <================
+                          CustomTextField(
+                            onTab: () => _controller.pickBirthDate(context),
+                            readOnly: true,
+                            controller: _controller.dateBirthCTRL,
+                            hintText: AppStrings.dateOfBirth.tr,
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
+                              child: SvgPicture.asset(
+                                AppIcons.calenderIcon,
+                                color: Colors.grey,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(height: 16.h),
-                        //====================> Marital Status Text Field <================
-                        CustomTextField(
-                          onTab: ()=>_controller.pickMaritalStatus(context),
-                          readOnly: true,
-                          controller: _controller.marriedCTRL,
-                          hintText: AppStrings.maritalStatus.tr,
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.w),
-                            child: SvgPicture.asset(
-                              AppIcons.age,
-                              color: Colors.grey,
+                          SizedBox(height: 16.h),
+                          //====================> Location Text Field <================
+                          // CustomTextField(
+                          //   controller: _controller.locationCTRL,
+                          //   hintText: AppStrings.location.tr,
+                          //   prefixIcon: Padding(
+                          //     padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          //     child: SvgPicture.asset(
+                          //       AppIcons.location,
+                          //       color: Colors.grey,
+                          //     ),
+                          //   ),
+                          // ),
+                          // SizedBox(height: 16.h),
+                          //====================> Height Text Field <================
+                          CustomTextField(
+                            onTab: () => _controller.pickHeight(context),
+                            readOnly: true,
+                            keyboardType: TextInputType.number,
+                            controller: _controller.heightCTRL,
+                            hintText: AppStrings.height.tr,
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
+                              child: SvgPicture.asset(
+                                AppIcons.age,
+                                color: Colors.grey,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(height: 16.h),
-                        //====================> Religion Text Field <================
-                        CustomTextField(
-                          onTab: ()=>_controller.pickReligion(context),
-                          readOnly: true,
-                          controller: _controller.religionCTRL,
-                          hintText: AppStrings.religion.tr,
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.w),
-                            child: SvgPicture.asset(
-                              AppIcons.religion,
-                              color: Colors.grey,
+                          SizedBox(height: 16.h),
+                          //====================> Weight Text Field <================
+                          CustomTextField(
+                            onTab: () => _controller.pickWeight(context),
+                            readOnly: true,
+                            keyboardType: TextInputType.number,
+                            controller: _controller.weightCTRL,
+                            hintText: AppStrings.weight.tr,
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
+                              child: SvgPicture.asset(
+                                AppIcons.age,
+                                color: Colors.grey,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(height: 16.h),
-                        //====================> Education qualification Text Field <================
-                        CustomTextField(
-                          onTab: ()=>_controller.pickEducation(context),
-                          readOnly: true,
-                          controller: _controller.eduCTRL,
-                          hintText: AppStrings.education.tr,
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.w),
-                            child: SvgPicture.asset(
-                              AppIcons.edu,
-                              color: Colors.grey,
+                          SizedBox(height: 16.h),
+                          //====================> Marital Status Text Field <================
+                          CustomTextField(
+                            onTab: () => _controller.pickMaritalStatus(context),
+                            readOnly: true,
+                            controller: _controller.marriedCTRL,
+                            hintText: AppStrings.maritalStatus.tr,
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
+                              child: SvgPicture.asset(
+                                AppIcons.age,
+                                color: Colors.grey,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(height: 16.h),
-                        //=======================> Gender Selection <=====================
-                        CustomText(
-                          text: AppStrings.gender.tr,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.sp,
-                        ),
-                        _genderRadioButton(),
-                        SizedBox(height: 8.h),
-                        //====================> Interest Container <================
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12.r),
-                            border: Border.all(
-                              width: 1.w,
-                              color: AppColors.borderColor,
+                          SizedBox(height: 16.h),
+                          //====================> Religion Text Field <================
+                          CustomTextField(
+                            onTab: () => _controller.pickReligion(context),
+                            readOnly: true,
+                            controller: _controller.religionCTRL,
+                            hintText: AppStrings.religion.tr,
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
+                              child: SvgPicture.asset(
+                                AppIcons.religion,
+                                color: Colors.grey,
+                              ),
                             ),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.all(12.w),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    CustomText(
-                                      text: AppStrings.addYourFavoriteInterest.tr,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        // _showInterestsDialog(context);
-                                      },
-                                      child: Icon(
-                                        Icons.add_box_rounded,
-                                        color: AppColors.primaryColor,
+                          SizedBox(height: 16.h),
+                          //====================> Education qualification Text Field <================
+                          CustomTextField(
+                            onTab: () => _controller.pickEducation(context),
+                            readOnly: true,
+                            controller: _controller.eduCTRL,
+                            hintText: AppStrings.education.tr,
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
+                              child: SvgPicture.asset(
+                                AppIcons.edu,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 16.h),
+                          //=======================> Gender Selection <=====================
+                          CustomText(
+                            text: AppStrings.gender.tr,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.sp,
+                          ),
+                          _genderRadioButton(),
+                          SizedBox(height: 8.h),
+                          //====================> Interest Container <================
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12.r),
+                              border: Border.all(
+                                width: 1.w,
+                                color: AppColors.borderColor,
+                              ),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(12.w),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      CustomText(
+                                        text: AppStrings.addYourFavoriteInterest
+                                            .tr,
+                                        fontWeight: FontWeight.w500,
                                       ),
-                                    ),
-                                  ],
+                                      InkWell(
+                                        onTap: () {
+                                           _controller.pickInterest(context);
+                                        },
+                                        child: Icon(
+                                          Icons.add_box_rounded,
+                                          color: AppColors.primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Divider(thickness: 0.4, color: Colors.grey),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 12.w),
-                                child: Wrap(
-                                  spacing: 8.0,
-                                  children: _controller.selectedInterest.map((interest) {
-                                    return _interestChip(interest);
-                                  }).toList(),
+                                Divider(thickness: 0.4, color: Colors.grey),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 12.w),
+                                  child: Wrap(
+                                    spacing: 8.0,
+                                    children: _controller.selectedInterest.map((
+                                        interest) {
+                                      return _interestChip(interest);
+                                    }).toList(),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 12.h),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 16.h),
-                        //====================> Language Container <================
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12.r),
-                            border: Border.all(
-                              width: 1.w,
-                              color: AppColors.borderColor,
+                                SizedBox(height: 12.h),
+                              ],
                             ),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.all(12.w),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    CustomText(
-                                      text: AppStrings.language.tr,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        _controller.pickCountries(context);
-                                      },
-                                      child: Icon(
-                                        Icons.add_box_rounded,
-                                        color: AppColors.primaryColor,
+                          SizedBox(height: 16.h),
+                          //====================> Language Container <================
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12.r),
+                              border: Border.all(
+                                width: 1.w,
+                                color: AppColors.borderColor,
+                              ),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(12.w),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment
+                                        .spaceBetween,
+                                    children: [
+                                      CustomText(
+                                        text: AppStrings.language.tr,
+                                        fontWeight: FontWeight.w500,
                                       ),
-                                    ),
-                                  ],
+                                      InkWell(
+                                        onTap: () {
+                                          _controller.pickCountries(context);
+                                        },
+                                        child: Icon(
+                                          Icons.add_box_rounded,
+                                          color: AppColors.primaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Divider(thickness: 0.4, color: Colors.grey),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 12.w),
-                                child: Wrap(
-                                  spacing: 8.0,
-                                  children: _controller.selectedLanguage.map((language) {
-                                    return _languageChip(language);
-                                  }).toList(),
+                                Divider(thickness: 0.4, color: Colors.grey),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 12.w),
+                                  child: Wrap(
+                                    spacing: 8.0,
+                                    children: _controller.selectedLanguage.map((
+                                        language) {
+                                      return _languageChip(language);
+                                    }).toList(),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 16.h),
-                            ],
+                                SizedBox(height: 16.h),
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 16.h),
-                        //====================> About Text Field <================
-                        CustomText(
-                          text: AppStrings.about.tr,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.sp,
-                          bottom: 16.h,
-                        ),
-                        CustomTextField(
-                          controller: _controller.aboutCTRL,
-                          hintText: 'Write about your self...',
-                          maxLines: 5,
-                        ),
-                        SizedBox(height: 8.h),
-                      ],
+                          SizedBox(height: 16.h),
+                          //====================> About Text Field <================
+                          CustomText(
+                            text: AppStrings.about.tr,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.sp,
+                            bottom: 16.h,
+                          ),
+                          CustomTextField(
+                            controller: _controller.aboutCTRL,
+                            hintText: 'Write about your self...',
+                            maxLines: 5,
+                          ),
+                          SizedBox(height: 8.h),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 22.h),
-              //==============================> Update profile Button <=======================
-              Padding(
-                padding:  EdgeInsets.symmetric(horizontal: 12.w),
-                child: Obx(()=> CustomButton(
-                      loading: _controller.updateProfileLoading.value,
-                      onTap: (){
-                        _controller.updateProfile();
-                      },
-                      text: AppStrings.updateProfile.tr),
+                SizedBox(height: 22.h),
+                //==============================> Update profile Button <=======================
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  child: Obx(() =>
+                      CustomButton(
+                          loading: _controller.updateProfileLoading.value,
+                          onTap: () {
+                            _controller.updateProfile();
+                          },
+                          text: AppStrings.updateProfile.tr),
+                  ),
                 ),
-              ),
-              SizedBox(height: 22.h),
+                SizedBox(height: 22.h),
 
-            ],
+              ],
+            ),
           ),
-        ),
       ),
     );
   }
@@ -408,7 +419,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       children: [
         InkWell(
           onTap:
-              () => setState(() {
+              () =>
+              setState(() {
                 _controller.selectedGender = 'male';
               }),
           child: Row(
@@ -434,7 +446,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
         InkWell(
           onTap:
-              () => setState(() {
+              () =>
+              setState(() {
                 _controller.selectedGender = 'female';
               }),
           child: Row(
@@ -460,7 +473,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
         InkWell(
           onTap:
-              () => setState(() {
+              () =>
+              setState(() {
                 _controller.selectedGender = 'other';
               }),
           child: Row(
@@ -502,6 +516,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       },
     );
   }
+
   //=========================> Language Chip <================
   Widget _languageChip(String language) {
     return Chip(
@@ -513,8 +528,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       },
     );
   }
-
-
   //====================================> Pick Image Gallery and Camera <====================
   void _showImagePickerOption() {
     showModalBottomSheet(
@@ -571,114 +584,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               )
             ],
           ),
-        );
-      },
-    );
-  }
-  //====================================> Show Interests Dialog <====================
-/*
-  void _showInterestsDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          title: CustomText(
-            text: 'Select Interests',  // Title for the dialog
-            fontSize: 16.sp,
-            fontWeight: FontWeight.bold,
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Obx(()=> Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: interests.map((interest) {
-                    return ChoiceChip(
-                      showCheckmark: false,
-                      label: CustomText(
-                        text: interest.toLowerCase(),
-                        color: _controller.selectedInterest.contains(interest)
-                            ? Colors.white
-                            : Colors.black,
-                      ),
-                      side: BorderSide(
-                        width: 1.w,
-                        color: AppColors.primaryColor
-                      ),
-                      selected: _controller.selectedInterest.contains(interest.toLowerCase()),
-                      onSelected: (isSelected) {
-                        setState(() {
-                          if (isSelected) {
-                            _controller.selectedInterest.add(interest.toLowerCase());
-                          } else {
-                            _controller.selectedInterest.remove(interest);
-                          }
-                        });
-                      },
-                      selectedColor: AppColors.primaryColor,
-                      backgroundColor: Colors.white,
-                    );
-                  }).toList(),
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-                print('Selected interests: ${_controller.selectedInterest}');
-              },
-              child: CustomText(text: 'Done'),
-            ),
-            TextButton(
-              onPressed: () {
-                Get.back();
-              },
-              child: CustomText(text: 'Cancel'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-*/
-
-  //====================================> ShowLanguageDialog <====================
-  void _showLanguageDialog(BuildContext context) {
-    TextEditingController languageController = TextEditingController();
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          title: CustomText(text: 'Add New Language', fontSize: 16.sp,fontWeight: FontWeight.bold),
-          content: TextField(
-            controller: languageController,
-            decoration: InputDecoration(hintText: 'Enter language name'),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                String newLanguage = languageController.text.trim();
-                if (newLanguage.isNotEmpty) {
-                  _controller.selectedLanguage.add(newLanguage);
-                  Navigator.pop(context);
-                  print('=============> ${_controller.selectedLanguage}');
-                }
-              },
-              child: CustomText(text: 'Add'),
-            ),
-            TextButton(
-              onPressed: () {
-                Get.back();
-              },
-              child: CustomText(text: 'Cancel'),
-            ),
-          ],
         );
       },
     );
