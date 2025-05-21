@@ -87,7 +87,7 @@ class ProfileController extends GetxController {
       'religion': religionCTRL.text,
       'educationQualification': eduCTRL.text,
       'gender': '$selectedGender',
-      //'interested': '${selectedInterest.toList()}',
+      'interested':jsonEncode(selectedInterest),
       'language': selectedLanguage.join(', '),
       'about': aboutCTRL.text,
     };
@@ -134,10 +134,11 @@ class ProfileController extends GetxController {
       aboutCTRL.clear();
       profileImagePath.value = '';
       selectedGender = '';
+      selectedInterest.value = [];
       selectedLanguage.value = [];
-      getProfileData();
       updateProfileLoading(false);
       Get.back();
+      getProfileData();
     } else {
       ApiChecker.checkApi(response);
       updateProfileLoading(false);
@@ -575,13 +576,124 @@ class ProfileController extends GetxController {
     );
   }
 
+//==========================> Interest Function <=======================
+  Future<void> pickInterest(BuildContext context) async {
+    List<String> allInterests = [
+      'Reading',
+      'Photography',
+      'Gaming',
+      'Music',
+      'Travel',
+      'Painting',
+      'Politics',
+      'Cooking',
+      'Pets',
+      'Charity',
+      'Sports',
+      'Fashion',
+    ];
+
+    List<String> selectedInterests = selectedInterest.isNotEmpty
+        ? selectedInterest.map((e) => e.trim()).toList()
+        : [];
+
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
+      ),
+      backgroundColor: Colors.white,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) {
+          return Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+              top: 16.h,
+              left: 16.w,
+              right: 16.w,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomText(text: 'Select Interests'),
+                SizedBox(height: 12.h),
+                SizedBox(
+                  height: 400.h,
+                  child: ListView.builder(
+                    itemCount: allInterests.length,
+                    itemBuilder: (context, index) {
+                      final interest = allInterests[index];
+                      final isSelected = selectedInterests.contains(interest);
+
+                      return CheckboxListTile(
+                        title: Row(
+                          children: [
+                            Flexible(
+                              child: CustomText(
+                                text: interest,
+                                maxLine: 2,
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                          ],
+                        ),
+                        value: isSelected,
+                        activeColor: AppColors.primaryColor,
+                        checkColor: Colors.white,
+                        fillColor: MaterialStateProperty.resolveWith<Color>((states) {
+                          if (states.contains(MaterialState.selected)) {
+                            return AppColors.primaryColor; // Selected color
+                          }
+                          return Colors.grey;
+                        }),
+                        onChanged: (checked) {
+                          setState(() {
+                            if (checked == true) {
+                              if (!selectedInterests.contains(interest)) {
+                                selectedInterests.add(interest);
+                              }
+                            } else {
+                              selectedInterests.remove(interest);
+                            }
+                          });
+                        },
+                      );
+                    },
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: CustomText(text: 'Cancel'),
+                    ),
+                    SizedBox(width: 8.w),
+                    TextButton(
+                      onPressed: () {
+                        selectedInterest.assignAll(selectedInterests);
+                        Navigator.pop(context);
+                      },
+                      child: CustomText(text: 'OK'),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16.h),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+
 //==========================> Language Function <=======================
   Future<void> pickCountries(BuildContext context) async {
     await CountryCodes.init();
-
-    // Call the function to get the list
     final allCountries = CountryCodes.countryCodes();
-
     List<String> selectedCountries = selectedLanguage.isNotEmpty
         ? selectedLanguage.map((e) => e.trim()).toList()
         : [];
@@ -620,11 +732,21 @@ class ProfileController extends GetxController {
                       return CheckboxListTile(
                         title: Row(
                           children: [
-                            CustomText(text: countryName),
+                            Flexible(
+                              child: CustomText(text: countryName, maxLine: 2,
+                              textAlign: TextAlign.start),
+                            ),
                           ],
                         ),
                         value: isSelected,
                         activeColor: AppColors.primaryColor,
+                        checkColor: Colors.white,
+                        fillColor: MaterialStateProperty.resolveWith<Color>((states) {
+                          if (states.contains(MaterialState.selected)) {
+                            return AppColors.primaryColor; // Selected color
+                          }
+                          return Colors.grey;
+                        }),
                         onChanged: (checked) {
                           setState(() {
                             if (checked == true) {

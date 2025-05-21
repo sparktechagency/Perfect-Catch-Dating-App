@@ -443,23 +443,23 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                           fontSize: 18.sp,
                           bottom: 8.h,
                         ),
-                       /* CustomText(
+                        CustomText(
                           text:
                               '${_profileController.profileModel.value.about ?? ''}'
                                   .tr,
                           maxLine: 20,
                           textAlign: TextAlign.start,
-                        ),*/
-                        CustomText(
+                        ),
+                       /* CustomText(
                           text:
                           'Hello there! I\'m Vickie, seeking a lifelong adventure partner. A blend of tradition and modernity, I find joy in the simple moments and cherish family values. With a heart that believes in love\'s magic, I\'m looking someone to share happiness.'
                               .tr,
                           maxLine: 20,
                           textAlign: TextAlign.start,
-                        ),
+                        ),*/
                         SizedBox(height: 24.h),
                         //========================> Interest Section <==========================
-                       /* CustomText(
+                        CustomText(
                           text: AppStrings.interests.tr,
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w600,
@@ -484,8 +484,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 .map((item) => _interestChip(item))
                                 .toList(),
                           ],
-                        ),*/
-                        CustomText(
+                        ),
+                    /*    CustomText(
                           text: AppStrings.interests.tr,
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w600,
@@ -499,7 +499,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                             _interestChip(SvgPicture.asset(AppIcons.ms),'Music'),
                             _interestChip(SvgPicture.asset(AppIcons.sp),'Sport'),
                           ],
-                        ),
+                        ),*/
                         SizedBox(height: 24.h),
                         //========================> Gallery GridView Section <==========================
                         CustomText(
@@ -584,12 +584,19 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   }
 
   //======================================> Interest Chip <========================
-  _interestChip(SvgPicture icon, String label, ) {
+  _interestChip(String label, ) {
+    return Chip(
+      label: CustomText(text: label, color: Colors.white, textAlign: TextAlign.start,),
+      backgroundColor: AppColors.primaryColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.r)),
+    );
+  }
+  /*_interestChip(SvgPicture icon, String label, ) {
     return Chip(
       avatar: icon,
       label: CustomText(text: label, color: Colors.white, textAlign: TextAlign.start,),
       backgroundColor: AppColors.primaryColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.r)),
     );
-  }
+  }*/
 }
