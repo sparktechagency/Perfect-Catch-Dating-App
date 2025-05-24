@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:perfect_catch_dating_app/themes/light_theme.dart';
 import 'package:perfect_catch_dating_app/utils/app_constants.dart';
 import 'package:perfect_catch_dating_app/utils/message.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'controllers/localization_controller.dart';
 import 'controllers/theme_controller.dart';
 import 'firebase_options.dart';
@@ -39,7 +42,20 @@ void main() async {
   Map<String, Map<String, String>> _languages = await di.init();
   runApp(MyApp(languages: _languages));
 }
-
+Future<void> _configureSDK() async {
+  await Purchases.setLogLevel(LogLevel.debug);
+  PurchasesConfiguration? configuration;
+  if (Platform.isAndroid) {
+// configure for Google Play store
+  } else if (Platform.isIOS) {
+    configuration = PurchasesConfiguration("appl_FSfKwpJEcdCMgzSMlarbDVeyjkj");
+  }
+  await Purchases.configure(configuration!);
+  //isEntitlementActive('premium');
+// if (configuration != null) {
+// await Purchases.configure(configuration);
+// }
+}
 class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.languages});
   final Map<String, Map<String, String>> languages;
