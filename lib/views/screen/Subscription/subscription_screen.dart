@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:perfect_catch_dating_app/controllers/settings_controller.dart';
 import 'package:perfect_catch_dating_app/utils/app_strings.dart';
 import '../../../helpers/route.dart';
 import '../../../utils/app_colors.dart';
+import '../../../utils/app_icons.dart';
+import '../../../utils/style.dart';
 import '../../base/custom_app_bar.dart';
 import '../../base/custom_button.dart';
 import '../../base/custom_text.dart';
@@ -16,9 +20,19 @@ class SubscriptionScreen extends StatefulWidget {
 }
 
 class _SubscriptionScreenState extends State<SubscriptionScreen> {
+  final SettingController _controller = Get.put(SettingController());
+
   bool isChecked = false;
   bool isSelected = false;
   String selectedOption = 'Basic';
+
+  @override
+  void initState() {
+    _controller.getOffiering();
+    // TODO: implement initState
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +40,96 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       appBar: CustomAppBar(title: 'Subscription'.tr),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.w),
-        child: Column(
+        child: ListView.builder(
+          itemCount: _controller.packages.length,
+          shrinkWrap: true,
+          primary: false,
+          itemBuilder: (context, index) {
+            final package = _controller.packages[index];
+            final product = package.storeProduct;
+
+            bool isCurrent = product.identifier == _controller.currentProductId;
+            print('CurrentId ${product.identifier}');
+            print('CurrentId ${_controller.currentProductId}');
+            print('CurrentId Check  ${isCurrent}');
+
+
+            return InkWell(
+              onTap: ()
+              async {
+                _controller.payment(package);
+              },
+              borderRadius: BorderRadius.circular(13),
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 10.h),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.borderColor),
+                    color: AppColors.primaryColor,
+                    borderRadius: BorderRadius.circular(13),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      /// Top row with icon
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CircleAvatar(
+                            radius: 22,
+                            backgroundColor: Colors.black,
+                            child: Center(
+                              child: SvgPicture.asset(AppIcons.sub),
+                            ),
+                          ),
+                          // You can mark current plan with extra logic if needed
+                          isCurrent==true? Container(
+                            padding: EdgeInsets.symmetric(horizontal: 8.w,vertical: 5),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.black
+                            ),
+                            child: Text('Current Plan',style: AppStyles.h4(color: AppColors.primaryColor),),
+                          ):SizedBox()
+                        ],
+                      ),
+                      SizedBox(height: 10.h),
+
+                      /// Title
+                      Text(product.title, style: AppStyles.h2()),
+                      Text(product.description, style: AppStyles.h6()),
+
+                      Divider(color: AppColors.dividerColor),
+
+                      /// Price
+                      Row(
+                        children: [
+                          Text(product.priceString, style: AppStyles.h3()),
+                          SizedBox(width: 4),
+                          // Text("/${product.subscriptionPeriod?.name.toLowerCase() ?? "month"}",
+                          //     style: AppStyles.h6()),
+                        ],
+                      ),
+                      SizedBox(height: 34.h),
+                      //======================> Pay Now Button <=========================
+                      CustomButton(
+                        color: AppColors.whiteColor,
+                        textColor: AppColors.blackColor,
+                        onTap: () {
+                          _controller.payment(package);
+                        },
+                        text: 'Pay Now'.tr,
+                      ),
+                      SizedBox(height: 32.h),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        )
+        /*Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 24.h),
@@ -65,11 +168,10 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
             ),
             SizedBox(height: 32.h),
           ],
-        ),
+        ),*/
       ),
     );
   }
-
   //=============================> Subscription Container Widget <=============================
   _subscriptionContainer(
     String type,

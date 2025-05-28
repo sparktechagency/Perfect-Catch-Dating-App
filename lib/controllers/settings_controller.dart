@@ -1,4 +1,9 @@
+import 'dart:math';
+
 import 'package:get/get.dart';
+import 'package:purchases_flutter/models/customer_info_wrapper.dart';
+import 'package:purchases_flutter/models/package_wrapper.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import '../service/api_checker.dart';
 import '../service/api_client.dart';
 import '../service/api_constants.dart';
@@ -82,6 +87,46 @@ class SettingController extends GetxController {
       ApiChecker.checkApi(response);
       aboutUsLoading(false);
       update();
+    }
+  }
+
+  //==========================> Revenue Cat Subscription <===================
+  var oferLoading=false.obs;
+  var subscription=false.obs;
+  RxList<Package> packages=<Package>[].obs;
+  String? currentProductId;
+  getOffiering()async{
+    subscription.value=true;
+    Offerings offerings = await Purchases.getOfferings();
+    Offering? current = offerings.current;
+    if (current != null && current.availablePackages.isNotEmpty) {
+      packages.value = current.availablePackages;
+      subscription(false);
+      update();
+      print('Package>>>>>>>>>>>>>>>>$packages');
+// print('Package>>>>>>>>>>>>>>>>$offerings');
+// Show these packages in your custom UI
+    }
+  }
+
+  payment(Package package)async{
+    oferLoading(true);
+//final product = package.storeProduct;
+    try {
+      CustomerInfo customerInfo = await Purchases.purchasePackage(package);
+      if (customerInfo.entitlements.all["premium"]?.isActive == true) {
+        final customerId = customerInfo.originalAppUserId;
+        final amount = package.storeProduct.priceString;
+        final currencyCode = package.storeProduct.currencyCode;
+        //paymentHandel(customerId,amount,currencyCode);
+        oferLoading(false);
+        update();
+// Optional: set state or refresh offerings
+      } else {
+        oferLoading(false);
+        update();
+      }
+    } catch (e) {
     }
   }
 }

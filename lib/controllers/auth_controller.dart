@@ -169,8 +169,8 @@ class AuthController extends GetxController {
       'email': signInEmailCtrl.text.trim(),
       'password': signInPassCtrl.text.trim(),
       'loginType': "emailAndPassword",
-      "fcmToken": fcmToken,
-     // fcmToken.isNotEmpty?fcmToken:"test",
+      "fcmToken": fcmToken.isNotEmpty? fcmToken:"test",
+      // fcmToken.isNotEmpty?fcmToken:"test",
     };
     Response response = await ApiClient.postData(
         ApiConstants.signInEndPoint, json.encode(body),
