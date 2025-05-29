@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+   "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <key>CADisableMinimumFrameDurationOnPhone</key>
     <true/>
     <key>CFBundleDevelopmentRegion</key>
-    <string>$(DEVELOPMENT_LANGUAGE)</string>
+    <string>en</string>
     <key>CFBundleDisplayName</key>
     <string>Perfect Catch Dating App</string>
     <key>CFBundleDocumentTypes</key>
@@ -34,7 +35,7 @@
     <key>CFBundleShortVersionString</key>
     <string>$(FLUTTER_BUILD_NAME)</string>
     <key>CFBundleSignature</key>
-    <string>????</string>
+    <string>PCDA</string>
     <key>CFBundleVersion</key>
     <string>$(FLUTTER_BUILD_NUMBER)</string>
     <key>GMSApiKey</key>
@@ -43,12 +44,15 @@
     <true/>
     <key>MKDirectionsApplicationSupportedModes</key>
     <array>
-        <string>MKDirectionsModeOther</string>
+        <string>MKDirectionsModeDriving</string>
+        <string>MKDirectionsModeWalking</string>
     </array>
     <key>NSLocalNetworkUsageDescription</key>
     <string>This app needs access to devices on your local network for certain features.</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>This app needs access to your location even when the app is in the background.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>We need camera access to allow you to take profile photos.</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>We use your location to suggest nearby matches and improve app functionality.</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>This app needs access to your location while in use.</string>
     <key>UIApplicationSupportsIndirectInputEvents</key>
@@ -61,13 +65,7 @@
     <string>LaunchScreen</string>
     <key>UIMainStoryboardFile</key>
     <string>Main</string>
-    <key>NSCameraUsageDescription</key>
-    <string>We need camera access to allow you to take profile photos.</string>
-
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>We use your location to suggest nearby matches and improve app functionality.</string>
     <key>UISupportedInterfaceOrientations</key>
-
     <array>
         <string>UIInterfaceOrientationPortrait</string>
         <string>UIInterfaceOrientationLandscapeLeft</string>
@@ -82,8 +80,8 @@
     </array>
     <!-- Document Handling Configuration -->
     <key>UISupportsDocumentBrowser</key>
-    <true/> <!-- Set to YES if your app uses UIDocumentBrowserViewController -->
+    <true/>
     <key>LSSupportsOpeningDocumentsInPlace</key>
-    <true/> <!-- Recommended for opening documents in place -->
+    <true/>
 </dict>
 </plist>
