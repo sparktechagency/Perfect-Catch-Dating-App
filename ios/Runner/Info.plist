@@ -44,9 +44,11 @@
     <true/>
     <key>MKDirectionsApplicationSupportedModes</key>
     <array>
-        <string>MKDirectionsModeDriving</string>
-        <string>MKDirectionsModeWalking</string>
+        <string>driving</string>
+        <string>walking</string>
     </array>
+    <key>MKDirectionsApplicationSupportedRegions</key>
+    <string>RoutingAppCoverageFile.kml</string>
     <key>NSLocalNetworkUsageDescription</key>
     <string>This app needs access to devices on your local network for certain features.</string>
     <key>NSCameraUsageDescription</key>
