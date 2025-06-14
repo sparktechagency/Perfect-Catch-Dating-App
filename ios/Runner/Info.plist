@@ -42,11 +42,6 @@
     <string>AIzaSyD-34Ieqrqb7nfyC3ewBkh57QxLlpCgljQ</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
-    <key>MKDirectionsApplicationSupportedModes</key>
-    <array>
-        <string>driving</string>
-        <string>walking</string>
-    </array>
     <key>MKDirectionsApplicationSupportedRegions</key>
     <string>RoutingAppCoverageFile.kml</string>
     <key>NSLocalNetworkUsageDescription</key>
