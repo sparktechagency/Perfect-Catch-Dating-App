@@ -382,6 +382,7 @@ import 'dart:async';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:perfect_catch_dating_app/helpers/prefs_helpers.dart';
 import 'package:perfect_catch_dating_app/service/api_client.dart';
@@ -678,7 +679,7 @@ class _SlotAutoScrollState extends State<SlotAutoScroll> {
   List.generate(4, (_) => ScrollController());
   final List<Timer?> timers = List.generate(4, (_) => null);
   // Updated to have 4 different speeds for variety
-  final List<double> speeds = [2.5, 3.2, 4.0, 3.8];
+  final List<double> speeds = [7.0, 6.0, 6.5, 7.5];
 
   final int itemCount = 9999; // simulate infinite
 
@@ -711,7 +712,7 @@ class _SlotAutoScrollState extends State<SlotAutoScroll> {
       try {
         final newOffset = controller.offset + speeds[index];
         if (newOffset >= controller.position.maxScrollExtent - 100) {
-          controller.jumpTo(0);
+          controller.jumpTo(1);
         } else {
           controller.jumpTo(newOffset);
         }
@@ -737,7 +738,7 @@ class _SlotAutoScrollState extends State<SlotAutoScroll> {
   void _alignReelToImage(int index) {
     final controller = controllers[index];
 
-    if (!controller.hasClients) return; // <-- ✅ Prevent crash
+    if (!controller.hasClients) return;
 
     final offset = controller.offset;
     final alignedOffset = (offset / 100).round() * 100;
@@ -745,7 +746,7 @@ class _SlotAutoScrollState extends State<SlotAutoScroll> {
     controller.animateTo(
       alignedOffset.toDouble(),
       duration: const Duration(milliseconds: 500),
-      curve: Curves.ease,
+      curve: Curves.easeOut,
     );
   }
 
@@ -754,7 +755,7 @@ class _SlotAutoScrollState extends State<SlotAutoScroll> {
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.white.withOpacity(0.3), width: 1),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8.r),
         ),
         margin: const EdgeInsets.symmetric(horizontal: 2),
         child: ListView.builder(
@@ -766,24 +767,24 @@ class _SlotAutoScrollState extends State<SlotAutoScroll> {
             final image = images[i % images.length];
             return Center(
               child: Container(
-                padding: const EdgeInsets.all(8),
+                padding:  EdgeInsets.all(8.w),
                 child: Image.asset(
                   image,
-                  width: 50,
-                  height: 50,
+                  width: 50.w,
+                  height: 50.h,
                   errorBuilder: (context, error, stackTrace) {
                     // Fallback for missing images
                     return Container(
-                      width: 50,
-                      height: 50,
+                      width: 50.w,
+                      height: 50.h,
                       decoration: BoxDecoration(
                         color: Colors.grey.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.r),
                       ),
                       child: Icon(
                         Icons.person,
                         color: Colors.white.withOpacity(0.7),
-                        size: 30,
+                        size: 30.w,
                       ),
                     );
                   },
