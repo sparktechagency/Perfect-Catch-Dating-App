@@ -754,7 +754,7 @@ class _SlotAutoScrollState extends State<SlotAutoScroll> {
     return Expanded(
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.white.withOpacity(0.3), width: 1),
+          border: Border.all(color: Colors.red, width: 1),
           borderRadius: BorderRadius.circular(8.r),
         ),
         margin: const EdgeInsets.symmetric(horizontal: 2),
@@ -780,6 +780,7 @@ class _SlotAutoScrollState extends State<SlotAutoScroll> {
                       decoration: BoxDecoration(
                         color: Colors.grey.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(8.r),
+                        //border: Border.all(color: Color(0xffFFD700))
                       ),
                       child: Icon(
                         Icons.person,
@@ -831,7 +832,7 @@ class _SlotAutoScrollState extends State<SlotAutoScroll> {
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.7),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.white.withOpacity(0.2), width: 2),
+                border: Border.all(color: Color(0xffFFD700), width: 2),
               ),
               padding: const EdgeInsets.all(8),
               child: Row(

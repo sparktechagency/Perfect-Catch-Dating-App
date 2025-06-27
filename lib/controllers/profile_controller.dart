@@ -280,7 +280,7 @@ class ProfileController extends GetxController {
   Future<void> pickWeight(BuildContext context) async {
     int? selectedWeight = weightCTRL.text.isNotEmpty ? int.tryParse(weightCTRL.text) : null;
 
-    final weights = List<int>.generate(201, (i) => i + 1); // 1 to 201
+    final weights = List<int>.generate(501, (i) => i + 1); // 1 to 201
 
     await showModalBottomSheet(
       context: context,
@@ -435,7 +435,7 @@ class ProfileController extends GetxController {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomText(text: 'Select Your Marital Status'),
+              CustomText(text: 'Select Your Religion'),
               SizedBox(height: 12.h),
               SizedBox(
                 height: 200.h,
