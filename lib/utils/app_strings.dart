@@ -138,7 +138,6 @@ class AppStrings {
   static String areYouSureToDelete    = 'Are you sure you want to delete this conversation?';
 //=============================>  Profile <==============================
   static String profile   = 'Profile';
-  static String basicPackage   = 'Basic package';
   static String explore   = 'Explore';
   static String months   = 'Months';
   static String personalInformation   = 'Personal Information';

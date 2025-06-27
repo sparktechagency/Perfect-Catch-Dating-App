@@ -101,7 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   CustomText(
-                                    text: AppStrings.basicPackage.tr,
+                                    text: AppStrings.basic.tr,
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.w500,
                                   ),
