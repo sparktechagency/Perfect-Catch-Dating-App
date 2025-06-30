@@ -19,7 +19,7 @@ class UpdateGalleryController extends GetxController {
       return;
     }
 
-    var isFirstTimeUpdateGallery = await PrefsHelper.getBool(AppConstants.hasUpdateGallery);
+    bool isFirstTimeUpdateGallery = await PrefsHelper.getBool(AppConstants.hasUpdateGallery) ?? false;
     showInfo(isFirstTimeUpdateGallery.toString());
 
     uploadGalleryLoading(true);

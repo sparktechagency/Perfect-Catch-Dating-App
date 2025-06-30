@@ -224,13 +224,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     fontWeight: FontWeight.w600,
                                                                     color: Colors.white,
                                                                   ),
-                                                                  //==================> Name <===================
-                                                                  //TODO Gender is not found
-                                                                  // CustomText(
-                                                                  //   text: user.,
-                                                                  //   color: Colors.white,
-                                                                  //   bottom: 6.h,
-                                                                  // ),
                                                                   //==================> Location Row <===================
                                                                   Row(
                                                                     children: [
