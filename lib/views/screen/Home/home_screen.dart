@@ -235,7 +235,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       CustomText(
                                                                         text: '${user.location!.locationName}',
                                                                         color: Colors.white,
+                                                                       fontSize: 12.sp,
                                                                         maxLine: 3,
+                                                                        textAlign: TextAlign.start,
                                                                       ),
                                                                     ],
                                                                   ),
