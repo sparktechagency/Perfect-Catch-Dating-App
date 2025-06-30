@@ -107,13 +107,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                   Spacer(),
                                   InkWell(
                                     onTap: () {
-                                      Get.toNamed(AppRoutes.messageScreen);
-                                    },
-                                    child: SvgPicture.asset(AppIcons.message),
-                                  ),
-                                  SizedBox(width: 10.w),
-                                  InkWell(
-                                    onTap: () {
 
                                     },
                                     child: SvgPicture.asset(AppIcons.music),

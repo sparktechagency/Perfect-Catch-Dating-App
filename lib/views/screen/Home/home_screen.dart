@@ -224,13 +224,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     fontWeight: FontWeight.w600,
                                                                     color: Colors.white,
                                                                   ),
-                                                                  //==================> Name <===================
-                                                                  //TODO Gender is not found
-                                                                  // CustomText(
-                                                                  //   text: user.,
-                                                                  //   color: Colors.white,
-                                                                  //   bottom: 6.h,
-                                                                  // ),
                                                                   //==================> Location Row <===================
                                                                   Row(
                                                                     children: [
@@ -242,7 +235,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       CustomText(
                                                                         text: '${user.location!.locationName}',
                                                                         color: Colors.white,
+                                                                       fontSize: 12.sp,
                                                                         maxLine: 3,
+                                                                        textAlign: TextAlign.start,
                                                                       ),
                                                                     ],
                                                                   ),

@@ -12,7 +12,20 @@
           "package_name": "com.vanie.catchperfectdating"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "616351905985-u8ko6t207j18936ld76skmc66do1tfb9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vanie.catchperfectdating",
+            "certificate_hash": "e8f9125a7dc18710148f2aad0a3edbd8e0ade9a0"
+          }
+        },
+        {
+          "client_id": "616351905985-am5m878o414t85a9ouran0tm46046ihh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDaANua4MUKmTyTImngjXDTlaxjnjWS7Fg"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "616351905985-am5m878o414t85a9ouran0tm46046ihh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "616351905985-kpeqjv4t5u3clvnibvv58uquahbnlssq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.vanie.catchperfectdating"
+              }
+            }
+          ]
         }
       }
     }

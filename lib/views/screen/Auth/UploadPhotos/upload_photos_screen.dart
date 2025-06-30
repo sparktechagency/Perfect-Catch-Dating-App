@@ -140,7 +140,7 @@ class _UploadPhotosScreenState extends State<UploadPhotosScreen> {
                 loading: _galleryController.uploadGalleryLoading.value,
                 onTap: () {
                   _galleryController.uploadGalleryImages(
-                    isUpdate: Get.arguments as bool,
+                    isUpdate: Get.arguments as bool? ?? false,
                   );
                 },
                 text: AppStrings.continues.tr,
