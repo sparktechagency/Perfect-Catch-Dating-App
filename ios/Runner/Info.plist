@@ -43,13 +43,16 @@
     <true/>
     <key>LSSupportsOpeningDocumentsInPlace</key>
     <true/>
-    <key>MKDirectionsApplicationSupportedRegions</key>
-    <string>RoutingAppCoverageFile.kml</string>
+
+    <!-- FIXED ROUTING CONFIGURATION -->
     <key>MKDirectionsApplicationSupportedModes</key>
     <array>
-        <string>automobile</string>
-        <string>walking</string>
+        <string>MKDirectionsModeCar</string>
+        <string>MKDirectionsModeWalk</string>
     </array>
+    <key>MKRoutingAppCoverageFile</key>
+    <string>routing-app-coverage-file.json</string>
+
     <key>NSCameraUsageDescription</key>
     <string>We need camera access to allow you to take profile photos.</string>
     <key>NSLocalNetworkUsageDescription</key>
