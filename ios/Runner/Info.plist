@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
-   "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <key>CADisableMinimumFrameDurationOnPhone</key>
@@ -14,12 +13,12 @@
         <dict>
             <key>CFBundleTypeName</key>
             <string>MKDirectionsRequest</string>
+            <key>LSHandlerRank</key>
+            <string>Owner</string>
             <key>LSItemContentTypes</key>
             <array>
                 <string>com.apple.maps.directionsrequest</string>
             </array>
-            <key>LSHandlerRank</key>
-            <string>Owner</string>
         </dict>
     </array>
     <key>CFBundleExecutable</key>
@@ -42,12 +41,19 @@
     <string>AIzaSyD-34Ieqrqb7nfyC3ewBkh57QxLlpCgljQ</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
+    <key>LSSupportsOpeningDocumentsInPlace</key>
+    <true/>
     <key>MKDirectionsApplicationSupportedRegions</key>
     <string>RoutingAppCoverageFile.kml</string>
-    <key>NSLocalNetworkUsageDescription</key>
-    <string>This app needs access to devices on your local network for certain features.</string>
+    <key>MKDirectionsApplicationSupportedModes</key>
+    <array>
+        <string>automobile</string>
+        <string>walking</string>
+    </array>
     <key>NSCameraUsageDescription</key>
     <string>We need camera access to allow you to take profile photos.</string>
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>This app needs access to devices on your local network for certain features.</string>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
     <string>We use your location to suggest nearby matches and improve app functionality.</string>
     <key>NSLocationWhenInUseUsageDescription</key>
@@ -57,6 +63,7 @@
     <key>UIBackgroundModes</key>
     <array>
         <string>location</string>
+        <string>remote-notification</string>
     </array>
     <key>UILaunchStoryboardName</key>
     <string>LaunchScreen</string>
@@ -75,10 +82,7 @@
         <string>UIInterfaceOrientationLandscapeLeft</string>
         <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
-    <!-- Document Handling Configuration -->
     <key>UISupportsDocumentBrowser</key>
-    <true/>
-    <key>LSSupportsOpeningDocumentsInPlace</key>
     <true/>
 </dict>
 </plist>
