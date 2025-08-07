@@ -1,48 +1,48 @@
 {
   "project_info": {
-    "project_number": "616351905985",
-    "project_id": "catch-perfect-dating",
-    "storage_bucket": "catch-perfect-dating.firebasestorage.app"
+    "project_number": "665228742074",
+    "project_id": "vaine-dating-perfect-catch",
+    "storage_bucket": "vaine-dating-perfect-catch.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:616351905985:android:985ebb7424a9f36c4dbc40",
+        "mobilesdk_app_id": "1:665228742074:android:c13fc7c4d4d59ed8742183",
         "android_client_info": {
-          "package_name": "com.vanie.catchperfectdating"
+          "package_name": "com.vaine.datingperfectcatch"
         }
       },
       "oauth_client": [
         {
-          "client_id": "616351905985-u8ko6t207j18936ld76skmc66do1tfb9.apps.googleusercontent.com",
+          "client_id": "665228742074-i0v4r255c3a2u1d9ftmr08ail02491n7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.vanie.catchperfectdating",
-            "certificate_hash": "e8f9125a7dc18710148f2aad0a3edbd8e0ade9a0"
+            "package_name": "com.vaine.datingperfectcatch",
+            "certificate_hash": "001b5796abc758ab7359fc17b95167cd9cda22bc"
           }
         },
         {
-          "client_id": "616351905985-am5m878o414t85a9ouran0tm46046ihh.apps.googleusercontent.com",
+          "client_id": "665228742074-a8kvq18lq26ull3sac8hl42caute16ng.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDaANua4MUKmTyTImngjXDTlaxjnjWS7Fg"
+          "current_key": "AIzaSyCTkOUO44nYIDq-yG7EN3nKabyY71p-xow"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "616351905985-am5m878o414t85a9ouran0tm46046ihh.apps.googleusercontent.com",
+              "client_id": "665228742074-a8kvq18lq26ull3sac8hl42caute16ng.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "616351905985-kpeqjv4t5u3clvnibvv58uquahbnlssq.apps.googleusercontent.com",
+              "client_id": "665228742074-6tv1dlru0lc37cn8u7oejlg2dbfltk27.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.vanie.catchperfectdating"
+                "bundle_id": "com.vaine.datingperfectcatch"
               }
             }
           ]

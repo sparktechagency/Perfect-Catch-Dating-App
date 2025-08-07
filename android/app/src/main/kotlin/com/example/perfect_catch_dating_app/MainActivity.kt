@@ -1,4 +1,4 @@
-package com.vanie.catchperfectdating
+package com.vaine.datingperfectcatch
 
 import io.flutter.embedding.android.FlutterActivity
 

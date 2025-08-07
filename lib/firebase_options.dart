@@ -50,20 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDaANua4MUKmTyTImngjXDTlaxjnjWS7Fg',
-    appId: '1:616351905985:android:985ebb7424a9f36c4dbc40',
-    messagingSenderId: '616351905985',
-    projectId: 'catch-perfect-dating',
-    storageBucket: 'catch-perfect-dating.firebasestorage.app',
+    apiKey: 'AIzaSyCTkOUO44nYIDq-yG7EN3nKabyY71p-xow',
+    appId: '1:665228742074:android:c13fc7c4d4d59ed8742183',
+    messagingSenderId: '665228742074',
+    projectId: 'vaine-dating-perfect-catch',
+    storageBucket: 'vaine-dating-perfect-catch.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA5rPjMqppxOP9ztomM2zxaRfi8BaHlzgw',
-    appId: '1:616351905985:ios:48443fc5b9e3cadd4dbc40',
-    messagingSenderId: '616351905985',
-    projectId: 'catch-perfect-dating',
-    storageBucket: 'catch-perfect-dating.firebasestorage.app',
-    iosBundleId: 'com.vanie.catchperfectdating',
+    apiKey: 'AIzaSyASgWoogLtGEInrOlcr554HN-1jBX5tCzs',
+    appId: '1:665228742074:ios:1d1f59dd6779824d742183',
+    messagingSenderId: '665228742074',
+    projectId: 'vaine-dating-perfect-catch',
+    storageBucket: 'vaine-dating-perfect-catch.firebasestorage.app',
+    iosBundleId: 'com.vaine.datingperfectcatch',
   );
 
 }
